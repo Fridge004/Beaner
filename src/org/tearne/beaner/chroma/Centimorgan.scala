@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package beaner.chroma
+package org.tearne.beaner.chroma
 
-import beaner.plant._
+import org.tearne.beaner.plant._
 import scala.collection.mutable.Map
 
 class Centimorgan(p:Plant) {
