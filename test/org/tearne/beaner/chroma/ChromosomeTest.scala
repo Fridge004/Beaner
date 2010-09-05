@@ -16,17 +16,16 @@
  ******************************************************************************/
 package org.tearne.beaner.chroma
 
+import org.junit.{Before, Test}
+import org.junit.Assert._
+import org.mockito.Matchers._
+import org.mockito.Mockito._
+import org.scalatest.Assertions._
+import org.scalatest.mock.MockitoSugar
+import org.tearne.beaner.chroma
+
 import org.tearne.beaner.plant._
 import org.tearne.beaner.plant.spec._
-import org.tearne.beaner.chroma.ChromasomeException
-import org.scalatest.mock.MockitoSugar
-import org.scalatest.Assertions._
-import org.mockito.Mockito._
-import org.mockito.Matchers._
-import org.junit.Assert._
-import org.junit.Ignore
-import org.junit.Test
-import org.junit.Before
 
 class ChromosomeTest extends MockitoSugar{
 	val tolerance = 1e-16
