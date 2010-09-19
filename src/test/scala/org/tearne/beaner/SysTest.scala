@@ -28,7 +28,7 @@ import org.scalatest.Assertions._
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 
-class AccTests extends MockitoSugar{
+class SysTest extends MockitoSugar{
 	val tolerance = 1e-16
 	val lowTolerance = 0.001
 
