@@ -18,30 +18,41 @@ package org.tearne.beaner.plant
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant.spec._
 
-class OffspringPlant(val name:String, val chromasomes:Array[Chromasome], val spec:PlantSpec, val selectionProbability:Option[Double]) extends Plant{
-	def this(name:String, chromasomes:Array[Chromasome], spec:PlantSpec) = this(name, chromasomes, spec, None)
-	def this(name:String, chromasomes:Array[Chromasome], spec:PlantSpec, selectionProbability:Double) =
-		this(name, chromasomes, spec, {
-			if(selectionProbability > 1.0 || selectionProbability < 0.0)
-				throw new OffspringPlantException("Selection probability out of range: "+selectionProbability)
-			Some(selectionProbability)
-		})
-	
-	for(i <- 0 until chromasomes.size){
-		val length1 = chromasomes(i).size
-		val length = spec.chromasomeLengths(i)
-		if(length1  != length)
-			throw new OffspringPlantException("Chromasome "+i+" does not match spec (actual="+chromasomes(i).size+",spec="+spec.chromasomeLengths(i)+")")
-	}
-	
-	def proportionOf(plant:Plant):Double = {
-		var sumP = 0.0
-		var cMCount = 0
-		for(i <- 0 until chromasomes.size){
-			sumP += chromasomes(i).proportionOf(plant)*spec.chromasomeLengths(i)
-			cMCount += spec.chromasomeLengths(i)
-		}
-		
-		sumP / cMCount
-	}
+class OffspringPlant(val name: String, 
+		     val chromasomes: Array[Chromasome], 
+		     val spec: PlantSpec, 
+		     val selectionProbability: Option[Double]
+		     ) extends Plant {
+  
+  def this(name: String, 
+	   chromasomes: Array[Chromasome], 
+	   spec: PlantSpec) = 
+    this(name, chromasomes, spec, None)
+  
+  def this(name: String, 
+	   chromasomes: Array[Chromasome], 
+	   spec: PlantSpec, 
+	   selectionProbability: Double) =
+    this(name, chromasomes, spec, {
+      if (selectionProbability > 1.0 || selectionProbability < 0.0)
+        throw new OffspringPlantException("Selection probability out of range: " + selectionProbability)
+      Some(selectionProbability)
+    })
+
+  for (i <- 0 until chromasomes.size) {
+    val length1 = chromasomes(i).size
+    val length = spec.chromasomeLengths(i)
+    if (length1 != length)
+      throw new OffspringPlantException("Chromasome " + i + " does not match spec (actual=" + chromasomes(i).size + ",spec=" + spec.chromasomeLengths(i) + ")")
+  }
+
+  def proportionOf(plant: Plant): Double = {
+    var sumP = 0.0
+    var cMCount = 0
+    for (i <- 0 until chromasomes.size) {
+      sumP += chromasomes(i).proportionOf(plant) * spec.chromasomeLengths(i)
+      cMCount += spec.chromasomeLengths(i)
+    }
+    sumP / cMCount
+  }
 }
