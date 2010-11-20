@@ -1,1 +1,0 @@
-scala -classpath ../target/scala_2.8.0/classes demo.scala

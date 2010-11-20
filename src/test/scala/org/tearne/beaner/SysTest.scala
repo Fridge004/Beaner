@@ -14,7 +14,7 @@
  */
 
 package org.tearne.beaner
-import org.junit.{ Test, Before}
+import org.junit.{Test, Before}
 import org.junit.Assert._
 import org.mockito.Matchers._
 import org.mockito.Mockito._
