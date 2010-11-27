@@ -26,28 +26,32 @@ import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant._
 import org.tearne.beaner.plant.selection._
 import org.tearne.beaner.plant.spec._
+import org.tearne.beaner.cross._
 
 class SysTest extends JUnitSuite with MockitoSugar {
   val tolerance = 1e-16
   val lowTolerance = 1e-4
 
   val spec = mock[PlantSpec]; when(spec.chromasomeLengths).thenReturn(Array[Int](50, 70, 90))
-  val p1 = new ParentPlant("p1", spec)
-  val p2 = new ParentPlant("p2", spec)
-  val pV = new ParentPlant("p3", spec)
+  val p1 = new ParentPlant(spec)
+  val p2 = new ParentPlant(spec)
+  val pV = new ParentPlant(spec)
   var f1, bc1, bc2, fin: OffspringPlant = null
   val chromaCrosser = new ChromasomeCrosser()
   val criteria = List(new Criteria(p1, 0, 9), new Criteria(p2, 1, 39))
 
   @Before
   def setup {
+    val plantCrosser = new PlantCrosser(chromaCrosser)
+    
     //Heterozygous selection
-    f1 = new PlantCrosser(p1, p2, chromaCrosser).selectHeterozygousOffspring(criteria).get
-    bc1 = new PlantCrosser(f1, pV, chromaCrosser).selectHeterozygousOffspring(criteria).get
-    bc2 = new PlantCrosser(bc1, pV, chromaCrosser).selectHeterozygousOffspring(criteria).get
+    
+    f1 = plantCrosser.selectHeterozygousOffspring(PlantPair(p1, p2), criteria).get
+    bc1 = plantCrosser.selectHeterozygousOffspring(PlantPair(f1, pV), criteria).get
+    bc2 = plantCrosser.selectHeterozygousOffspring(PlantPair(bc1, pV), criteria).get
 
     //Homozygous selection
-    fin = new PlantCrosser(bc2, bc2, chromaCrosser).selectHomozygousOffspring(criteria).get
+    fin = plantCrosser.selectHomozygousOffspring(PlantPair(bc2, bc2), criteria).get
   }
 
   @Test

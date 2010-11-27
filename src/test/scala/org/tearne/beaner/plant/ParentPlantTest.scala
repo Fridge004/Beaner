@@ -29,9 +29,9 @@ class ParentPlantTest extends JUnitSuite with MockitoSugar{
 	val tolerance = 1e-16
 	val plantName = "myPlant"
 	var p:Plant = null
-		
+	
 	@Before def setup {
-		p = new ParentPlant(plantName, PlantSpec.phaseolusVulgaris)
+		p = new ParentPlant(PlantSpec.phaseolusVulgaris)
 	}
 		
 	@Test def creationOfChromasomes {
@@ -48,9 +48,5 @@ class ParentPlantTest extends JUnitSuite with MockitoSugar{
 		
 	@Test def correctNumberOfChromasomes {
 		assertEquals(PlantSpec.phaseolusVulgaris.chromasomeLengths.size, p.chromasomes.size)
-	}
-		
-	@Test def plantsHaveNames() {
-		expect(plantName)(p.name)
 	}
 }

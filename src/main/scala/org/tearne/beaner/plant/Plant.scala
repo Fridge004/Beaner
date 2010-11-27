@@ -20,6 +20,7 @@ import org.tearne.beaner.plant.spec._
 
 trait Plant {
 	val chromasomes:Array[Chromasome]
-	val name:String
 	val spec:PlantSpec
+	
+	//def x():OffspringPlant = {}
 }

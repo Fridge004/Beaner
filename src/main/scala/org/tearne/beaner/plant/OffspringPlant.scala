@@ -18,22 +18,19 @@ package org.tearne.beaner.plant
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant.spec._
 
-class OffspringPlant(val name: String, 
-		     val chromasomes: Array[Chromasome], 
+class OffspringPlant(val chromasomes: Array[Chromasome], 
 		     val spec: PlantSpec, 
 		     val selectionProbability: Option[Double]
 		     ) extends Plant {
   
-  def this(name: String, 
-	   chromasomes: Array[Chromasome], 
+  def this(chromasomes: Array[Chromasome], 
 	   spec: PlantSpec) = 
-    this(name, chromasomes, spec, None)
+    this(chromasomes, spec, None)
   
-  def this(name: String, 
-	   chromasomes: Array[Chromasome], 
+  def this(chromasomes: Array[Chromasome], 
 	   spec: PlantSpec, 
 	   selectionProbability: Double) =
-    this(name, chromasomes, spec, {
+    this(chromasomes, spec, {
       if (selectionProbability > 1.0 || selectionProbability < 0.0)
         throw new OffspringPlantException("Selection probability out of range: " + selectionProbability)
       Some(selectionProbability)

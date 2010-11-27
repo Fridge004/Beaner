@@ -5,12 +5,11 @@ import org.tearne.beaner.chroma._
 
 val chromaCrosser = new ChromasomeCrosser()
 
-val parent1 = new ParentPlant("p1", PlantSpec.phaseolusVulgaris)
-val parent2 = new ParentPlant("p2", PlantSpec.phaseolusVulgaris)
-val prefVar = new ParentPlant("p3", PlantSpec.phaseolusVulgaris)
+val parent1 = new ParentPlant(PlantSpec.phaseolusVulgaris)
+val parent2 = new ParentPlant(PlantSpec.phaseolusVulgaris)
+val prefVar = new ParentPlant(PlantSpec.phaseolusVulgaris)
 
-val criteria = List(new Criteria(parent1, 0, 9), 
-		    new Criteria(parent2, 1, 39))
+val criteria = List(new Criteria(parent1, 0, 9), new Criteria(parent2, 1, 39))
 
 //Heterozygous selection
 var f1  = new PlantCrosser(parent1, parent2, chromaCrosser).selectHeterozygousOffspring(criteria).get

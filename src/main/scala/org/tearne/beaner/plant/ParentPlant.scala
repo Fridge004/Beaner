@@ -18,7 +18,7 @@ package org.tearne.beaner.plant
 import org.tearne.beaner.plant.spec.PlantSpec
 import org.tearne.beaner.chroma._
 
-class ParentPlant(val name:String, val spec:PlantSpec) extends Plant{
+class ParentPlant(val spec:PlantSpec) extends Plant{
 	
 	val chromasomes:Array[Chromasome] = new Array[Chromasome](spec.chromasomeLengths.size)
 	

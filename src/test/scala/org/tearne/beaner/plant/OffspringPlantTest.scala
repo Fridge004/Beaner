@@ -57,7 +57,7 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 		when(chroma3.proportionOf(p)).thenReturn(2.0/3.0)
 		chromas = Array(chroma1, chroma2, chroma3)
 		
-		val plant = new OffspringPlant("plant", chromas, spec)
+		val plant = new OffspringPlant(chromas, spec)
 		val expectedProportion = (1.0*spec.chromasomeLengths(0)+
 								  0.5*spec.chromasomeLengths(1)+
 								  2.0/3.0*spec.chromasomeLengths(2))/6
@@ -66,11 +66,11 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 	}
 	
 	@Test def defaultSelectionProbabilityIsNone {
-		assertEquals(None, new OffspringPlant("plant", chromas, spec).selectionProbability)
+		assertEquals(None, new OffspringPlant(chromas, spec).selectionProbability)
 	}
 	
 	@Test def nonNoneSelectionProbability {
-		assertEquals(0.3, new OffspringPlant("plant", chromas, spec, 0.3).selectionProbability.get, tolerance)
+		assertEquals(0.3, new OffspringPlant(chromas, spec, 0.3).selectionProbability.get, tolerance)
 	}
 	
 	@Test def exceptionIfChromasDontMatchSpec {
@@ -78,26 +78,25 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 		chromas = Array(chroma1, chroma2, chroma3)
 		
 		intercept[OffspringPlantException]{
-			new OffspringPlant("plant", chromas, spec, 0.0)
+			new OffspringPlant(chromas, spec, 0.0)
 		}
 	}
 	
 	@Test def exceptionifSelectionProbOutOfRange {
 		intercept[OffspringPlantException]{
-			new OffspringPlant("plant", chromas, spec, -0.3)
+			new OffspringPlant(chromas, spec, -0.3)
 		}
 		
 		intercept[OffspringPlantException]{
-			new OffspringPlant("plant", chromas, spec, -1.1)
+			new OffspringPlant(chromas, spec, -1.1)
 		}
 	}
 	
 	@Test def attributes {		
 		val chromas = Array(chroma1, chroma2, chroma3)
 		
-		val plant = new OffspringPlant("myPlant", chromas, spec, 0.5)
+		val plant = new OffspringPlant(chromas, spec, 0.5)
 		
-		assertEquals("myPlant", plant.name)
 		assertTrue(plant.isInstanceOf[Plant])
 		assertEquals(3, plant.chromasomes.size)
 		assertEquals(chromas(0), plant.chromasomes(0))

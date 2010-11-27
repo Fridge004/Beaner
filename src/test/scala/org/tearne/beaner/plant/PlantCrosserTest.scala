@@ -18,6 +18,7 @@ package org.tearne.beaner.plant
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant.spec._
 import org.tearne.beaner.plant.selection._
+import org.tearne.beaner.cross._
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import org.junit.Assert.{assertEquals, assertTrue}
@@ -33,9 +34,9 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar{
 	//Create simple plant spec (3 chromasomes of lengths 3, 2 and 1)
 	val spec = mock[PlantSpec]; when(spec.chromasomeLengths).thenReturn(Array[Int](3,2,1))
 
-    val p1 = new ParentPlant("p1", spec)
-	val p2 = new ParentPlant("p2", spec)
-	val p3 = new ParentPlant("p3", spec)
+  val p1 = new ParentPlant(spec)
+	val p2 = new ParentPlant(spec)
+	val p3 = new ParentPlant(spec)
 
 	//Create criteria to select for 
 	// p1 on the first chromasome, third cM
@@ -59,12 +60,12 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar{
 		var mockPlantSpec = mock[PlantSpec]
 		when(mockPlantSpec.chromasomeLengths).thenReturn(Array(100))
 		
-		val p1 = new ParentPlant("p1", PlantSpec.phaseolusVulgaris)
-		val p2 = new ParentPlant("p2", mockPlantSpec)
+		val p1 = new ParentPlant(PlantSpec.phaseolusVulgaris)
+		val p2 = new ParentPlant(mockPlantSpec)
 		
-		intercept[PlantCrosserException]{
-			new PlantCrosser(p1, p2, mock[ChromasomeCrosser])
-		}
+		val plantCrosser = new PlantCrosser(mock[ChromasomeCrosser])
+		intercept[PlantCrosserException]{plantCrosser.selectHeterozygousOffspring(PlantPair(p1,p2),null)}
+		intercept[PlantCrosserException]{plantCrosser.selectHomozygousOffspring(PlantPair(p1,p2),null)}
 	}
 	
 	@Test def heterozygousCrossing {
@@ -73,8 +74,8 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar{
 		when(chromasomeCrosser.selectHeterozygousOffspring(p1.chromasomes(1), p2.chromasomes(1), p2, 1)).thenReturn(Some(chromasome1))
 		when(chromasomeCrosser.getOffspringWithoutSelection(p1.chromasomes(2), p2.chromasomes(2))).thenReturn(Some(chromasome2))
 		
-		val pCrosser = new PlantCrosser(p1, p2, chromasomeCrosser)
-		val offspring = pCrosser.selectHeterozygousOffspring(criteria).get
+		val plantCrosser = new PlantCrosser(chromasomeCrosser)
+		val offspring = plantCrosser.selectHeterozygousOffspring(PlantPair(p1, p2), criteria).get
 		
 		assertEquals(chromasome0, offspring.chromasomes(0))
 		assertEquals(chromasome1, offspring.chromasomes(1))
@@ -92,8 +93,8 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar{
 		when(chromasomeCrosser.selectHeterozygousOffspring(p1.chromasomes(1), p2.chromasomes(1), p2, 1)).thenReturn(None)
 		when(chromasomeCrosser.getOffspringWithoutSelection(p1.chromasomes(2), p2.chromasomes(2))).thenReturn(Some(chromasome2))
 		
-		val pCrosser = new PlantCrosser(p1, p2, chromasomeCrosser)
-		val offspring = pCrosser.selectHeterozygousOffspring(criteria)
+		val plantCrosser = new PlantCrosser(chromasomeCrosser)
+		val offspring = plantCrosser.selectHeterozygousOffspring(PlantPair(p1, p2), criteria)
 		
 		assertTrue(offspring==None)
 	}
@@ -104,8 +105,8 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar{
 		when(chromasomeCrosser.selectHomozygousOffspring(p1.chromasomes(1), p2.chromasomes(1), p2, 1)).thenReturn(Some(chromasome1))
 		when(chromasomeCrosser.getOffspringWithoutSelection(p1.chromasomes(2), p2.chromasomes(2))).thenReturn(Some(chromasome2))
 		
-		val pCrosser = new PlantCrosser(p1, p2, chromasomeCrosser)
-		val offspring = pCrosser.selectHomozygousOffspring(criteria).get
+		val plantCrosser = new PlantCrosser(chromasomeCrosser)
+		val offspring = plantCrosser.selectHomozygousOffspring(PlantPair(p1, p2), criteria).get
 		
 		assertEquals(chromasome0, offspring.chromasomes(0))
 		assertEquals(chromasome1, offspring.chromasomes(1))
@@ -123,8 +124,8 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar{
 		when(chromasomeCrosser.selectHomozygousOffspring(p1.chromasomes(1), p2.chromasomes(1), p2, 1)).thenReturn(Some(chromasome1))
 		when(chromasomeCrosser.getOffspringWithoutSelection(p1.chromasomes(2), p2.chromasomes(2))).thenReturn(Some(chromasome2))
 		
-		val pCrosser = new PlantCrosser(p1, p2, chromasomeCrosser)
-		val offspring = pCrosser.selectHomozygousOffspring(criteria)
+		val plantCrosser = new PlantCrosser(chromasomeCrosser)
+		val offspring = plantCrosser.selectHomozygousOffspring(PlantPair(p1, p2), criteria)
 		
 		assertTrue(offspring==None)
 	}
