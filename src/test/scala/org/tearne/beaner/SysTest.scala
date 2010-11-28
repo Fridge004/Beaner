@@ -21,12 +21,13 @@ import org.mockito.Mockito._
 import org.scalatest.Assertions._
 import org.scalatest.junit.JUnitSuite
 import org.scalatest.mock.MockitoSugar
+import org.tearne.beaner.cross._
 
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant._
 import org.tearne.beaner.plant.selection._
 import org.tearne.beaner.plant.spec._
-import org.tearne.beaner.cross._
+import org.tearne.beaner.cross.PlantPair
 
 class SysTest extends JUnitSuite with MockitoSugar {
   val tolerance = 1e-16
@@ -37,21 +38,20 @@ class SysTest extends JUnitSuite with MockitoSugar {
   val p2 = new ParentPlant(spec)
   val pV = new ParentPlant(spec)
   var f1, bc1, bc2, fin: OffspringPlant = null
-  val chromaCrosser = new ChromasomeCrosser()
+  val chromaCrosser = new ChromosomeCrosser()
   val criteria = List(new Criteria(p1, 0, 9), new Criteria(p2, 1, 39))
 
   @Before
   def setup {
-    val plantCrosser = new PlantCrosser(chromaCrosser)
+    PlantPair.setPlantCrosser(new PlantCrosser(chromaCrosser))
     
     //Heterozygous selection
-    
-    f1 = plantCrosser.selectHeterozygousOffspring(PlantPair(p1, p2), criteria).get
-    bc1 = plantCrosser.selectHeterozygousOffspring(PlantPair(f1, pV), criteria).get
-    bc2 = plantCrosser.selectHeterozygousOffspring(PlantPair(bc1, pV), criteria).get
+    f1 = p1 x p2 selectHet criteria
+    bc1 = f1 x pV selectHet criteria
+    bc2 = bc1 x pV selectHet criteria
 
     //Homozygous selection
-    fin = plantCrosser.selectHomozygousOffspring(PlantPair(bc2, bc2), criteria).get
+    fin = bc2 x bc2 selectHom criteria
   }
 
   @Test

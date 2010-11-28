@@ -29,13 +29,13 @@ import org.junit.Before
 class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 
 	val tolerance = 1e-16
-	var chromasome1, chromasome2 : Chromasome = null
+	var chromasome1, chromasome2 : Chromosome = null
 	var p1,p2:Plant = null
 	
-	var chromasomeCrosser:ChromasomeCrosser = null
+	var chromasomeCrosser:ChromosomeCrosser = null
 	
 	@Before def setup{
-		chromasomeCrosser = new ChromasomeCrosser()
+		chromasomeCrosser = new ChromosomeCrosser()
 		val spec = mock[PlantSpec]
 		when(spec.chromasomeLengths).thenReturn(Array(1))
 		p1 = mock[Plant]
@@ -47,9 +47,9 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 		val gamete1 = mock[Chromatid]
 		val gamete2 = mock[Chromatid]
 		
-		chromasome1 = mock[Chromasome]
+		chromasome1 = mock[Chromosome]
 		when(chromasome1.makeGameteNoSelection).thenReturn(gamete1)
-		chromasome2 = mock[Chromasome]
+		chromasome2 = mock[Chromosome]
 		when(chromasome2.makeGameteNoSelection).thenReturn(gamete2)
 		
 		val result = chromasomeCrosser.getOffspringWithoutSelection(chromasome1, chromasome2).get
@@ -60,9 +60,9 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 	}
 	
 	@Test def failedHomozygousSelection {
-		chromasome1 = mock[Chromasome]
+		chromasome1 = mock[Chromosome]
 		when(chromasome1.probabilityGameteContains(p1, 50)).thenReturn(0)
-		chromasome2 = mock[Chromasome]
+		chromasome2 = mock[Chromosome]
 		when(chromasome2.probabilityGameteContains(p1, 50)).thenReturn(0)
 		
 		val result = chromasomeCrosser.selectHomozygousOffspring(chromasome1, chromasome2, p1, 50)
@@ -74,10 +74,10 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 		val gamete1 = mock[Chromatid]
 		val gamete2 = mock[Chromatid]
 		
-		chromasome1 = mock[Chromasome]
+		chromasome1 = mock[Chromosome]
 		when(chromasome1.probabilityGameteContains(p1, 50)).thenReturn(0.5)
 		when(chromasome1.makeGameteSelectingFor(p1, 50)).thenReturn(gamete1)
-		chromasome2 = mock[Chromasome]
+		chromasome2 = mock[Chromosome]
 		when(chromasome2.probabilityGameteContains(p1, 50)).thenReturn(0.4)
 		when(chromasome2.makeGameteSelectingFor(p1, 50)).thenReturn(gamete2)
 		
@@ -89,9 +89,9 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 	}
 	
 	@Test def failedHeterozygousSelection {
-		chromasome1 = mock[Chromasome]
+		chromasome1 = mock[Chromosome]
 		when(chromasome1.probabilityGameteContains(p1, 50)).thenReturn(0)
-		chromasome2 = mock[Chromasome]
+		chromasome2 = mock[Chromosome]
 		when(chromasome2.probabilityGameteContains(p1, 50)).thenReturn(0)
 		
 		val result = chromasomeCrosser.selectHeterozygousOffspring(chromasome1, chromasome2, p1, 50)
@@ -103,10 +103,10 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 		val gamete1 = mock[Chromatid]
 		val gamete2 = mock[Chromatid]
 		
-		chromasome1 = mock[Chromasome]
+		chromasome1 = mock[Chromosome]
 		when(chromasome1.probabilityGameteContains(p1, 50)).thenReturn(0.4)
 		when(chromasome1.makeGameteSelectingFor(p1, 50)).thenReturn(gamete1)
-		chromasome2 = mock[Chromasome]
+		chromasome2 = mock[Chromosome]
 		when(chromasome2.probabilityGameteContains(p1, 50)).thenReturn(0)
 		when(chromasome2.makeGameteNoSelection).thenReturn(gamete2)
 
@@ -120,9 +120,9 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 	}
 	
 	@Test def exceptionIfTryHeterozygousSelectionAndBothChromosomesCanSupplyAllele {
-		chromasome1 = mock[Chromasome]
+		chromasome1 = mock[Chromosome]
 		when(chromasome1.probabilityGameteContains(p1, 50)).thenReturn(0.5)
-		chromasome2 = mock[Chromasome]
+		chromasome2 = mock[Chromosome]
 		when(chromasome2.probabilityGameteContains(p1, 50)).thenReturn(0.5)
 
 		intercept[ChromasomeCrosserException]{

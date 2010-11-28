@@ -20,9 +20,9 @@ import org.tearne.beaner.chroma._
 
 class ParentPlant(val spec:PlantSpec) extends Plant{
 	
-	val chromasomes:Array[Chromasome] = new Array[Chromasome](spec.chromasomeLengths.size)
+	val chromasomes:Array[Chromosome] = new Array[Chromosome](spec.chromasomeLengths.size)
 	
 	for(i<- 0 until spec.chromasomeLengths.size){
-		chromasomes(i) = new Chromasome(this, spec.chromasomeLengths(i))
+		chromasomes(i) = new Chromosome(this, spec.chromasomeLengths(i))
 	}
 }

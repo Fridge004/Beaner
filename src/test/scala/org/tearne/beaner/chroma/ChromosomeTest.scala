@@ -49,26 +49,26 @@ class ChromosomeTest extends JUnitSuite with MockitoSugar {
 
   @Test
   def defaultSelectionProbabilityIsNone {
-    assertEquals(None, new Chromasome(tidA, tidB).selectionProbability)
+    assertEquals(None, new Chromosome(tidA, tidB).selectionProbability)
   }
 
   @Test
   def nonNoneSelectionProbability {
-    assertEquals(0.3, new Chromasome(tidA, tidB, 0.3).selectionProbability.get, tolerance)
+    assertEquals(0.3, new Chromosome(tidA, tidB, 0.3).selectionProbability.get, tolerance)
   }
 
   @Test
   def size {
-    assertEquals(100, new Chromasome(tidA, tidB).size)
-    assertEquals(99, new Chromasome(tidD, tidD).size)
+    assertEquals(100, new Chromosome(tidA, tidB).size)
+    assertEquals(99, new Chromosome(tidD, tidD).size)
   }
 
   @Test
   def probabilityGameteContains {
-    assertEquals(0.5, new Chromasome(tidA, tidB).probabilityGameteContains(p1, 50), tolerance)
-    assertEquals(0.75, new Chromasome(tidA, tidC).probabilityGameteContains(p1, 50), tolerance)
-    assertEquals(0.5, new Chromasome(tidC, tidC).probabilityGameteContains(p1, 50), tolerance)
-    assertEquals(0.25, new Chromasome(tidB, tidC).probabilityGameteContains(p1, 50), tolerance)
+    assertEquals(0.5, new Chromosome(tidA, tidB).probabilityGameteContains(p1, 50), tolerance)
+    assertEquals(0.75, new Chromosome(tidA, tidC).probabilityGameteContains(p1, 50), tolerance)
+    assertEquals(0.5, new Chromosome(tidC, tidC).probabilityGameteContains(p1, 50), tolerance)
+    assertEquals(0.25, new Chromosome(tidB, tidC).probabilityGameteContains(p1, 50), tolerance)
   }
 
   @Test
@@ -78,23 +78,23 @@ class ChromosomeTest extends JUnitSuite with MockitoSugar {
     tidA(50).alleles(p2) = 0.5
 
     intercept[ChromasomeException] {
-      new Chromasome(tidA, tidB).makeGameteSelectingFor(p1, 50)
+      new Chromosome(tidA, tidB).makeGameteSelectingFor(p1, 50)
     }
 
     intercept[ChromasomeException] {
-      new Chromasome(tidA, tidB).makeGameteSelectingFor(p2, 50)
+      new Chromosome(tidA, tidB).makeGameteSelectingFor(p2, 50)
     }
   }
 
   @Test
   def exceptionIfChromatidsDiffLengths {
-    intercept[ChromasomeException] { new Chromasome(tidA, tidD) }
+    intercept[ChromasomeException] { new Chromosome(tidA, tidD) }
   }
 
   @Test
   def gameteSelectingFor_doubleChromatid {
     tidB(50) = new Centimorgan(p1)
-    val chromasome = new Chromasome(tidA, tidB)
+    val chromasome = new Chromosome(tidA, tidB)
 
     val gamete = chromasome.makeGameteSelectingFor(p1, 50)
 
@@ -113,7 +113,7 @@ class ChromosomeTest extends JUnitSuite with MockitoSugar {
 
   @Test
   def gameteSelectingFor_singleChromatid {
-    val chromasome = new Chromasome(tidA, tidB)
+    val chromasome = new Chromosome(tidA, tidB)
     val gamete = chromasome.makeGameteSelectingFor(p1, 50)
 
     assertEquals(1.0, gamete.probabilityOf(p1, 50), tolerance)
@@ -133,12 +133,12 @@ class ChromosomeTest extends JUnitSuite with MockitoSugar {
 
   @Test
   def proportionOf {
-    assertEquals(0.5, new Chromasome(tidA, tidB).proportionOf(p1), tolerance)
-    assertEquals(0.5, new Chromasome(tidA, tidB).proportionOf(p2), tolerance)
-    assertEquals(0, new Chromasome(tidA, tidB).proportionOf(p3), tolerance)
+    assertEquals(0.5, new Chromosome(tidA, tidB).proportionOf(p1), tolerance)
+    assertEquals(0.5, new Chromosome(tidA, tidB).proportionOf(p2), tolerance)
+    assertEquals(0, new Chromosome(tidA, tidB).proportionOf(p3), tolerance)
     tidA(0) = new Centimorgan(p3)
     tidA(1) = new Centimorgan(p3)
-    assertEquals(0.01, new Chromasome(tidA, tidB).proportionOf(p3), tolerance)
+    assertEquals(0.01, new Chromosome(tidA, tidB).proportionOf(p3), tolerance)
 
     val cTid1 = mock[Chromatid]
     when(cTid1.sumProbabilitiesOf(p1)).thenReturn(2.0)
@@ -148,7 +148,7 @@ class ChromosomeTest extends JUnitSuite with MockitoSugar {
     when(cTid2.sumProbabilitiesOf(p1)).thenReturn(3.0)
     when(cTid2.size).thenReturn(4)
 
-    val chromosome = new Chromasome(cTid1, cTid2)
+    val chromosome = new Chromosome(cTid1, cTid2)
     val expectedExpectedProportion = (2.0 + 3.0) / 8.0
 
     assertEquals(expectedExpectedProportion, chromosome.proportionOf(p1), tolerance)
@@ -168,7 +168,7 @@ class ChromosomeTest extends JUnitSuite with MockitoSugar {
     cTidArray2(0) = cM2a
     cTidArray2(1) = cM2b
 
-    val chromosome = new Chromasome(new Chromatid(cTidArray1), new Chromatid(cTidArray2))
+    val chromosome = new Chromosome(new Chromatid(cTidArray1), new Chromatid(cTidArray2))
     chromosome.makeGameteNoSelection
 
     verify(cM1a).gameteify(cM2a, 0.5)
@@ -191,7 +191,7 @@ class ChromosomeTest extends JUnitSuite with MockitoSugar {
     cTidArray2(3) = new Centimorgan(p3)
     cTidArray2(4) = new Centimorgan(p4)
 
-    val chromosome = new Chromasome(new Chromatid(cTidArray1), new Chromatid(cTidArray2))
+    val chromosome = new Chromosome(new Chromatid(cTidArray1), new Chromatid(cTidArray2))
 
     val gamete = chromosome.makeGameteNoSelection
 

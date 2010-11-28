@@ -19,7 +19,7 @@ import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant.selection._
 import org.tearne.beaner.cross._
 
-class PlantCrosser(chromaCrosser:ChromasomeCrosser) {
+class PlantCrosser(chromaCrosser:ChromosomeCrosser) {
 
   private def checkCanCross(plants:PlantPair)={
     if(plants.first.spec != plants.second.spec)
@@ -29,7 +29,7 @@ class PlantCrosser(chromaCrosser:ChromasomeCrosser) {
 	def selectHeterozygousOffspring(plants:PlantPair, criteriaList:List[Criteria]):Option[OffspringPlant] = {
 		checkCanCross(plants)
 	  
-	  val resultGenome = new Array[Chromasome](plants.first.spec.chromasomeLengths.size)
+	  val resultGenome = new Array[Chromosome](plants.first.spec.chromasomeLengths.size)
 		var selectionProbability = 0.0;
 		
 		criteriaList.foreach(criteria=>{
@@ -51,21 +51,21 @@ class PlantCrosser(chromaCrosser:ChromasomeCrosser) {
 		Some(new OffspringPlant(resultGenome, plants.first.spec, getSelectionProbability(resultGenome)))
 	}
 	
-	private def getHeterozygousSelectedChroma(plants:PlantPair, criteria:Criteria):Option[Chromasome] = {
+	private def getHeterozygousSelectedChroma(plants:PlantPair, criteria:Criteria):Option[Chromosome] = {
 			val chromaNum = criteria.chromasomeIndex
 			val cMNum = criteria.cMIndex
 			val plant = criteria.plant
 			chromaCrosser.selectHeterozygousOffspring(plants.first.chromasomes(chromaNum), plants.second.chromasomes(chromaNum), plant, cMNum)
 	}
 	
-	private def getUnselectedtedChroma(plants:PlantPair, chromaNum:Int):Chromasome = {
+	private def getUnselectedtedChroma(plants:PlantPair, chromaNum:Int):Chromosome = {
 		chromaCrosser.getOffspringWithoutSelection(plants.first.chromasomes(chromaNum), plants.second.chromasomes(chromaNum)).get
 	}
 	
 	def selectHomozygousOffspring(plants:PlantPair, criteriaList:List[Criteria]):Option[OffspringPlant] = {
 		checkCanCross(plants)
 	  
-	  val resultGenome = new Array[Chromasome](plants.first.spec.chromasomeLengths.size)
+	  val resultGenome = new Array[Chromosome](plants.first.spec.chromasomeLengths.size)
 		var selectionProbability = 0.0
 		var chromasomeSize = 0
 		
@@ -87,14 +87,14 @@ class PlantCrosser(chromaCrosser:ChromasomeCrosser) {
 		Some(new OffspringPlant(resultGenome, plants.first.spec, getSelectionProbability(resultGenome)))
 	}
 	
-	private def getHomozygousSelectedChroma(plants:PlantPair, criteria:Criteria):Option[Chromasome] = {
+	private def getHomozygousSelectedChroma(plants:PlantPair, criteria:Criteria):Option[Chromosome] = {
 		val chromaNum = criteria.chromasomeIndex
 		val cMNum = criteria.cMIndex
 		val plant = criteria.plant
 		chromaCrosser.selectHomozygousOffspring(plants.first.chromasomes(chromaNum), plants.second.chromasomes(chromaNum), plant, cMNum)
 	}
 	
-	private def getSelectionProbability(chromasomes:Array[Chromasome]):Double = {
+	private def getSelectionProbability(chromasomes:Array[Chromosome]):Double = {
 		var prob = 1.0
 		
 		chromasomes.foreach(chroma=>{

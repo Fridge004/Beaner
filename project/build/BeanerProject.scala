@@ -1,7 +1,7 @@
 import sbt._
 import de.element34.sbteclipsify._
 
-class BeanerProject(info: ProjectInfo) extends DefaultProject(info) with Eclipsify{
+class BeanerProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProject with Eclipsify{
   lazy val hi = task { println("Hello World"); None }
 
   lazy val junit = "junit" % "junit" % "4.5" % "test->default"

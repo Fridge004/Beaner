@@ -17,10 +17,11 @@ package org.tearne.beaner.plant
 
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant.spec._
+import org.tearne.beaner.cross.PlantPair
 
 trait Plant {
-	val chromasomes:Array[Chromasome]
+	val chromasomes:Array[Chromosome]
 	val spec:PlantSpec
 	
-	//def x():OffspringPlant = {}
+	def x(that:Plant):PlantPair = PlantPair(this, that) 
 }

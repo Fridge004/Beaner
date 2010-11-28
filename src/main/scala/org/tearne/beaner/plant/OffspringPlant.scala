@@ -18,16 +18,16 @@ package org.tearne.beaner.plant
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant.spec._
 
-class OffspringPlant(val chromasomes: Array[Chromasome], 
+class OffspringPlant(val chromasomes: Array[Chromosome], 
 		     val spec: PlantSpec, 
 		     val selectionProbability: Option[Double]
 		     ) extends Plant {
   
-  def this(chromasomes: Array[Chromasome], 
+  def this(chromasomes: Array[Chromosome], 
 	   spec: PlantSpec) = 
     this(chromasomes, spec, None)
   
-  def this(chromasomes: Array[Chromasome], 
+  def this(chromasomes: Array[Chromosome], 
 	   spec: PlantSpec, 
 	   selectionProbability: Double) =
     this(chromasomes, spec, {

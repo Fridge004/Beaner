@@ -28,17 +28,17 @@ import org.mockito.Matchers._
 
 class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 	val tolerance = 1e-16
-	var chroma1, chroma2, chroma3 : Chromasome = null
+	var chroma1, chroma2, chroma3 : Chromosome = null
 	var spec : PlantSpec = null
-	var chromas:Array[Chromasome] = null
+	var chromas:Array[Chromosome] = null
 	
 	@Before def setup {
 		spec = mock[PlantSpec]
 		when(spec.chromasomeLengths).thenReturn(Array[Int](1,2,3))
 		
-		chroma1 = new Chromasome(mock[Plant],1)
-		chroma2 = new Chromasome(mock[Plant],2)
-		chroma3 = new Chromasome(mock[Plant],3)
+		chroma1 = new Chromosome(mock[Plant],1)
+		chroma2 = new Chromosome(mock[Plant],2)
+		chroma3 = new Chromosome(mock[Plant],3)
 		
 		chromas = Array(chroma1, chroma2, chroma3)
 	}
@@ -46,9 +46,9 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 	@Test def proportionOf {
 		val p = mock[Plant]
 		
-		chroma1 = mock[Chromasome]
-		chroma2 = mock[Chromasome]
-		chroma3 = mock[Chromasome]
+		chroma1 = mock[Chromosome]
+		chroma2 = mock[Chromosome]
+		chroma3 = mock[Chromosome]
 		when(chroma1.size).thenReturn(1)
 		when(chroma2.size).thenReturn(2)
 		when(chroma3.size).thenReturn(3)
@@ -74,7 +74,7 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 	}
 	
 	@Test def exceptionIfChromasDontMatchSpec {
-		chroma3 = new Chromasome(mock[Plant],4)
+		chroma3 = new Chromosome(mock[Plant],4)
 		chromas = Array(chroma1, chroma2, chroma3)
 		
 		intercept[OffspringPlantException]{

@@ -18,7 +18,7 @@ package org.tearne.beaner.chroma
 import org.tearne.beaner.plant._
 import scala.math._
 
-class Chromasome(val firstChromatid: Chromatid, val secondChromatid: Chromatid, val selectionProbability: Option[Double]) {
+class Chromosome(val firstChromatid: Chromatid, val secondChromatid: Chromatid, val selectionProbability: Option[Double]) {
 
   def this(firstChromatid: Chromatid, secondChromatid: Chromatid, selectionProbability: Double) 
     = this(firstChromatid, secondChromatid, Some(selectionProbability))

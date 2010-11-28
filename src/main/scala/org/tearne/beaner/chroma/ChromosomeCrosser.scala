@@ -18,7 +18,7 @@ package org.tearne.beaner.chroma
 import org.tearne.beaner.plant._
 import org.tearne.beaner.chroma._
 
-class ChromasomeCrosser{
+class ChromosomeCrosser{
 	
 	//Doesnt seem to be needed ATM, but works
 //	def probabilityOf(firstChromasome:Chromasome, secondChromasome:Chromasome, plant:Plant, index:Int) : Double = {
@@ -33,16 +33,16 @@ class ChromasomeCrosser{
 //	}
 	
 	def getOffspringWithoutSelection(
-			firstChromasome:Chromasome, 
-			secondChromasome:Chromasome):Option[Chromasome] = {
-		Some(new Chromasome(firstChromasome.makeGameteNoSelection, secondChromasome.makeGameteNoSelection))
+			firstChromasome:Chromosome, 
+			secondChromasome:Chromosome):Option[Chromosome] = {
+		Some(new Chromosome(firstChromasome.makeGameteNoSelection, secondChromasome.makeGameteNoSelection))
 	}
 	
 	def selectHomozygousOffspring(
-			firstChromasome:Chromasome, 
-			secondChromasome:Chromasome, 
+			firstChromasome:Chromosome, 
+			secondChromasome:Chromosome, 
 			plantToSelectFor:Plant, 
-			positionForSelection:Int):Option[Chromasome] = {
+			positionForSelection:Int):Option[Chromosome] = {
 		
 		val selectionProbability = 
 			firstChromasome.probabilityGameteContains(plantToSelectFor, positionForSelection)*
@@ -51,7 +51,7 @@ class ChromasomeCrosser{
 		if(selectionProbability==0.0)
 			None
 		else
-			Some(new Chromasome(
+			Some(new Chromosome(
 				firstChromasome.makeGameteSelectingFor(plantToSelectFor, positionForSelection),
 				secondChromasome.makeGameteSelectingFor(plantToSelectFor, positionForSelection),
 				selectionProbability
@@ -59,10 +59,10 @@ class ChromasomeCrosser{
 	}
 	
 	def selectHeterozygousOffspring(
-			firstChromasome:Chromasome, 
-			secondChromasome:Chromasome, 
+			firstChromasome:Chromosome, 
+			secondChromasome:Chromosome, 
 			plantToSelectFor:Plant, 
-			positionForSelection:Int):Option[Chromasome] = {
+			positionForSelection:Int):Option[Chromosome] = {
 		
 		if(firstChromasome.probabilityGameteContains(plantToSelectFor, positionForSelection)>0){
 			if(secondChromasome.probabilityGameteContains(plantToSelectFor, positionForSelection)>0){
@@ -79,13 +79,13 @@ class ChromasomeCrosser{
 		}
 	}
 
-	private def getResultGivenSelectionFromSingleChromasome(firstChromasome:Chromasome, secondChromasome:Chromasome, plantToSelectFor:Plant, positionForSelection:Int) = {
+	private def getResultGivenSelectionFromSingleChromasome(firstChromasome:Chromosome, secondChromasome:Chromosome, plantToSelectFor:Plant, positionForSelection:Int) = {
 		var resultChromatidA:Chromatid = null
 		var resultChromatidB:Chromatid = null
 		
 		resultChromatidA = firstChromasome.makeGameteSelectingFor(plantToSelectFor, positionForSelection)
 		resultChromatidB = secondChromasome.makeGameteNoSelection;
 		
-		new Chromasome(resultChromatidA, resultChromatidB, firstChromasome.probabilityGameteContains(plantToSelectFor, positionForSelection))
+		new Chromosome(resultChromatidA, resultChromatidB, firstChromasome.probabilityGameteContains(plantToSelectFor, positionForSelection))
 	}
 }

@@ -6,12 +6,16 @@ import org.tearne.beaner.plant.selection._
 class PlantPair(val first:Plant, val second:Plant) { 
   import PlantPair.plantCrosser
 
-  def selectHet(criteria:List[Criteria]):Option[OffspringPlant] = {
-      plantCrosser.selectHeterozygousOffspring(this, criteria)
+  def selectHet(criteria:List[Criteria]):OffspringPlant = {
+      plantCrosser.selectHeterozygousOffspring(this, criteria).getOrElse{
+	      throw new OffspringPlantException()
+      }
   }
   
-  def selectHom(criteria:List[Criteria]):Option[OffspringPlant] = {
-      plantCrosser.selectHomozygousOffspring(this, criteria)
+  def selectHom(criteria:List[Criteria]):OffspringPlant = {
+      plantCrosser.selectHomozygousOffspring(this, criteria).getOrElse{
+	      throw new OffspringPlantException()
+      }
   }
 }
 object PlantPair{
