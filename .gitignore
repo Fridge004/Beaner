@@ -3,6 +3,8 @@
 .project
 .scala_dependencies
 .classpath
+*.iml
+
 
 bin/
 target/
