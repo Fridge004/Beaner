@@ -6,6 +6,7 @@
 *.iml
 
 
+out/
 bin/
 target/
 lib_managed/
