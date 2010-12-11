@@ -7,11 +7,10 @@ import org.mockito.Matchers._
 import org.scalatest.mock.MockitoSugar
 import org.tearne.beaner.plant._
 import org.tearne.beaner.cross._
-import org.tearne.beaner.plant.selection.Criteria
 
 class PlantPairTest extends JUnitSuite with MockitoSugar {
   var pair: PlantPair = null
-  var criteriaList: List[Criteria] = null
+  var criteria: Set[Criterion] = null
   var plantCrosser: PlantCrosser = null
   val resultPlant: Option[OffspringPlant] = Option(mock[OffspringPlant])
 
@@ -19,7 +18,7 @@ class PlantPairTest extends JUnitSuite with MockitoSugar {
   def setup() {
     pair = PlantPair(mock[Plant], mock[Plant])
 
-    criteriaList = mock[Criteria] :: Nil
+    criteria = Set(mock[Criterion])
     plantCrosser = mock[PlantCrosser]
 
     PlantPair.setPlantCrosser(plantCrosser)
@@ -30,20 +29,20 @@ class PlantPairTest extends JUnitSuite with MockitoSugar {
     when(plantCrosser.selectHeterozygousOffspring(anyObject(), anyObject())).thenReturn(None)
     PlantPair.setPlantCrosser(plantCrosser)
     intercept[OffspringPlantException] {
-      pair selectHet criteriaList
+      pair selectHet criteria
     }
   }
 
   @Test
   def selectHet() {
-    when(plantCrosser.selectHeterozygousOffspring(pair, criteriaList)).thenReturn(resultPlant)
-    assert(resultPlant.get === pair.selectHet(criteriaList))
+    when(plantCrosser.selectHeterozygousOffspring(pair, criteria)).thenReturn(resultPlant)
+    assert(resultPlant.get === pair.selectHet(criteria))
   }
 
   @Test
   def selectHom() {
-    when(plantCrosser.selectHomozygousOffspring(pair, criteriaList)).thenReturn(resultPlant)
-    assert(resultPlant.get === pair.selectHom(criteriaList))
+    when(plantCrosser.selectHomozygousOffspring(pair, criteria)).thenReturn(resultPlant)
+    assert(resultPlant.get === pair.selectHom(criteria))
   }
 
   @Test

@@ -1,22 +1,36 @@
 import org.tearne.beaner.plant._
-import org.tearne.beaner.plant.spec._
-import org.tearne.beaner.plant.selection._
+import org.tearne.beaner.cross._
 import org.tearne.beaner.chroma._
 
-val chromaCrosser = new ChromasomeCrosser()
+//
+// Setup
+//
+PlantPair.setPlantCrosser(new PlantCrosser(new ChromosomeCrosser()))
+ParentPlant.setPlantType(PlantSpec.phaseolusVulgaris)
 
-val parent1 = new ParentPlant(PlantSpec.phaseolusVulgaris)
-val parent2 = new ParentPlant(PlantSpec.phaseolusVulgaris)
-val prefVar = new ParentPlant(PlantSpec.phaseolusVulgaris)
+// Plants
+val parent1 = new ParentPlant()
+val parent2 = new ParentPlant()
+val prefVar = new ParentPlant()
 
-val criteria = List(new Criteria(parent1, 0, 9), new Criteria(parent2, 1, 39))
+// Criteria
+val aphid = new Criterion(parent1, 0, 9)
+val blight= new Criterion(parent2, 1, 39)
+val criteria = aphid + blight
+
+//
+// Do crossings
+//
 
 //Heterozygous selection
-var f1  = new PlantCrosser(parent1, parent2, chromaCrosser).selectHeterozygousOffspring(criteria).get
-var bc1 = new PlantCrosser(f1,      prefVar, chromaCrosser).selectHeterozygousOffspring(criteria).get
-var bc2 = new PlantCrosser(bc1,     prefVar, chromaCrosser).selectHeterozygousOffspring(criteria).get
+var f1  = parent1 x parent2 selectHet criteria
+var bc1 = f1 x prefVar selectHet criteria
+var bc2 = bc1 x prefVar selectHet criteria
 
 //Homozygous selection
-var fin = new PlantCrosser(bc2,     bc2,     chromaCrosser).selectHomozygousOffspring(criteria).get
+var fin = bc2 x bc2 selectHom criteria
 
+//
+// Results
+//
 println(fin.proportionOf(prefVar))

@@ -15,7 +15,6 @@
 
 package org.tearne.beaner.plant
 
-import org.tearne.beaner.plant.spec._
 import org.junit.{Test, Before}
 import org.junit.Assert._
 import org.mockito.Matchers._

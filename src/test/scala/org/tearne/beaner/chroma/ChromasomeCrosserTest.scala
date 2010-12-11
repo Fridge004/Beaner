@@ -16,7 +16,6 @@
 package org.tearne.beaner.chroma
 
 import org.tearne.beaner.plant._
-import org.tearne.beaner.plant.spec._
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.Assertions._
 import org.scalatest.junit.JUnitSuite

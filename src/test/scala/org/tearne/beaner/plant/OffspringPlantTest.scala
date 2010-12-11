@@ -15,7 +15,6 @@
 
 package org.tearne.beaner.plant
 
-import org.tearne.beaner.plant.spec._
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.chroma._
 import org.junit.{Test, Before}

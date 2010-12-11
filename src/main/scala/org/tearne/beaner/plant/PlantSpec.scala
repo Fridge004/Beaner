@@ -13,7 +13,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.plant.spec
+package org.tearne.beaner.plant
 
 class PlantSpec(val chromasomeLengths:Array[Int]) {
 	override def equals(other: Any): Boolean = {

@@ -13,7 +13,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.plant.spec
+package org.tearne.beaner.plant
 
 import org.scalatest.junit.AssertionsForJUnit._
 import org.junit.Assert._

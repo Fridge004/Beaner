@@ -13,12 +13,12 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.plant.selection
+package org.tearne.beaner.cross
 
 import org.tearne.beaner.plant._
 
 import org.scalatest.junit.AssertionsForJUnit
-import org.junit.{Test, Ignore}
+import org.junit.{ Test, Ignore }
 import org.junit.Assert._
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.Assertions._
@@ -26,17 +26,15 @@ import org.scalatest.junit.JUnitSuite
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 
-class CriteriaTest extends JUnitSuite with MockitoSugar{
+class CriterionTest extends JUnitSuite with MockitoSugar {
 
-	@Ignore
-	@Test def size {
-//		val plant = mock[Plant]
-//		val chroma = 3
-//		val cM = 20
-//		val criteria = new Criteria(plant, chroma, cM)
-//		
-//		assertEquals(plant, criteria.plant)
-//		assertEquals(chroma, criteria.chromasome)
-//		assertEquals(cM, criteria.cM)
-	}
+  @Test def andIngCriterion {
+    val c1 = new Criterion(mock[Plant], 1, 2)
+    val c2 = new Criterion(mock[Plant], 1, 2)
+    
+    val criteria: Set[Criterion] = c1 + c2
+    assertTrue(criteria.contains(c1))
+    assertTrue(criteria.contains(c2))
+    assert(criteria.size == 2)
+  }
 }

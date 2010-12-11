@@ -26,7 +26,6 @@ import org.tearne.beaner.chroma
 import scala.math._
 
 import org.tearne.beaner.plant._
-import org.tearne.beaner.plant.spec._
 
 class ChromosomeTest extends JUnitSuite with MockitoSugar {
   val tolerance = 1e-16

@@ -13,7 +13,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.plant
+package org.tearne.beaner.cross
 
 class PlantCrosserException(message: String, cause: Throwable) extends RuntimeException(message, cause) {
 

@@ -16,7 +16,6 @@
 package org.tearne.beaner.plant
 
 import org.tearne.beaner.chroma._
-import org.tearne.beaner.plant.spec._
 
 class OffspringPlant(val chromasomes: Array[Chromosome], 
 		     val spec: PlantSpec, 
