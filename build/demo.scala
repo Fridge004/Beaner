@@ -21,7 +21,6 @@ val criteria = aphid + blight
 //
 // Do crossings
 //
-
 //Heterozygous selection
 var f1  = parent1 x parent2 selectHet criteria
 var bc1 = f1 x prefVar selectHet criteria
