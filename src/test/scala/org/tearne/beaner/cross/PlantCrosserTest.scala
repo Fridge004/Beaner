@@ -13,7 +13,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.plant
+package org.tearne.beaner.cross
 
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant._

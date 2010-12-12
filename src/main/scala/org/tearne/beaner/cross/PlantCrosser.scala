@@ -26,13 +26,13 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
       throw new PlantCrosserException("Cannot cross plants with different specs")
   }
 
-  def selectHeterozygousOffspring(plants: PlantPair, criteriaList: Set[Criterion]): Option[OffspringPlant] = {
+  def selectHeterozygousOffspring(plants: PlantPair, criteria: Set[Criterion]): Option[OffspringPlant] = {
     checkCanCross(plants)
 
     val resultGenome = new Array[Chromosome](plants.first.spec.chromasomeLengths.size)
     var selectionProbability = 0.0;
 
-    criteriaList.foreach(criteria => {
+    criteria.foreach(criteria => {
       val chromaNum = criteria.chromasomeIndex
       if (resultGenome(chromaNum) != null)
         throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")

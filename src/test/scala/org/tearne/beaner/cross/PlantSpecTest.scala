@@ -13,14 +13,15 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.plant
+package org.tearne.beaner.cross
 
 import org.scalatest.junit.AssertionsForJUnit._
 import org.junit.Assert._
 import org.junit.Test
 import org.scalatest.junit.JUnitSuite
+import org.tearne.beaner.plant._
 
-class PlantSpecsTests extends JUnitSuite{
+class PlantSpecTest extends JUnitSuite{
 	@Test def phaseolusVulgaris {
 		val expectedLengths = Array(107, 175, 132, 95, 72, 113, 102, 133, 105, 89, 100)
 		assertArrayEquals(expectedLengths, PlantSpec.phaseolusVulgaris.chromasomeLengths)

@@ -1,5 +1,6 @@
 package org.tearne.beaner.plant
 
+import org.scalatest.junit.JUnitSuite
 import org.junit.Test
 import org.mockito.Mockito._
 import org.mockito.Spy._
@@ -9,7 +10,7 @@ import org.tearne.beaner.cross._
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.Assertions._
 
-class PlantTest extends MockitoSugar{
+class PlantTest extends JUnitSuite with MockitoSugar{
 
   class PlantImpl(val chromasomes:Array[Chromosome], val spec:PlantSpec) extends Plant{}
   
