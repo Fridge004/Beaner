@@ -17,7 +17,7 @@ package org.tearne.beaner.chroma
 
 import org.tearne.beaner.plant._
 
-class Chromatid(cMArray:Array[Centimorgan]) {
+class Chromatid(val cMArray:Array[Centimorgan]) {
 	def this(plant:Plant, size:Int) = this{
 		val cMs = new Array[Centimorgan](size)
 		for(i <- 0 until cMs.length)

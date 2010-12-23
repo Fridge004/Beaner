@@ -5,6 +5,7 @@
 .classpath
 *.iml
 
+.DS_Store
 
 out/
 bin/
