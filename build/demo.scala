@@ -29,9 +29,9 @@ val parent2 = new ParentPlant()
 val prefVar = new ParentPlant()
 
 // Criteria
-val aphid = new Criterion(parent1, 0, 9)
-val blight= new Criterion(parent2, 1, 39)
-val criteria = aphid + blight
+val c1 = new Criterion(parent1, 0, 9)
+val c2= new Criterion(parent2, 1, 39)
+val criteria = c1 +c2 
 
 //
 // Do crossings
