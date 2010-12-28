@@ -16,7 +16,6 @@
 package org.tearne.beaner.chroma
 
 import org.tearne.beaner.plant._
-import scala.collection.mutable.Map
 
 class Centimorgan(val alleles:Map[Plant, Double]){
   def this(p:Plant) = this(Map(p->1.0))

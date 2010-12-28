@@ -7,17 +7,25 @@ import org.tearne.beaner.plant.Plant
 import org.tearne.beaner.cross.Criterion
 import org.tearne.beaner.chroma.Centimorgan
 import processing.core.PApplet
-import collection.mutable.LinkedHashSet
-import collection._
 
 class ColourTest extends JUnitSuite with MockitoSugar{
+
+  @Test def exceptionIfMorePlantsThanAvailableColours {
+    val elevenPlants = 1.to(11).map(i => mock[Plant])
+    val criteria = elevenPlants.map(p => new Criterion(p,0,0)).toSet
+
+    intercept[ColourException]{
+      new Colour(criteria, mock[Plant])
+    }
+  }
+
 
   @Test def blendedCentiMorganColour {
     val prefVar = mock[Plant]
     val p0 = mock[Plant]
     val p1 = mock[Plant]
 
-    val alleles = mutable.Map(prefVar -> 0.2, p0 -> 0.3, p1 -> 0.4)
+    val alleles = Map(prefVar -> 0.2, p0 -> 0.3, p1 -> 0.4)
     val cM = new Centimorgan(alleles)
 
     def red(c: Int) = c >> 16 & 0xFF
@@ -34,7 +42,7 @@ class ColourTest extends JUnitSuite with MockitoSugar{
       expectedBlue.asInstanceOf[Float]
     )
 
-    val criteria: LinkedHashSet[Criterion] = new Criterion(p0, 0, 1) + new Criterion(p1, 2, 3)
+    val criteria: Set[Criterion] = new Criterion(p0, 0, 1) + new Criterion(p1, 2, 3)
     val colour = new Colour(criteria,prefVar)
 
     assert(expectedColour === colour(cM))
@@ -42,44 +50,45 @@ class ColourTest extends JUnitSuite with MockitoSugar{
 
   @Test def gettingPlantColours {
     val prefVar = mock[Plant]
-    val p0 = mock[Plant]
-    val p1 = mock[Plant]
-    val p2 = mock[Plant]
-    val p3 = mock[Plant]
-    val p4 = mock[Plant]
-    val p5 = mock[Plant]
-    val p6 = mock[Plant]
-    val p7 = mock[Plant]
-    val p8 = mock[Plant]
-    val p9 = mock[Plant]
+    val plants = List(
+      mock[Plant],
+      mock[Plant],
+      mock[Plant],
+      mock[Plant],
+      mock[Plant],
+      mock[Plant],
+      mock[Plant],
+      mock[Plant],
+      mock[Plant],
+      mock[Plant]
+    )
 
-    val criteria = new Criterion(p0, 0, 1) +
-      new Criterion(p1, 2, 3) +
-      new Criterion(p2, 2, 3) +
-      new Criterion(p3, 4, 5) +
-      new Criterion(p4, 0, 1) +
-      new Criterion(p5, 2, 3) +
-      new Criterion(p6, 4, 5) +
-      new Criterion(p7, 0, 1) +
-      new Criterion(p8, 2, 3) +
-      new Criterion(p9, 4, 5) +
-      new Criterion(p1, 0, 1) +
-      new Criterion(p2, 2, 3) +
-      new Criterion(p3, 4, 5)
+    val criteria = new Criterion(plants(0), 0, 1) +
+                  new Criterion(plants(1), 2, 3) +
+                  new Criterion(plants(2), 2, 3) +
+                  new Criterion(plants(3), 4, 5) +
+                  new Criterion(plants(4), 0, 1) +
+                  new Criterion(plants(5), 2, 3) +
+                  new Criterion(plants(6), 4, 5) +
+                  new Criterion(plants(7), 0, 1) +
+                  new Criterion(plants(8), 2, 3) +
+                  new Criterion(plants(9), 4, 5) +
+                  new Criterion(plants(1), 0, 1) +
+                  new Criterion(plants(2), 2, 3) +
+                  new Criterion(plants(3), 4, 5)
 
     val colour = new Colour(criteria, prefVar)
 
     assert(Colour.prefVar === colour(prefVar))
 
-    assert(Colour.donorColours(0) === colour(p0))
-    assert(Colour.donorColours(1) === colour(p1))
-    assert(Colour.donorColours(2) === colour(p2))
-    assert(Colour.donorColours(3) === colour(p3))
-    assert(Colour.donorColours(4) === colour(p4))
-    assert(Colour.donorColours(5) === colour(p5))
-    assert(Colour.donorColours(6) === colour(p6))
-    assert(Colour.donorColours(7) === colour(p7))
-    assert(Colour.donorColours(8) === colour(p8))
-    assert(Colour.donorColours(9) === colour(p9))
+    var colours = Set[Int]()
+    for(i <- 0 to 9){
+      colours += colour(plants(i))
+    }
+
+    assert(10 === colours.size)
+    0.to(9).foreach{
+      i => assert(colours.contains(Colour.donorColours(i)), "Result doesn't contain "+i+"th colour: "+Colour.donorColours(i)+colours)
+    }
   }
 }

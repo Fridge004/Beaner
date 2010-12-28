@@ -16,11 +16,10 @@
 package org.tearne.beaner.cross
 
 import org.tearne.beaner.plant._
-import collection.mutable.LinkedHashSet
 
 class Criterion(val plant:Plant, val chromasomeIndex:Int, val cMIndex:Int){
-  def +(that:Criterion):LinkedHashSet[Criterion] = {
-    val set = LinkedHashSet(this, that)
+  def +(that:Criterion):Set[Criterion] = {
+    val set = Set(this, that)
 
     //val result1:Set[Criterion] = new LinkedHashSet[Criterion]()+this
     //val result2:Set[Criterion] = result1 + that

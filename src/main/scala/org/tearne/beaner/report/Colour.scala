@@ -3,28 +3,19 @@ package org.tearne.beaner.report
 import processing.core._
 import org.tearne.beaner.plant._
 import org.tearne.beaner.cross._
-import collection._
-import collection.immutable.HashMap
 import org.tearne.beaner.chroma.Centimorgan
 
-class Colour(criteria: mutable.Set[Criterion], val prefVar: Plant){
-  val plantsMap: HashMap[Plant, Int] = {
-    var map = new HashMap[Plant, Int]
-    map += (prefVar -> Colour.prefVar)
+class Colour(criteria: Set[Criterion], val prefVar: Plant){
+  val plantsMap: Map[Plant, Int] = {
+    val donorsExcludingPrefVar = criteria.toList.map(_.plant).filter(_!=prefVar).distinct
 
-    val plants = new mutable.HashSet[Plant]
-    criteria.foreach{criterion => plants + criterion.plant}
+    if(donorsExcludingPrefVar.size > Colour.donorColours.size)
+      throw new ColourException("There are "+donorsExcludingPrefVar.size+" plants and only "+Colour.donorColours.size+" colours available")
 
-    //TODO Do this a functional way
-    var counter = 0;
-    for(criterion <- criteria){
-      if(criterion.plant != prefVar && !map.contains(criterion.plant)){
-        map += (criterion.plant -> Colour.donorColours(counter))
-        counter += 1
-      }
-    }
-
-    map
+    donorsExcludingPrefVar
+      .zip(Colour.donorColours)
+      .toMap
+      .+(prefVar -> Colour.prefVar)
    }
 
   def apply(plant: Plant) = {

@@ -16,18 +16,17 @@
 package org.tearne.beaner.cross
 
 import org.tearne.beaner.plant._
-import scala.collection._
 
 class PlantPair(val first:Plant, val second:Plant) { 
   import PlantPair.plantCrosser
 
-  def selectHet(criteria: mutable.Set[Criterion]):OffspringPlant = {
+  def selectHet(criteria: Set[Criterion]):OffspringPlant = {
     plantCrosser.selectHeterozygousOffspring(this, criteria).getOrElse{
 	      throw new OffspringPlantException()
       }
   }
   
-  def selectHom(criteria: mutable.Set[Criterion]):OffspringPlant = {
+  def selectHom(criteria: Set[Criterion]):OffspringPlant = {
       plantCrosser.selectHomozygousOffspring(this, criteria).getOrElse{
 	      throw new OffspringPlantException()
       }

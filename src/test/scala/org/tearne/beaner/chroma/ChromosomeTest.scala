@@ -72,9 +72,7 @@ class ChromosomeTest extends JUnitSuite with MockitoSugar {
 
   @Test
   def exceptionIfTryToSelectWhenAlleleNotPresentWithProbOne {
-    tidA(50) = new Centimorgan()
-    tidA(50).alleles(p1) = 0.5
-    tidA(50).alleles(p2) = 0.5
+    tidA(50) = new Centimorgan(Map(p1->0.5, p2->0.5))
 
     intercept[ChromasomeException] {
       new Chromosome(tidA, tidB).makeGameteSelectingFor(p1, 50)
