@@ -41,7 +41,7 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar {
   // p1 on the first chromasome, third cM
   // p2 on the second chromasome, second cM
   //No selection on the third chromasome
-  val criteria = Set(new Criterion(p1, 0, 2), new Criterion(p2, 1, 1))
+  val criteria = new Criterion(p1, 0, 2) + new Criterion(p2, 1, 1)
 
   val chromasome0 = mock[Chromosome];
   when(chromasome0.size).thenReturn(3)

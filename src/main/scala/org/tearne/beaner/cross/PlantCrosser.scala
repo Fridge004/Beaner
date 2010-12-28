@@ -17,7 +17,7 @@ package org.tearne.beaner.cross
 
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant._
-import org.tearne.beaner.cross._
+import scala.collection._
 
 class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
 
@@ -26,7 +26,7 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
       throw new PlantCrosserException("Cannot cross plants with different specs")
   }
 
-  def selectHeterozygousOffspring(plants: PlantPair, criteria: Set[Criterion]): Option[OffspringPlant] = {
+  def selectHeterozygousOffspring(plants: PlantPair, criteria: mutable.Set[Criterion]): Option[OffspringPlant] = {
     checkCanCross(plants)
 
     val resultGenome = new Array[Chromosome](plants.first.spec.chromasomeLengths.size)
@@ -51,10 +51,10 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
     Some(new OffspringPlant(resultGenome, plants.first.spec, getSelectionProbability(resultGenome)))
   }
 
-  private def getHeterozygousSelectedChroma(plants: PlantPair, criteria: Criterion): Option[Chromosome] = {
-    val chromaNum = criteria.chromasomeIndex
-    val cMNum = criteria.cMIndex
-    val plant = criteria.plant
+  private def getHeterozygousSelectedChroma(plants: PlantPair, criterion: Criterion): Option[Chromosome] = {
+    val chromaNum = criterion.chromasomeIndex
+    val cMNum = criterion.cMIndex
+    val plant = criterion.plant
     chromaCrosser.selectHeterozygousOffspring(plants.first.chromasomes(chromaNum), plants.second.chromasomes(chromaNum), plant, cMNum)
   }
 
@@ -62,7 +62,7 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
     chromaCrosser.getOffspringWithoutSelection(plants.first.chromasomes(chromaNum), plants.second.chromasomes(chromaNum)).get
   }
 
-  def selectHomozygousOffspring(plants: PlantPair, criteriaList: Set[Criterion]): Option[OffspringPlant] = {
+  def selectHomozygousOffspring(plants: PlantPair, criteriaList: mutable.Set[Criterion]): Option[OffspringPlant] = {
     checkCanCross(plants)
 
     val resultGenome = new Array[Chromosome](plants.first.spec.chromasomeLengths.size)

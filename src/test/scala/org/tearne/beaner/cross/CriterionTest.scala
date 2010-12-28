@@ -23,7 +23,7 @@ import org.junit.Assert._
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.Assertions._
 import org.scalatest.junit.JUnitSuite
-import org.mockito.Mockito._
+import collection._
 import org.mockito.Matchers._
 
 class CriterionTest extends JUnitSuite with MockitoSugar {
@@ -32,9 +32,23 @@ class CriterionTest extends JUnitSuite with MockitoSugar {
     val c1 = new Criterion(mock[Plant], 1, 2)
     val c2 = new Criterion(mock[Plant], 1, 2)
     
-    val criteria: Set[Criterion] = c1 + c2
+    val criteria = c1 + c2
     assertTrue(criteria.contains(c1))
     assertTrue(criteria.contains(c2))
     assert(criteria.size == 2)
+  }
+
+  @Test def orderPreserved {
+    val c1 = new Criterion(mock[Plant], 1, 2)
+    val c2 = new Criterion(mock[Plant], 2, 2)
+    val c3 = new Criterion(mock[Plant], 1, 4)
+    val c4 = new Criterion(mock[Plant], 5, 6)
+
+    val criteria = c1 + c2 + c3 + c4
+    val expectedOrder = List(c1,c2,c3,c4)
+
+    expectedOrder.zip(criteria).foreach{
+      case(expected, actual) => assert(expected === actual)
+    }
   }
 }

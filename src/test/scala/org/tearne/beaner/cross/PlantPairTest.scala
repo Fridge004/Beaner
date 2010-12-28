@@ -21,11 +21,11 @@ import org.mockito.Mockito._
 import org.mockito.Matchers._
 import org.scalatest.mock.MockitoSugar
 import org.tearne.beaner.plant._
-import org.tearne.beaner.cross._
+import collection._
 
 class PlantPairTest extends JUnitSuite with MockitoSugar {
   var pair: PlantPair = null
-  var criteria: Set[Criterion] = null
+  var criteria: mutable.Set[Criterion] = null
   var plantCrosser: PlantCrosser = null
   val resultPlant: Option[OffspringPlant] = Option(mock[OffspringPlant])
 
@@ -33,7 +33,7 @@ class PlantPairTest extends JUnitSuite with MockitoSugar {
   def setup() {
     pair = PlantPair(mock[Plant], mock[Plant])
 
-    criteria = Set(mock[Criterion])
+    criteria = mutable.Set(mock[Criterion])
     plantCrosser = mock[PlantCrosser]
 
     PlantPair.setPlantCrosser(plantCrosser)

@@ -1,41 +1,28 @@
 package org.tearne.beaner.report
 
-import processing.core.PApplet
+import processing.core.{PApplet,PFont}
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant._
 
-class ChromatidView(chromatid:Chromatid, xPos:Int, yPos:Int, isLeft:Boolean, plant:Plant, pApplet:PApplet) {
-  private val length = chromatid.size 
+class ChromatidView(chromatid:Chromatid, isLeft:Boolean, colour:Colour, pApplet:PApplet) {
+  private val length = chromatid.size
+  val cMHeight = 3
 
   def display(){
     pApplet.pushMatrix
-    if(isLeft){
-      pApplet.fill(pApplet.color(255,110,110))
-      pApplet.translate(-5,0)
-    }
-    else{
-      pApplet.fill(pApplet.color(110,110,255))
-      pApplet.translate(5,0)
+    if(!isLeft){
+      pApplet.translate(10,0)
     } 
-
-    drawChromatids
+    drawChromatids()
     
     pApplet.popMatrix
   }
   
-  def drawChromatids {
+  private def drawChromatids() {
     chromatid.cMArray.zipWithIndex.foreach{
       case (cM,index) => {
-	pApplet.fill(getColour(cM))
-        pApplet.rect(xPos, yPos+3*index, 10, 3)
-    }}
-  }
-
-  private def getColour(cM:Centimorgan):Int={
-    val p = cM.probabilityOf(plant)
-    val r:Int = (p*255).asInstanceOf[Int]
-    val b:Int = 0.0.asInstanceOf[Int]
-    val g:Int = ((1-p)*255).asInstanceOf[Int]
-    pApplet.color(r,g,b)
+	      pApplet.fill(colour(cM))
+        pApplet.rect(0, cMHeight*index, 10, cMHeight)
+   }}
   }
 }
