@@ -33,16 +33,14 @@ class SysTest extends JUnitSuite with MockitoSugar {
   }
 
   @Test def megansSecondExcelSheetTest_4Markers {
-    //TODO fix spec
-    val spec = mock[PlantSpec]
-    when(spec.chromasomeLengths).thenReturn(Array[Int](5, 6, 3, 7, 5))
-    ParentPlant.setPlantType(spec)
-
-    val p1 = new ParentPlant()
-    val p2 = new ParentPlant()
-    val p3 = new ParentPlant()
-    val p4 = new ParentPlant()
-    val pV = new ParentPlant()
+    object MyPlantSpec extends PlantSpec{
+      val chromasomeLengths = Array(5, 6, 3, 7, 5)
+    }
+    val p1 = MyPlantSpec()
+    val p2 = MyPlantSpec()
+    val p3 = MyPlantSpec()
+    val p4 = MyPlantSpec()
+    val pV = MyPlantSpec()
 
     val c1 = new Criterion(p1, 0, 1)
     val c2 = new Criterion(p2, 1, 5)
@@ -93,12 +91,13 @@ class SysTest extends JUnitSuite with MockitoSugar {
   }
 
   @Test def setupForMegansFirstExcelSheetTest {
-    val spec = mock[PlantSpec]; when(spec.chromasomeLengths).thenReturn(Array[Int](50, 70, 90))
-    ParentPlant.setPlantType(spec)
+    object MyPlantSpec extends PlantSpec{
+      val chromasomeLengths = Array[Int](50, 70, 90)
+    }
 
-    val p1 = new ParentPlant()
-    val p2 = new ParentPlant()
-    val pV = new ParentPlant()
+    val p1 = MyPlantSpec()
+    val p2 = MyPlantSpec()
+    val pV = MyPlantSpec()
 
     val crit1 = new Criterion(p1, 0, 9)
     val crit2 = new Criterion(p2, 1, 39)

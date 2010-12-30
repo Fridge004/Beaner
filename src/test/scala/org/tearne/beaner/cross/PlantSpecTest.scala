@@ -20,17 +20,25 @@ import org.junit.Assert._
 import org.junit.Test
 import org.scalatest.junit.JUnitSuite
 import org.tearne.beaner.plant._
+import org.scalatest.mock.MockitoSugar
 
-class PlantSpecTest extends JUnitSuite{
+class PlantSpecTest extends JUnitSuite with MockitoSugar{
+  class PlantSpecImpl1 extends PlantSpec{
+    val chromasomeLengths = Array(5,4,2)
+  }
+  class PlantSpecImpl2 extends PlantSpec{
+    val chromasomeLengths = Array(5,4,1)
+  }
+
 	@Test def phaseolusVulgaris {
 		val expectedLengths = Array(107, 175, 132, 95, 72, 113, 102, 133, 105, 89, 100)
-		assertArrayEquals(expectedLengths, PlantSpec.phaseolusVulgaris.chromasomeLengths)
+		assertArrayEquals(expectedLengths, PhaseolusVulgaris.chromasomeLengths)
 	}
 	
 	@Test def equalityAndHashcode {
-		val spec1 = new PlantSpec(Array(1,2,3,4))
-		val spec2 = new PlantSpec(Array(1,2,3))
-		val spec3 = new PlantSpec(Array(1,2,3,4))
+		val spec1 = new PlantSpecImpl1
+		val spec2 = new PlantSpecImpl2
+		val spec3 = new PlantSpecImpl1
 		
 		assertEquals(spec1, spec3)
 		assertFalse(spec1 == spec2)

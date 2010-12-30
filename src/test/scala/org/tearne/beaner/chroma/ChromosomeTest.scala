@@ -41,8 +41,7 @@ class ChromosomeTest extends JUnitSuite with MockitoSugar {
     tidA = new Chromatid(p1, 100)
     tidB = new Chromatid(p2, 100)
     tidC = new Chromatid(p1, 100)
-    tidC(50).alleles(p1) = 0.5
-    tidC(50).alleles(p2) = 0.5
+    tidC(50) = new Centimorgan(Map(p1->0.5,p2->0.5))
     tidD = new Chromatid(p1, 99)
   }
 

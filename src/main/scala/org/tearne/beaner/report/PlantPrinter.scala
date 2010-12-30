@@ -1,13 +1,26 @@
+/*
+ * Copyright (c) Oliver Tearne (tearne at gmail dot com)
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation, either version
+ * 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program.
+ * If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package org.tearne.beaner.report
 
 import org.tearne.beaner.plant._
-import java.awt.event._
 import processing.pdf._
 import processing.core._
 import com.lowagie.text.PageSize
 
-class PlantPrinter(plants: List[Plant], colour: Colour) extends processing.core.PApplet {
-  def this(plant: Plant, colour: Colour) = this(List(plant), colour)
+class PlantPrinter(plants: List[NamedPlant], colour: Colour) extends processing.core.PApplet {
   val margin = 0.05
   val headerSpace = 20
   private val f:PFont = createFont("GillSans-Bold", 10);
@@ -34,8 +47,8 @@ class PlantPrinter(plants: List[Plant], colour: Colour) extends processing.core.
     }
   }
 
-  private def printPlant(plant:Plant){
-    val numChromasomes = plant.chromasomes.size
+  private def printPlant(namedPlant:NamedPlant){
+    val numChromasomes = namedPlant.plant.chromasomes.size
 
     val widthWithoutMargin = (width*(1-margin)).asInstanceOf[Int]
     val marginWidth = width - widthWithoutMargin
@@ -46,13 +59,13 @@ class PlantPrinter(plants: List[Plant], colour: Colour) extends processing.core.
     textFont(f,12)
     fill(0)
     textAlign(processing.core.PConstants.LEFT)
-    text(plant.friendlyName,10f,10f)
-    if(plant.isInstanceOf[OffspringPlant])
-      text("%.1f".format(100*plant.asInstanceOf[OffspringPlant].proportionOf(colour.prefVar))+"%",10f,20f)
+    text(namedPlant.name,10f,10f)
+    if(namedPlant.plant.isInstanceOf[OffspringPlant])
+      text("%.1f".format(100*namedPlant.plant.asInstanceOf[OffspringPlant].proportionOf(colour.prefVar))+"%",10f,20f)
     translate(0,headerSpace)
     //text
 
-    plant.chromasomes.zipWithIndex.foreach {
+    namedPlant.plant.chromasomes.zipWithIndex.foreach {
       case (chromasome, index) => {
         pushMatrix
         val xTrans = (marginWidth/2.0+(widthWithoutMargin*index) / numChromasomes.asInstanceOf[Double]).asInstanceOf[Int]
@@ -77,36 +90,49 @@ object PlantPrinter {
     // Setup
     //
     PlantPair.setPlantCrosser(new PlantCrosser(new ChromosomeCrosser()))
-    ParentPlant.setPlantType(PlantSpec.phaseolusVulgaris)
 
-    // Plants
-    val parent1 = new ParentPlant()
-    val parent2 = new ParentPlant()
-    val prefVar = new ParentPlant()
+    val p1 = PhaseolusVulgaris()
+    val p2 = PhaseolusVulgaris()
+    val p3 = PhaseolusVulgaris()
+    val p4 = PhaseolusVulgaris()
+    val pV = PhaseolusVulgaris()
 
-    // Criteria
-    val marker1 = new Criterion(parent1, 0, 9)
-    val marker2 = new Criterion(parent2, 1, 39)
-    val criteria = marker1 + marker2
+    val c1 = new Criterion(p1, 1, 9)
+    val c2 = new Criterion(p2, 3, 50)
+    val c3 = new Criterion(p3, 4, 24)
+    val c4 = new Criterion(p4, 7, 36)
+    val cAll = c1 + c2 + c3 + c4
 
-    //
-    // Do crossings
-    //
-    //Heterozygous selection
-    var f1 = parent1 x parent2 selectHet criteria
-    var bc1 = f1 x prefVar selectHet criteria
-    var bc2 = bc1 x prefVar selectHet criteria
-    var bc3 = bc2 x prefVar selectHet criteria
-    var bc4 = bc3 x prefVar selectHet criteria
-    var bc5 = bc4 x prefVar selectHet criteria
-    var bc6 = bc5 x prefVar selectHet criteria
+    val f1_p1p2 = p1 x p2 selectHet c1 + c2
+    val f1_p3p4 = p3 x p4 selectHet c3 + c4
+    val f1_p1p2p3p4 = f1_p1p2 x f1_p3p4 selectHet cAll
 
-    //Homozygous selection
-    var fin = bc6 x bc6 selectHom criteria
+    val bc1 = f1_p1p2p3p4 x pV selectHet cAll
+    val bc2 = bc1 x pV selectHet cAll
+    val bc3 = bc2 x pV selectHet cAll
+    val bc4 = bc3 x pV selectHet cAll
+
+    val fin = bc4 x bc4 selectHom cAll
 
     //Make colour object
-    val colour = new Colour(criteria, prefVar)
+    val colours = new Colour(cAll, pV)
 
-    new PlantPrinter(List(prefVar, parent1, parent2, f1, bc1, bc2, bc3, bc4, bc5, bc6, fin), colour).makePdf()
+    val plantsList = List(
+      Name(pV, "Preferred Variety"),
+      Name(p1, "First Donor"),
+      Name(p2, "Second Donor"),
+      Name(p3, "Third Donor"),
+      Name(p4, "Fourth Donor"),
+      Name(f1_p1p2, "F1 (p1 x p2)"),
+      Name(f1_p3p4, "F1 (p3 x p4)"),
+      Name(f1_p1p2p3p4, "F1 ((p1 x p2) x (p3 x p4))"),
+      Name(bc1, "Backcross 1"),
+      Name(bc2, "Backcross 2"),
+      Name(bc3, "Backcross 3"),
+      Name(bc4, "Backcross 4"),
+      Name(fin, "Selfed")
+    )
+
+    new PlantPrinter(plantsList, colours).makePdf()
   }
 }

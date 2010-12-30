@@ -30,7 +30,7 @@ import org.mockito.Matchers._
 class PlantCrosserTest extends JUnitSuite with MockitoSugar {
   val tolerance = 1e-16
 
-  //Create simple plant spec (3 chromasomes of lengths 3, 2 and 1)
+  //Create simple namedPlant spec (3 chromasomes of lengths 3, 2 and 1)
   val spec = mock[PlantSpec]; when(spec.chromasomeLengths).thenReturn(Array[Int](3, 2, 1))
 
   val p1 = new ParentPlant(spec)
@@ -60,7 +60,7 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar {
     var mockPlantSpec = mock[PlantSpec]
     when(mockPlantSpec.chromasomeLengths).thenReturn(Array(100))
 
-    val p1 = new ParentPlant(PlantSpec.phaseolusVulgaris)
+    val p1 = PhaseolusVulgaris()
     val p2 = new ParentPlant(mockPlantSpec)
 
     val plantCrosser = new PlantCrosser(mock[ChromosomeCrosser])

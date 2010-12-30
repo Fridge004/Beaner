@@ -55,13 +55,9 @@ class ChromatidTest extends JUnitSuite with MockitoSugar{
 	}
 	
 	@Test def sumProbabilitiesOf {
-		val cm3 = new Centimorgan()
-		cm3.alleles(p1) = 0.5
-		cm3.alleles(p2) = 0.5
+		val cm3 = new Centimorgan(Map(p1->0.5,p2->0.5))
 		
-		val cm4 = new Centimorgan()
-		cm4.alleles(p1) = 0.7
-		cm4.alleles(p2) = 0.3
+		val cm4 = new Centimorgan(Map(p1->0.7, p2->0.3))
 		
 		val cTidArray1 = new Array[Centimorgan](4)
 		cTidArray1(0) = cm1

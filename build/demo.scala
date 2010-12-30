@@ -1,50 +1,52 @@
-/*
- * Copyright (c) Oliver Tearne (tearne at gmail dot com)
- * 
- * This program is free software: you can redistribute it and/or modify it under the terms of
- * the GNU General Public License as published by the Free Software Foundation, either version
- * 3 of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
- * See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with this program.  
- * If not, see <http://www.gnu.org/licenses/>.
- */
-
 import org.tearne.beaner.plant._
 import org.tearne.beaner.cross._
 import org.tearne.beaner.chroma._
+import org.tearne.beaner.report._
 
 //
 // Setup
 //
 PlantPair.setPlantCrosser(new PlantCrosser(new ChromosomeCrosser()))
-ParentPlant.setPlantType(PlantSpec.phaseolusVulgaris)
 
 // Plants
-val parent1 = new ParentPlant()
-val parent2 = new ParentPlant()
-val prefVar = new ParentPlant()
+val parent1 = PhaseolusVulgaris()
+val parent2 = PhaseolusVulgaris()
+val prefVar = PhaseolusVulgaris()
 
 // Criteria
-val c1 = new Criterion(parent1, 0, 9)
-val c2= new Criterion(parent2, 1, 39)
-val criteria = c1 +c2 
+val marker1 = new Criterion(parent1, 0, 9)
+val marker2 = new Criterion(parent2, 1, 39)
+val criteria = marker1 + marker2
 
 //
 // Do crossings
 //
 //Heterozygous selection
-var f1  = parent1 x parent2 selectHet criteria
+var f1 = parent1 x parent2 selectHet criteria
 var bc1 = f1 x prefVar selectHet criteria
 var bc2 = bc1 x prefVar selectHet criteria
+var bc3 = bc2 x prefVar selectHet criteria
+var bc4 = bc3 x prefVar selectHet criteria
+var bc5 = bc4 x prefVar selectHet criteria
+var bc6 = bc5 x prefVar selectHet criteria
 
 //Homozygous selection
-var fin = bc2 x bc2 selectHom criteria
+var fin = bc6 x bc6 selectHom criteria
 
-//
-// Results
-//
-println(fin.proportionOf(prefVar))
+val colours = new Colour(criteria, prefVar)
+
+val plantsList = List(
+  Name(prefVar, "Preferred Variety"),
+  Name(parent1, "First Donor"),
+  Name(parent2, "Second Donor"),
+  Name(f1, "F1"),
+  Name(bc1, "Backcross 1"),
+  Name(bc2, "Backcross 2"),
+  Name(bc3, "Backcross 3"),
+  Name(bc4, "Backcross 4"),
+  Name(bc5, "Backcross 5"),
+  Name(bc6, "Backcross 6"),
+  Name(fin, "Selfed")
+)
+
+new PlantPrinter(plantsList, colours).makePdf()

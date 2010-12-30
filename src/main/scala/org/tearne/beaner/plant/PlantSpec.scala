@@ -15,7 +15,11 @@
 
 package org.tearne.beaner.plant
 
-class PlantSpec(val chromasomeLengths:Array[Int]) {
+trait PlantSpec {
+  val chromasomeLengths: Array[Int]
+
+  def apply() = new ParentPlant(this)
+
 	override def equals(other: Any): Boolean = {
 		other match {
 			case that: PlantSpec => {
@@ -32,7 +36,4 @@ class PlantSpec(val chromasomeLengths:Array[Int]) {
 	override def hashCode: Int = {
 		chromasomeLengths.foldLeft(41)((b,a) => 41*(a)+b)
 	}
-}
-object PlantSpec{
-	val phaseolusVulgaris = new PlantSpec(Array(107, 175, 132, 95, 72, 113, 102, 133, 105, 89, 100))
 }

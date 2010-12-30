@@ -19,17 +19,9 @@ import org.tearne.beaner.plant._
 import org.tearne.beaner.chroma._
 
 class ParentPlant(val spec: PlantSpec) extends Plant {
-  def this() = this(ParentPlant.spec)
-
   val chromasomes: Array[Chromosome] = new Array[Chromosome](spec.chromasomeLengths.size)
 
   for (i <- 0 until spec.chromasomeLengths.size) {
     chromasomes(i) = new Chromosome(this, spec.chromasomeLengths(i))
   }
-}
-
-object ParentPlant {
-  var spec: PlantSpec = null
-
-  def setPlantType(spec: PlantSpec) = ParentPlant.spec = spec
 }

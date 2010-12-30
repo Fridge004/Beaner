@@ -13,30 +13,10 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.report
+package org.tearne.beaner.plant
 
-import processing.core.PApplet
-import org.tearne.beaner.chroma._
+class NamedPlant(val plant: Plant, val name: String)
 
-class ChromatidView(chromatid:Chromatid, isLeft:Boolean, colour:Colour, pApplet:PApplet) {
-  private val length = chromatid.size
-  val cMHeight = 3
-
-  def display(){
-    pApplet.pushMatrix
-    if(!isLeft){
-      pApplet.translate(10,0)
-    } 
-    drawChromatids()
-    
-    pApplet.popMatrix
-  }
-  
-  private def drawChromatids() {
-    chromatid.cMArray.zipWithIndex.foreach{
-      case (cM,index) => {
-	      pApplet.fill(colour(cM))
-        pApplet.rect(0, cMHeight*index, 10, cMHeight)
-   }}
-  }
+object Name{
+  def apply(plant: Plant, name: String) = new NamedPlant(plant, name)
 }

@@ -177,9 +177,9 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 //		assertEquals(expectedSuccessProbability, successProbability, tolerance)
 //	}
 //	
-//	private def makeChromatidWithPlantAtIndex(plant:Plant, index:Int, prob:Double)={
+//	private def makeChromatidWithPlantAtIndex(namedPlant:Plant, index:Int, prob:Double)={
 //		val chromatid = mock[Chromatid]
-//		when(chromatid.probabilityOf(plant, index)).thenReturn(prob)
+//		when(chromatid.probabilityOf(namedPlant, index)).thenReturn(prob)
 //		chromatid
 //	}
 }

@@ -30,13 +30,13 @@ class ParentPlantTest extends JUnitSuite with MockitoSugar{
 	var p:Plant = null
 	
 	@Before def setup {
-		p = new ParentPlant(PlantSpec.phaseolusVulgaris)
+		p = PhaseolusVulgaris()
 	}
 		
 	@Test def creationOfChromasomes {
-		assertEquals(PlantSpec.phaseolusVulgaris.chromasomeLengths(0), p.chromasomes(0).size)
-		assertEquals(PlantSpec.phaseolusVulgaris.chromasomeLengths(3), p.chromasomes(3).size)
-		assertEquals(PlantSpec.phaseolusVulgaris.chromasomeLengths(6), p.chromasomes(6).size)
+		assertEquals(PhaseolusVulgaris.chromasomeLengths(0), p.chromasomes(0).size)
+		assertEquals(PhaseolusVulgaris.chromasomeLengths(3), p.chromasomes(3).size)
+		assertEquals(PhaseolusVulgaris.chromasomeLengths(6), p.chromasomes(6).size)
 		
 		val c = p.chromasomes(6)
 		for(i<-0 until p.chromasomes(6).size){
@@ -46,6 +46,6 @@ class ParentPlantTest extends JUnitSuite with MockitoSugar{
 	}
 		
 	@Test def correctNumberOfChromasomes {
-		assertEquals(PlantSpec.phaseolusVulgaris.chromasomeLengths.size, p.chromasomes.size)
+		assertEquals(PhaseolusVulgaris.chromasomeLengths.size, p.chromasomes.size)
 	}
 }

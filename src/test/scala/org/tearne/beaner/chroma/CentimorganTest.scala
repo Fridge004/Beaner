@@ -41,12 +41,8 @@ class CentimorganTest extends JUnitSuite with MockitoSugar {
 
   @Test
   def normalisingPreCombining() {
-    cM1 = new Centimorgan()
-    cM1.alleles(p1) = 0.2
-    cM1.alleles(p3) = 0.8 - 1e-15
-    cM2 = new Centimorgan()
-    cM2.alleles(p1) = 0.4
-    cM2.alleles(p3) = 0.6
+    cM1 = new Centimorgan(Map(p1->0.2,p3->(0.8-1e-15)))
+    cM2 = new Centimorgan(Map(p1->0.4,p3->0.6))
 
     val result = cM1.combinedWith(cM2, 0.5)
 
@@ -59,11 +55,8 @@ class CentimorganTest extends JUnitSuite with MockitoSugar {
 
   @Test
   def exceptionIfTryToCombineWhenDoesntSumToOne() {
-    cM1 = new Centimorgan()
-    cM1.alleles(p1) = 0.1
-    cM2 = new Centimorgan()
-    cM2.alleles(p1) = 0.4
-    cM2.alleles(p3) = 0.6
+    cM1 = new Centimorgan(Map(p1->0.1))
+    cM2 = new Centimorgan(Map(p1->0.4, p3->0.6))
 
     intercept[CentimorganException] {
       cM1.combinedWith(cM2, 20)
@@ -72,12 +65,8 @@ class CentimorganTest extends JUnitSuite with MockitoSugar {
 
   @Test
   def combinedWith {
-    cM1 = new Centimorgan()
-    cM1.alleles(p1) = 0.1
-    cM1.alleles(p2) = 0.9
-    cM2 = new Centimorgan()
-    cM2.alleles(p1) = 0.4
-    cM2.alleles(p3) = 0.6
+    cM1 = new Centimorgan(Map(p1->0.1,p2->0.9))
+    cM2 = new Centimorgan(Map(p1->0.4,p3->0.6))
 
     val result = cM1.combinedWith(cM2, 0.8)
 
@@ -88,8 +77,7 @@ class CentimorganTest extends JUnitSuite with MockitoSugar {
 
   @Test
   def probabilityOfGeneFrom {
-    cM1 = new Centimorgan()
-    cM1.alleles(p1) = 0.1
+    cM1 = new Centimorgan(Map(p1->0.1))
 
     assertProbEquals(0.1, cM1.probabilityOf(p1))
     assertProbEquals(0.0, cM1.probabilityOf(p3))
@@ -98,9 +86,7 @@ class CentimorganTest extends JUnitSuite with MockitoSugar {
   @Test
   def exceptionIfTryToGameteifyBadCentimorgans {
     cM1 = new Centimorgan(p3)
-    cM2 = new Centimorgan()
-    cM2.alleles(p1) = 0.1
-    cM2.alleles(p2) = 0.2
+    cM2 = new Centimorgan(Map(p1->0.1,p2->0.2))
 
     intercept[CentimorganException] {
       cM1.gameteify(cM2, 0.1)
@@ -113,13 +99,8 @@ class CentimorganTest extends JUnitSuite with MockitoSugar {
 
   @Test
   def gemeteifyComplexCentimorgans {
-    cM1 = new Centimorgan()
-    cM1.alleles(p1) = 0.5
-    cM1.alleles(p2) = 0.5
-
-    cM2 = new Centimorgan()
-    cM2.alleles(p3) = 0.3
-    cM2.alleles(p4) = 0.7
+    cM1 = new Centimorgan(Map(p1->0.5,p2->0.5))
+    cM2 = new Centimorgan(Map(p3->0.3,p4->0.7))
 
     val gameteCM = cM1.gameteify(cM2, 0.8)
 

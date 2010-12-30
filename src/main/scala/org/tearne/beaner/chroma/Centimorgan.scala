@@ -26,34 +26,33 @@ class Centimorgan(val alleles:Map[Plant, Double]){
   def combinedWith(cM: Centimorgan, proportionThis: Double): Centimorgan = {
     val proportionThat = 1.0 - proportionThis
 
-    val resultAlleles = Map[Plant, Double]()
-
+    var resultAlleles = Map[Plant, Double]()
     for (a <- alleles.keySet)
-      resultAlleles(a) = alleles(a) * proportionThis
+      resultAlleles += (a ->(alleles(a) * proportionThis))
  
     for (a <- cM.alleles.keySet) {
       if (resultAlleles.contains(a))
-        resultAlleles(a) = cM.alleles(a) * proportionThat + resultAlleles(a)
+        resultAlleles += (a->(cM.alleles(a) * proportionThat + resultAlleles(a)))
       else
-        resultAlleles(a) = cM.alleles(a) * proportionThat
+        resultAlleles += (a->(cM.alleles(a) * proportionThat))
     }
 
-    new Centimorgan(testNormalise(resultAlleles))
+    new Centimorgan(normalise(resultAlleles))
   }
 
-  private def testNormalise(map:Map[Plant, Double]) = {
+  private def normalise(map:Map[Plant, Double]) = {
     val total = map.values.sum
 
     if(total != 1.0)
       if (scala.math.abs(total-1) > tolerance)
-	throw new CentimorganException(
-	  "Cannot combine since this Centimorgan's values don't sum to 1.0 : Prob = " + total)
+        throw new CentimorganException(
+          "Cannot combine since this Centimorgan's values don't sum to 1.0 : Prob = " + total)
       else{
-	val correction = 1-total
-	map(map.keysIterator.next) += correction
+        val correction = 1-total
+        val kvp = map.iterator.next
+        map + (kvp._1 -> (kvp._2+correction))
       }
-
-      map
+    else map
   }
 
   def probabilityOf(plant: Plant) = {
@@ -76,18 +75,17 @@ class Centimorgan(val alleles:Map[Plant, Double]){
     if (sum != 1.0)
       throw new CentimorganException("Probabilities don't add up to one")
 
-    val result = new Centimorgan()
-
+    var resultAlleles = Map[Plant, Double]()
     for (a <- this.alleles.keySet) {
-      result.alleles(a) = this.alleles(a) * thisProb
+      resultAlleles += (a->(this.alleles(a) * thisProb))
     }
     for (a <- that.alleles.keySet) {
-      if (result.alleles.contains(a))
-        result.alleles(a) = result.alleles(a) + that.alleles(a) * (1 - thisProb)
+      if (resultAlleles.contains(a))
+        resultAlleles += (a->(resultAlleles(a) + that.alleles(a) * (1 - thisProb)))
       else
-        result.alleles(a) = that.alleles(a) * (1 - thisProb)
+        resultAlleles += (a->(that.alleles(a) * (1 - thisProb)) )
     }
 
-    result
+    new Centimorgan(resultAlleles)
   }
 }

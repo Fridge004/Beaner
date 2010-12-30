@@ -21,12 +21,12 @@ import org.tearne.beaner.chroma._
 class ChromosomeCrosser{
 	
 	//Doesnt seem to be needed ATM, but works
-//	def probabilityOf(firstChromasome:Chromasome, secondChromasome:Chromasome, plant:Plant, index:Int) : Double = {
-//		val p1a = firstChromasome.firstChromatid.probabilityOf(plant, index)
-//		val p1b = firstChromasome.secondChromatid.probabilityOf(plant, index)
+//	def probabilityOf(firstChromasome:Chromasome, secondChromasome:Chromasome, namedPlant:Plant, index:Int) : Double = {
+//		val p1a = firstChromasome.firstChromatid.probabilityOf(namedPlant, index)
+//		val p1b = firstChromasome.secondChromatid.probabilityOf(namedPlant, index)
 //		
-//		val p2a = secondChromasome.firstChromatid.probabilityOf(plant, index)
-//		val p2b = secondChromasome.secondChromatid.probabilityOf(plant, index)
+//		val p2a = secondChromasome.firstChromatid.probabilityOf(namedPlant, index)
+//		val p2b = secondChromasome.secondChromatid.probabilityOf(namedPlant, index)
 //		
 //		def pSuccess(p1:Double, p2:Double):Double = 1.0-(1-p1)*(1-p2)
 //		0.25*(pSuccess(p1a,p2a)+pSuccess(p1a,p2b)+pSuccess(p1b,p2a)+pSuccess(p1b,p2b))
