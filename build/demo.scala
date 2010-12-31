@@ -8,45 +8,48 @@ import org.tearne.beaner.report._
 //
 PlantPair.setPlantCrosser(new PlantCrosser(new ChromosomeCrosser()))
 
-// Plants
-val parent1 = PhaseolusVulgaris()
-val parent2 = PhaseolusVulgaris()
-val prefVar = PhaseolusVulgaris()
+val p1 = PhaseolusVulgaris()
+val p2 = PhaseolusVulgaris()
+val p3 = PhaseolusVulgaris()
+val p4 = PhaseolusVulgaris()
+val pV = PhaseolusVulgaris()
 
-// Criteria
-val marker1 = new Criterion(parent1, 0, 9)
-val marker2 = new Criterion(parent2, 1, 39)
-val criteria = marker1 + marker2
+val c1 = new Criterion(p1, 1, 9)
+val c2 = new Criterion(p2, 3, 50)
+val c3 = new Criterion(p3, 4, 24)
+val c4 = new Criterion(p4, 7, 36)
+val cAll = c1 + c2 + c3 + c4
 
-//
-// Do crossings
-//
-//Heterozygous selection
-var f1 = parent1 x parent2 selectHet criteria
-var bc1 = f1 x prefVar selectHet criteria
-var bc2 = bc1 x prefVar selectHet criteria
-var bc3 = bc2 x prefVar selectHet criteria
-var bc4 = bc3 x prefVar selectHet criteria
-var bc5 = bc4 x prefVar selectHet criteria
-var bc6 = bc5 x prefVar selectHet criteria
+val f1_p1p2 = p1 x p2 selectHet c1 + c2
+val f1_p3p4 = p3 x p4 selectHet c3 + c4
+val f1_p1p2p3p4 = f1_p1p2 x f1_p3p4 selectHet cAll
 
-//Homozygous selection
-var fin = bc6 x bc6 selectHom criteria
+val bc1 = f1_p1p2p3p4 x pV selectHet cAll
+val bc2 = bc1 x pV selectHet cAll
+val bc3 = bc2 x pV selectHet cAll
+val bc4 = bc3 x pV selectHet cAll
 
-val colours = new Colour(criteria, prefVar)
+val fin = bc4 x bc4 selectHom cAll
+
+//Make colour object
+val colours = new Colour(cAll, pV)
 
 val plantsList = List(
-  Name(prefVar, "Preferred Variety"),
-  Name(parent1, "First Donor"),
-  Name(parent2, "Second Donor"),
-  Name(f1, "F1"),
+  Name(pV, "Preferred Variety"),
+  Name(p1, "First Donor"),
+  Name(p2, "Second Donor"),
+  Name(p3, "Third Donor"),
+  Name(p4, "Fourth Donor"),
+  Name(f1_p1p2, "F1 (p1 x p2)"),
+  Name(f1_p3p4, "F1 (p3 x p4)"),
+  Name(f1_p1p2p3p4, "F1 ((p1 x p2) x (p3 x p4))"),
   Name(bc1, "Backcross 1"),
   Name(bc2, "Backcross 2"),
   Name(bc3, "Backcross 3"),
   Name(bc4, "Backcross 4"),
-  Name(bc5, "Backcross 5"),
-  Name(bc6, "Backcross 6"),
   Name(fin, "Selfed")
 )
 
 new PlantPrinter(plantsList, colours).makePdf()
+
+Thread.sleep(10000)
