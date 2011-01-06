@@ -1,7 +1,7 @@
 import sbt._
 import de.element34.sbteclipsify._
 
-class BeanerProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProject with Eclipsify{
+class MyProject(info: ProjectInfo) extends DefaultProject(info) with IdeaProject with Eclipsify{
   lazy val hi = task { println("Hello World"); None }
   override def compileOptions = super.compileOptions ++ Seq(Unchecked)
 
