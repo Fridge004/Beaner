@@ -55,6 +55,7 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar {
   when(chromasome2.size).thenReturn(1)
   when(chromasome2.selectionProbability).thenReturn(None)
 
+
   @Test
   def exceptionIfTryToBreedPlantsWithDifferentNumberOfChromosomes {
     var mockPlantSpec = mock[PlantSpec]
