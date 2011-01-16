@@ -1,0 +1,28 @@
+-classpath
+'/Users/philsteitz/newMath/tags/MATH_2_1_RC3/target/classes'
+-encoding
+'iso-8859-1'
+-protected
+-quiet
+-source
+'1.5'
+-sourcepath
+'/Users/philsteitz/newMath/tags/MATH_2_1_RC3/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2003-2010 <a href="http://www.apache.org/">The Apache Software Foundation</a>. All Rights Reserved.'
+-charset
+'UTF-8'
+-d
+'/Users/philsteitz/newMath/tags/MATH_2_1_RC3/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Commons Math 2.1 API'
+-link
+'http://java.sun.com/javase/6/docs/api'
+-linksource
+-use
+-version
+-windowtitle
+'Commons Math 2.1 API'

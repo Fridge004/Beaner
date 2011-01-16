@@ -38,7 +38,12 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 		
 		chromas = Array(chroma1, chroma2, chroma3)
 	}
-	
+
+  @Test def numRequiredForConfidenceInSelection {
+    val plant = new OffspringPlant(chromas, spec, 0.1)
+    assertEquals(275, plant.numPlantsForConfidence(0.95, 20))
+  }
+
 	@Test def proportionOf {
 		val p = mock[Plant]
 		

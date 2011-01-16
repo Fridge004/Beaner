@@ -16,6 +16,7 @@
 package org.tearne.beaner.plant
 
 import org.tearne.beaner.chroma._
+import org.apache.commons.math.distribution.BinomialDistributionImpl
 
 class OffspringPlant(val chromasomes: Array[Chromosome], 
 		     val spec: PlantSpec, 
@@ -50,5 +51,15 @@ class OffspringPlant(val chromasomes: Array[Chromosome],
       cMCount += spec.chromasomeLengths(i)
     }
     sumP / cMCount
+  }
+
+  def numPlantsForConfidence(confidence: Double, numPlantsReq: Int): Int = {
+    var binom = new BinomialDistributionImpl(numPlantsReq-1, selectionProbability.get)
+
+    while(binom.cumulativeProbability(numPlantsReq-1) > 1-confidence){
+      binom = new BinomialDistributionImpl(binom.getNumberOfTrials()+1, selectionProbability.get)
+    }
+
+    binom.getNumberOfTrials()
   }
 }

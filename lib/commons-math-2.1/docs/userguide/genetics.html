@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Math - The Commons Math User Guide - Genetic Algorithms</title>
+    <style type="text/css" media="all">
+      @import url("../css/maven-base.css");
+      @import url("../css/maven-theme.css");
+      @import url("../css/site.css");
+    </style>
+    <link rel="stylesheet" href="../css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <div id="banner">
+                    <span id="bannerLeft">
+    
+            Commons Math User Guide
+    
+            </span>
+                    <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+          
+  
+
+  
+    
+  
+  
+    
+              <div class="xright">      
+  
+
+  
+    
+  
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+           
+  
+
+  
+    
+  
+  
+    
+                   <h5>User Guide</h5>
+            <ul>
+              
+    <li class="none">
+                    <a href="../userguide/index.html">Contents</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/overview.html">Overview</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/stat.html">Statistics</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/random.html">Data Generation</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/linear.html">Linear Algebra</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/analysis.html">Numerical Analysis</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/special.html">Special Functions</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/utilities.html">Utilities</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/complex.html">Complex Numbers</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/distribution.html">Distributions</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/fraction.html">Fractions</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/transform.html">Transform Methods</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/geometry.html">3D Geometry</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/optimization.html">Optimization</a>
+          </li>
+              
+    <li class="none">
+                    <a href="../userguide/ode.html">Ordinary Differential Equations</a>
+          </li>
+              
+    <li class="none">
+              <strong>Genetic Algorithms</strong>
+        </li>
+          </ul>
+                                           <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+            <img alt="Built by Maven" src="../images/logos/maven-feather.png"></img>
+          </a>
+                       
+  
+
+  
+    
+  
+  
+    
+        </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2><a name="a14_Genetic_Algorithms"></a>14 Genetic Algorithms</h2>
+<div class="section"><h3><a name="a14.1_Overview"></a>14.1 Overview</h3>
+<p>
+          The genetics package provides a framework and implementations for 
+          genetic algorithms.
+        </p>
+</div>
+<div class="section"><h3><a name="a14.2_GA_Framework"></a>14.2 GA Framework</h3>
+<p><a href="../apidocs/org/apache/commons/math/genetics/GeneticAlgorithm.html">
+          org.apache.commons.math.genetic.GeneticAlgorithm</a> provides an
+          execution framework for Genetic Algorithms (GA).  
+          <a href="../apidocs/org/apache/commons/math/genetics/Population.html">Populations,</a> consisting
+          of <a href="../apidocs/org/apache/commons/math/genetics/Chromosome.html">
+          Chromosomes</a> are evolved by the <code>GeneticAlgorithm</code> until a 
+          <a href="../apidocs/org/apache/commons/math/genetics/StoppingCondition.html">StoppingCondition</a>
+          is reached. Evolution is determined by
+          <a href="../apidocs/org/apache/commons/math/genetics/SelectionPolicy.html">SelectionPolicies</a>,
+          <a href="../apidocs/org/apache/commons/math/genetics/MutationPolicy.html"> MutationPolicies</a>
+          and <a href="../apidocs/org/apache/commons/math/genetics/Fitness.html">Fitness</a>.
+      </p>
+<p>
+          The GA itself is implemented by the <code>evolve</code> method of the <code>GeneticAlgorithm</code> class,
+          which looks like this:
+          <div class="source"><pre>
+public Population evolve(Population initial, StoppingCondition condition) {
+    Population current = initial;
+    while (!condition.isSatisfied(current)) {
+        current = nextGeneration(current);
+    }
+    return current;
+}
+          </pre>
+</div>
+
+          The <code>nextGeneration</code> method implements the following algorithm:
+          <ol type="1"><li>Get nextGeneration population to fill from <code>current</code>
+             generation, using its nextGeneration method</li>
+<li>Loop until new generation is filled:</li>
+<ul><li>Apply configured <code>SelectionPolicy</code> to select a pair of parents
+                 from <code>current</code></li>
+<li>With probability = 
+                 <a href="../apidocs/org/apache/commons/math/genetics/GeneticAlgorithm.html#getCrossoverRate()">
+                 getCrossoverRate()</a>, apply configured <code>CrossoverPolicy</code> to parents</li>
+<li>With probability = 
+                 <a href="../apidocs/org/apache/commons/math/genetics/GeneticAlgorithm.html#getMutationRate()">
+                 getMutationRate()</a>,
+                 apply configured <code>MutationPolicy</code> to each of the offspring</li>
+<li>Add offspring individually to nextGeneration,
+                 space permitting</li>
+</ul>
+<li>Return nextGeneration</li>
+</ol>
+</p>
+</div>
+<div class="section"><h3><a name="a14.3_Implementation"></a>14.3 Implementation</h3>
+<p>
+      Here is an example GA execution:
+      <div class="source"><pre>
+// initialize a new genetic algorithm
+GeneticAlgorithm ga = new GeneticAlgorithm(
+    new OnePointCrossover&lt;Integer&gt;(),
+    1,
+    new RandomKeyMutation(),
+    0.10,
+    new TournamentSelection(TOURNAMENT_ARITY)
+);
+        
+// initial population
+Population initial = getInitialPopulation();
+        
+// stopping condition
+StoppingCondition stopCond = new FixedGenerationCount(NUM_GENERATIONS);
+        
+// run the algorithm
+Population finalPopulation = ga.evolve(initial, stopCond);
+        
+// best chromosome from the final population
+Chromosome bestFinal = finalPopulation.getFittestChromosome();
+        </pre>
+</div>
+
+        The arguments to the <code>GeneticAlgorithm</code> constructor above are: <br />
+<table class="bodyTable"><tr class="a"><th>Parameter</th>
+<th>value in example</th>
+<th>meaning</th>
+</tr>
+<tr class="b"><td>crossoverPolicy</td>
+<td><a href="../apidocs/org/apache/commons/math/genetics/OnePointCrossover.html">OnePointCrossover</a></td>
+<td>A random crossover point is selected and the first part from each parent is copied to the corresponding
+        child, and the second parts are copied crosswise.</td>
+</tr>
+<tr class="a"><td>crossoverRate</td>
+<td>1</td>
+<td>Always apply crossover</td>
+</tr>
+<tr class="b"><td>mutationPolicy</td>
+<td><a href="../apidocs/org/apache/commons/math/genetics/RandomKeyMutation.html">RandomKeyMutation</a></td>
+<td>Changes a randomly chosen element of the array representation to a random value uniformly distributed in [0,1].</td>
+</tr>
+<tr class="a"><td>mutationRate</td>
+<td>.1</td>
+<td>Apply mutation with probability 0.1 - that is, 10% of the time.</td>
+</tr>
+<tr class="b"><td>selectionPolicy</td>
+<td><a href="../apidocs/org/apache/commons/math/genetics/TournamentSelection.html">TournamentSelection</a></td>
+<td>Each of the two selected chromosomes is selected based on an n-ary tournament -- this is done by drawing
+        n random chromosomes without replacement from the population, and then selecting the fittest chromosome among them.</td>
+</tr>
+</table>
+<br />
+
+        The algorithm starts with an <code>initial</code> population of <code>Chromosomes.</code> and executes until 
+        the specified <a href="../apidocs/org/apache/commons/math/genetics/StoppingCondition.html">StoppingCondition</a>
+        is reached.  In the example above, a
+        <a href="../apidocs/org/apache/commons/math/genetics/FixedGenerationCount.html">FixedGenerationCount</a>
+        stopping condition is used, which means the algorithm proceeds through a fixed number of generations.
+      </p>
+</div>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2003-2010
+    
+          
+  
+
+  
+    
+  
+  
+    
+  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,942 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /*<a name="line.1"></a>
+<FONT color="green">002</FONT>     * Licensed to the Apache Software Foundation (ASF) under one or more<a name="line.2"></a>
+<FONT color="green">003</FONT>     * contributor license agreements.  See the NOTICE file distributed with<a name="line.3"></a>
+<FONT color="green">004</FONT>     * this work for additional information regarding copyright ownership.<a name="line.4"></a>
+<FONT color="green">005</FONT>     * The ASF licenses this file to You under the Apache License, Version 2.0<a name="line.5"></a>
+<FONT color="green">006</FONT>     * (the "License"); you may not use this file except in compliance with<a name="line.6"></a>
+<FONT color="green">007</FONT>     * the License.  You may obtain a copy of the License at<a name="line.7"></a>
+<FONT color="green">008</FONT>     *<a name="line.8"></a>
+<FONT color="green">009</FONT>     *      http://www.apache.org/licenses/LICENSE-2.0<a name="line.9"></a>
+<FONT color="green">010</FONT>     *<a name="line.10"></a>
+<FONT color="green">011</FONT>     * Unless required by applicable law or agreed to in writing, software<a name="line.11"></a>
+<FONT color="green">012</FONT>     * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.12"></a>
+<FONT color="green">013</FONT>     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.13"></a>
+<FONT color="green">014</FONT>     * See the License for the specific language governing permissions and<a name="line.14"></a>
+<FONT color="green">015</FONT>     * limitations under the License.<a name="line.15"></a>
+<FONT color="green">016</FONT>     */<a name="line.16"></a>
+<FONT color="green">017</FONT>    <a name="line.17"></a>
+<FONT color="green">018</FONT>    package org.apache.commons.math;<a name="line.18"></a>
+<FONT color="green">019</FONT>    <a name="line.19"></a>
+<FONT color="green">020</FONT>    import java.util.ListResourceBundle;<a name="line.20"></a>
+<FONT color="green">021</FONT>    <a name="line.21"></a>
+<FONT color="green">022</FONT>    /**<a name="line.22"></a>
+<FONT color="green">023</FONT>     * French localization message resources for the commons-math library.<a name="line.23"></a>
+<FONT color="green">024</FONT>     * @version $Revision: 927009 $ $Date: 2010-03-24 07:14:07 -0400 (Wed, 24 Mar 2010) $<a name="line.24"></a>
+<FONT color="green">025</FONT>     * @since 1.2<a name="line.25"></a>
+<FONT color="green">026</FONT>     */<a name="line.26"></a>
+<FONT color="green">027</FONT>    public class MessagesResources_fr<a name="line.27"></a>
+<FONT color="green">028</FONT>      extends ListResourceBundle {<a name="line.28"></a>
+<FONT color="green">029</FONT>    <a name="line.29"></a>
+<FONT color="green">030</FONT>      /** Non-translated/translated messages arrays. */<a name="line.30"></a>
+<FONT color="green">031</FONT>      private static final Object[][] CONTENTS = {<a name="line.31"></a>
+<FONT color="green">032</FONT>    <a name="line.32"></a>
+<FONT color="green">033</FONT>        // org.apache.commons.math.util.MathUtils<a name="line.33"></a>
+<FONT color="green">034</FONT>        { "must have n &gt;= k for binomial coefficient (n,k), got n = {0}, k = {1}",<a name="line.34"></a>
+<FONT color="green">035</FONT>          "n doit \u00eatre sup\u00e9rieur ou \u00e9gal \u00e0 k " +<a name="line.35"></a>
+<FONT color="green">036</FONT>          "pour le coefficient du bin\u00f4me (n,k), or n = {0}, k = {1}" },<a name="line.36"></a>
+<FONT color="green">037</FONT>        { "must have n &gt;= 0 for binomial coefficient (n,k), got n = {0}",<a name="line.37"></a>
+<FONT color="green">038</FONT>          "n doit \u00eatre positif pour le coefficient du bin\u00f4me (n,k), or n = {0}" },<a name="line.38"></a>
+<FONT color="green">039</FONT>        { "must have n &gt;= 0 for n!, got n = {0}",<a name="line.39"></a>
+<FONT color="green">040</FONT>          "n doit \u00eatre positif pour le calcul de n!, or n = {0}" },<a name="line.40"></a>
+<FONT color="green">041</FONT>        { "overflow: gcd({0}, {1}) is 2^31",<a name="line.41"></a>
+<FONT color="green">042</FONT>          "d\u00e9passement de capacit\u00e9 : le PGCD de {0} et {1} vaut 2^31" },<a name="line.42"></a>
+<FONT color="green">043</FONT>        { "overflow: gcd({0}, {1}) is 2^63",<a name="line.43"></a>
+<FONT color="green">044</FONT>          "d\u00e9passement de capacit\u00e9 : le PGCD de {0} et {1} vaut 2^63" },<a name="line.44"></a>
+<FONT color="green">045</FONT>        { "overflow: lcm({0}, {1}) is 2^31",<a name="line.45"></a>
+<FONT color="green">046</FONT>          "d\u00e9passement de capacit\u00e9 : le MCM de {0} et {1} vaut 2^31" },<a name="line.46"></a>
+<FONT color="green">047</FONT>        { "overflow: lcm({0}, {1}) is 2^63",<a name="line.47"></a>
+<FONT color="green">048</FONT>          "d\u00e9passement de capacit\u00e9 : le MCM de {0} et {1} vaut 2^63" },<a name="line.48"></a>
+<FONT color="green">049</FONT>        { "cannot raise an integral value to a negative power ({0}^{1})",<a name="line.49"></a>
+<FONT color="green">050</FONT>          "impossible d''\u00e9lever une valeur enti\u00e8re " +<a name="line.50"></a>
+<FONT color="green">051</FONT>          "\u00e0 une puissance n\u00e9gative ({0}^{1})" },<a name="line.51"></a>
+<FONT color="green">052</FONT>        { "invalid rounding method {0}, valid methods: {1} ({2}), {3} ({4}), {5} ({6}), {7} ({8}), {9} ({10}), {11} ({12}), {13} ({14}), {15} ({16})",<a name="line.52"></a>
+<FONT color="green">053</FONT>          "m\u00e9thode d''arondi {0} invalide, m\u00e9thodes valides : {1} ({2}), {3} ({4}), {5} ({6}), {7} ({8}), {9} ({10}), {11} ({12}), {13} ({14}), {15} ({16})" },<a name="line.53"></a>
+<FONT color="green">054</FONT>        { "Cannot normalize to an infinite value",<a name="line.54"></a>
+<FONT color="green">055</FONT>          "impossible de normaliser vers une valeur infinie" },<a name="line.55"></a>
+<FONT color="green">056</FONT>        { "Cannot normalize to NaN",<a name="line.56"></a>
+<FONT color="green">057</FONT>          "impossible de normaliser vers NaN" },<a name="line.57"></a>
+<FONT color="green">058</FONT>        { "Array contains an infinite element, {0} at index {1}",<a name="line.58"></a>
+<FONT color="green">059</FONT>          "le tableau contient l''\u00e9l\u00e9ment infini {0} \u00e0 l''index {1}" },<a name="line.59"></a>
+<FONT color="green">060</FONT>    <a name="line.60"></a>
+<FONT color="green">061</FONT>        // org.apache.commons.math.FunctionEvaluationException<a name="line.61"></a>
+<FONT color="green">062</FONT>        { "evaluation failed for argument = {0}",<a name="line.62"></a>
+<FONT color="green">063</FONT>          "erreur d''\u00e9valuation pour l''argument {0}" },<a name="line.63"></a>
+<FONT color="green">064</FONT>    <a name="line.64"></a>
+<FONT color="green">065</FONT>        // org.apache.commons.math.DuplicateSampleAbscissaException<a name="line.65"></a>
+<FONT color="green">066</FONT>        { "Abscissa {0} is duplicated at both indices {1} and {2}",<a name="line.66"></a>
+<FONT color="green">067</FONT>          "Abscisse {0} dupliqu\u00e9e aux indices {1} et {2}" },<a name="line.67"></a>
+<FONT color="green">068</FONT>    <a name="line.68"></a>
+<FONT color="green">069</FONT>        // org.apache.commons.math.ConvergenceException<a name="line.69"></a>
+<FONT color="green">070</FONT>        { "Convergence failed",<a name="line.70"></a>
+<FONT color="green">071</FONT>          "\u00c9chec de convergence" },<a name="line.71"></a>
+<FONT color="green">072</FONT>    <a name="line.72"></a>
+<FONT color="green">073</FONT>        // org.apache.commons.math.ArgumentOutsideDomainException<a name="line.73"></a>
+<FONT color="green">074</FONT>        { "Argument {0} outside domain [{1} ; {2}]",<a name="line.74"></a>
+<FONT color="green">075</FONT>          "Argument {0} hors du domaine [{1} ; {2}]" },<a name="line.75"></a>
+<FONT color="green">076</FONT>    <a name="line.76"></a>
+<FONT color="green">077</FONT>        // org.apache.commons.math.MaxIterationsExceededException<a name="line.77"></a>
+<FONT color="green">078</FONT>        { "Maximal number of iterations ({0}) exceeded",<a name="line.78"></a>
+<FONT color="green">079</FONT>          "Nombre maximal d''it\u00e9rations ({0}) d\u00e9pass\u00e9" },<a name="line.79"></a>
+<FONT color="green">080</FONT>    <a name="line.80"></a>
+<FONT color="green">081</FONT>        // org.apache.commons.math.MaxEvaluationsExceededException<a name="line.81"></a>
+<FONT color="green">082</FONT>        { "Maximal number of evaluations ({0}) exceeded",<a name="line.82"></a>
+<FONT color="green">083</FONT>          "Nombre maximal d''\u00e9valuations ({0}) d\u00e9pass\u00e9" },<a name="line.83"></a>
+<FONT color="green">084</FONT>    <a name="line.84"></a>
+<FONT color="green">085</FONT>        // org.apache.commons.math.analysis.interpolation.SplineInterpolator<a name="line.85"></a>
+<FONT color="green">086</FONT>        // org.apache.commons.math.analysis.polynomials.PolynomialFunctionLagrangeForm<a name="line.86"></a>
+<FONT color="green">087</FONT>        // org.apache.commons.math.DimensionMismatchException<a name="line.87"></a>
+<FONT color="green">088</FONT>        // org.apache.commons.math.optimization.LeastSquaresConverter<a name="line.88"></a>
+<FONT color="green">089</FONT>        // org.apache.commons.math.optimization.direct.DirectSearchOptimizer<a name="line.89"></a>
+<FONT color="green">090</FONT>        // org.apache.commons.math.optimization.general.AbstractLeastSquaresOptimizer<a name="line.90"></a>
+<FONT color="green">091</FONT>        // org.apache.commons.math.ode.ContinuousOutputModel<a name="line.91"></a>
+<FONT color="green">092</FONT>        // org.apache.commons.math.random.UncorrelatedRandomVectorGenerator<a name="line.92"></a>
+<FONT color="green">093</FONT>        // org.apache.commons.math.stat.regression.AbstractMultipleLinearRegression<a name="line.93"></a>
+<FONT color="green">094</FONT>        // org.apache.commons.math.stat.inference.ChiSquareTestImpl<a name="line.94"></a>
+<FONT color="green">095</FONT>        // org.apache.commons.math.analysis.interpolation.MicrosphereInterpolatingFunction<a name="line.95"></a>
+<FONT color="green">096</FONT>        { "dimension mismatch {0} != {1}",<a name="line.96"></a>
+<FONT color="green">097</FONT>          "dimensions incompatibles {0} != {1}" },<a name="line.97"></a>
+<FONT color="green">098</FONT>    <a name="line.98"></a>
+<FONT color="green">099</FONT>        // org.apache.commons.math.analysis.interpolation.MicrosphereInterpolatingFunction<a name="line.99"></a>
+<FONT color="green">100</FONT>        { "no data",<a name="line.100"></a>
+<FONT color="green">101</FONT>          "aucune donn\u00e9e" },<a name="line.101"></a>
+<FONT color="green">102</FONT>    <a name="line.102"></a>
+<FONT color="green">103</FONT>        // org.apache.commons.math.analysis.interpolation.MicrosphereInterpolator<a name="line.103"></a>
+<FONT color="green">104</FONT>        { "brightness exponent should be positive or null, but got {0}",<a name="line.104"></a>
+<FONT color="green">105</FONT>          "l''exposant de brillance devrait \u00eatre positif ou null, or e = {0}" },<a name="line.105"></a>
+<FONT color="green">106</FONT>        { "number of microsphere elements must be positive, but got {0}",<a name="line.106"></a>
+<FONT color="green">107</FONT>          "le nombre d''\u00e9l\u00e9ments de la microsph\u00e8re devrait \u00eatre positif, or n = {0}" },<a name="line.107"></a>
+<FONT color="green">108</FONT>    <a name="line.108"></a>
+<FONT color="green">109</FONT>       // org.apache.commons.math.linear.decomposition.NotPositiveDefiniteMatrixException<a name="line.109"></a>
+<FONT color="green">110</FONT>        { "not positive definite matrix",<a name="line.110"></a>
+<FONT color="green">111</FONT>          "matrice non d\u00e9finie positive" },<a name="line.111"></a>
+<FONT color="green">112</FONT>    <a name="line.112"></a>
+<FONT color="green">113</FONT>        // org.apache.commons.math.linear.decomposition.NotSymmetricMatrixException<a name="line.113"></a>
+<FONT color="green">114</FONT>        { "not symmetric matrix",<a name="line.114"></a>
+<FONT color="green">115</FONT>          "matrice non symm\u00e9trique" },<a name="line.115"></a>
+<FONT color="green">116</FONT>    <a name="line.116"></a>
+<FONT color="green">117</FONT>        // org.apache.commons.math.fraction.FractionConversionException<a name="line.117"></a>
+<FONT color="green">118</FONT>        { "Unable to convert {0} to fraction after {1} iterations",<a name="line.118"></a>
+<FONT color="green">119</FONT>          "Impossible de convertir {0} en fraction apr\u00e8s {1} it\u00e9rations" },<a name="line.119"></a>
+<FONT color="green">120</FONT>        { "Overflow trying to convert {0} to fraction ({1}/{2})",<a name="line.120"></a>
+<FONT color="green">121</FONT>          "D\u00e9passement de capacit\u00e9 lors de la conversion de {0} en fraction ({1}/{2})" },<a name="line.121"></a>
+<FONT color="green">122</FONT>    <a name="line.122"></a>
+<FONT color="green">123</FONT>        // org.apache.commons.math.fraction.BigFraction<a name="line.123"></a>
+<FONT color="green">124</FONT>        { "numerator is null",<a name="line.124"></a>
+<FONT color="green">125</FONT>          "le num\u00e9rateur est null" },<a name="line.125"></a>
+<FONT color="green">126</FONT>        { "denimonator is null",<a name="line.126"></a>
+<FONT color="green">127</FONT>          "le d\u00e9nominateur est null" },<a name="line.127"></a>
+<FONT color="green">128</FONT>        { "denominator must be different from 0",<a name="line.128"></a>
+<FONT color="green">129</FONT>          "le d\u00e9nominateur doit \u00eatre diff\u00e9rent de 0" },<a name="line.129"></a>
+<FONT color="green">130</FONT>        { "cannot convert NaN value",<a name="line.130"></a>
+<FONT color="green">131</FONT>          "les valeurs NaN ne peuvent \u00eatre converties" },<a name="line.131"></a>
+<FONT color="green">132</FONT>        { "cannot convert infinite value",<a name="line.132"></a>
+<FONT color="green">133</FONT>          "les valeurs infinies ne peuvent \u00eatre converties" },<a name="line.133"></a>
+<FONT color="green">134</FONT>    <a name="line.134"></a>
+<FONT color="green">135</FONT>        // org.apache.commons.math.fraction.AbstractFormat<a name="line.135"></a>
+<FONT color="green">136</FONT>        { "denominator format can not be null",<a name="line.136"></a>
+<FONT color="green">137</FONT>          "le format du d\u00e9nominateur ne doit pas \u00eatre nul" },<a name="line.137"></a>
+<FONT color="green">138</FONT>        { "numerator format can not be null",<a name="line.138"></a>
+<FONT color="green">139</FONT>          "le format du num\u00e9rateur ne doit pas \u00eatre nul" },<a name="line.139"></a>
+<FONT color="green">140</FONT>    <a name="line.140"></a>
+<FONT color="green">141</FONT>        // org.apache.commons.math.fraction.FractionFormat<a name="line.141"></a>
+<FONT color="green">142</FONT>        { "cannot convert given object to a fraction number: {0}",<a name="line.142"></a>
+<FONT color="green">143</FONT>          "impossible de convertir l''objet sous forme d''un nombre rationnel : {0}" },<a name="line.143"></a>
+<FONT color="green">144</FONT>    <a name="line.144"></a>
+<FONT color="green">145</FONT>        // org.apache.commons.math.fraction.FractionFormat<a name="line.145"></a>
+<FONT color="green">146</FONT>        // org.apache.commons.math.fraction.BigFractionFormat<a name="line.146"></a>
+<FONT color="green">147</FONT>        { "unparseable fraction number: \"{0}\"",<a name="line.147"></a>
+<FONT color="green">148</FONT>          "\u00e9chec d''analyse du nombre rationnel \"{0}\"" },<a name="line.148"></a>
+<FONT color="green">149</FONT>        { "cannot format given object as a fraction number",<a name="line.149"></a>
+<FONT color="green">150</FONT>          "impossible de formater l''objet sous forme d''un nombre rationnel" },<a name="line.150"></a>
+<FONT color="green">151</FONT>    <a name="line.151"></a>
+<FONT color="green">152</FONT>        // org.apache.commons.math.fraction.ProperFractionFormat<a name="line.152"></a>
+<FONT color="green">153</FONT>        // org.apache.commons.math.fraction.ProperBigFractionFormat<a name="line.153"></a>
+<FONT color="green">154</FONT>        { "whole format can not be null",<a name="line.154"></a>
+<FONT color="green">155</FONT>          "le format complet ne doit pas \u00eatre nul" },<a name="line.155"></a>
+<FONT color="green">156</FONT>    <a name="line.156"></a>
+<FONT color="green">157</FONT>        // org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils<a name="line.157"></a>
+<FONT color="green">158</FONT>        { "function is null",<a name="line.158"></a>
+<FONT color="green">159</FONT>          "la fonction est nulle" },<a name="line.159"></a>
+<FONT color="green">160</FONT>        { "bad value for maximum iterations number: {0}",<a name="line.160"></a>
+<FONT color="green">161</FONT>          "valeur invalide pour le nombre maximal d''it\u00e9rations : {0}" },<a name="line.161"></a>
+<FONT color="green">162</FONT>        { "invalid bracketing parameters:  lower bound={0},  initial={1}, upper bound={2}",<a name="line.162"></a>
+<FONT color="green">163</FONT>          "param\u00e8tres d''encadrement invalides : borne inf\u00e9rieure = {0}, valeur initiale = {1}, borne sup\u00e9rieure = {2}" },<a name="line.163"></a>
+<FONT color="green">164</FONT>        { "number of iterations={0}, maximum iterations={1}, initial={2}, lower bound={3}, upper bound={4}," +<a name="line.164"></a>
+<FONT color="green">165</FONT>            " final a value={5}, final b value={6}, f(a)={7}, f(b)={8}",<a name="line.165"></a>
+<FONT color="green">166</FONT>          "nombre d''it\u00e9rations = {0}, it\u00e9rations maximum = {1}, valeur initiale = {2}," +<a name="line.166"></a>
+<FONT color="green">167</FONT>            " borne inf\u00e9rieure = {3}, borne sup\u00e9rieure = {4}," +<a name="line.167"></a>
+<FONT color="green">168</FONT>            " valeur a finale = {5}, valeur b finale = {6}, f(a) = {7}, f(b) = {8}" },<a name="line.168"></a>
+<FONT color="green">169</FONT>    <a name="line.169"></a>
+<FONT color="green">170</FONT>        // org.apache.commons.math.analysis.solvers.LaguerreSolver<a name="line.170"></a>
+<FONT color="green">171</FONT>        { "polynomial degree must be positive: degree={0}",<a name="line.171"></a>
+<FONT color="green">172</FONT>          "le polyn\u00f4me doit \u00eatre de degr\u00e9 positif : degr\u00e9 = {0}" },<a name="line.172"></a>
+<FONT color="green">173</FONT>    <a name="line.173"></a>
+<FONT color="green">174</FONT>        // org.apache.commons.math.analysis.solvers.SecantSolver<a name="line.174"></a>
+<FONT color="green">175</FONT>        { "function values at endpoints do not have different signs, endpoints: [{0}, {1}], values: [{2}, {3}]",<a name="line.175"></a>
+<FONT color="green">176</FONT>          "les valeurs de la fonctions aux bornes sont de m\u00eame signe, bornes : [{0}, {1}], valeurs : [{2}, {3}]" },<a name="line.176"></a>
+<FONT color="green">177</FONT>    <a name="line.177"></a>
+<FONT color="green">178</FONT>        // org.apache.commons.math.analysis.interpolation.SplineInterpolator<a name="line.178"></a>
+<FONT color="green">179</FONT>        // org.apache.commons.math.analysis.polynomials.PolynomialFunctionLagrangeForm<a name="line.179"></a>
+<FONT color="green">180</FONT>        { "{0} points are required, got only {1}",<a name="line.180"></a>
+<FONT color="green">181</FONT>          "{0} sont n\u00e9cessaires, seuls {1} ont \u00e9t\u00e9 fournis" },<a name="line.181"></a>
+<FONT color="green">182</FONT>    <a name="line.182"></a>
+<FONT color="green">183</FONT>        // org.apache.commons.math.analysis.interpolation.SplineInterpolator<a name="line.183"></a>
+<FONT color="green">184</FONT>        { "points {0} and {1} are not strictly increasing ({2} &gt;= {3})",<a name="line.184"></a>
+<FONT color="green">185</FONT>          "les points {0} et {1} ne sont pas strictement croissants ({2} &gt;= {3})" },<a name="line.185"></a>
+<FONT color="green">186</FONT>        { "points {0} and {1} are not strictly decreasing ({2} &lt;= {3})",<a name="line.186"></a>
+<FONT color="green">187</FONT>          "les points {0} et {1} ne sont pas strictement d\u00e9croissants ({2} &lt;= {3})" },<a name="line.187"></a>
+<FONT color="green">188</FONT>        { "points {0} and {1} are not increasing ({2} &gt; {3})",<a name="line.188"></a>
+<FONT color="green">189</FONT>          "les points {0} et {1} ne sont pas croissants ({2} &gt; {3})" },<a name="line.189"></a>
+<FONT color="green">190</FONT>        { "points {0} and {1} are not decreasing ({2} &lt; {3})",<a name="line.190"></a>
+<FONT color="green">191</FONT>          "les points {0} et {1} ne sont pas d\u00e9croissants ({2} &lt; {3})" },<a name="line.191"></a>
+<FONT color="green">192</FONT>    <a name="line.192"></a>
+<FONT color="green">193</FONT>        // org.apache.commons.math.analysis.interpolation.LoessInterpolator<a name="line.193"></a>
+<FONT color="green">194</FONT>        { "bandwidth must be in the interval [0,1], but got {0}",<a name="line.194"></a>
+<FONT color="green">195</FONT>          "la largeur de bande doit \u00eatre dans l''intervalle [0, 1], alors qu'elle vaut {0}" },<a name="line.195"></a>
+<FONT color="green">196</FONT>        { "the number of robustness iterations must be non-negative, but got {0}",<a name="line.196"></a>
+<FONT color="green">197</FONT>          "le nombre d''it\u00e9rations robuste ne peut \u00eatre n\u00e9gatif, alors qu''il est de {0}" },<a name="line.197"></a>
+<FONT color="green">198</FONT>        { "Loess expects the abscissa and ordinate arrays to be of the same size, " +<a name="line.198"></a>
+<FONT color="green">199</FONT>          "but got {0} abscissae and {1} ordinatae",<a name="line.199"></a>
+<FONT color="green">200</FONT>          "la r\u00e9gression Loess n\u00e9cessite autant d''abscisses que d''ordonn\u00e9es, " +<a name="line.200"></a>
+<FONT color="green">201</FONT>          "mais {0} abscisses et {1} ordonn\u00e9es ont \u00e9t\u00e9 fournies" },<a name="line.201"></a>
+<FONT color="green">202</FONT>        { "Loess expects at least 1 point",<a name="line.202"></a>
+<FONT color="green">203</FONT>          "la r\u00e9gression Loess n\u00e9cessite au moins un point" },<a name="line.203"></a>
+<FONT color="green">204</FONT>        { "the bandwidth must be large enough to accomodate at least 2 points. There are {0} " +<a name="line.204"></a>
+<FONT color="green">205</FONT>          " data points, and bandwidth must be at least {1}  but it is only {2}",<a name="line.205"></a>
+<FONT color="green">206</FONT>          "la largeur de bande doit \u00eatre assez grande pour supporter au moins 2 points. Il y a {0}" +<a name="line.206"></a>
+<FONT color="green">207</FONT>          "donn\u00e9es et la largeur de bande doit \u00eatre au moins de {1}, or elle est seulement de {2}" },<a name="line.207"></a>
+<FONT color="green">208</FONT>        { "all abscissae must be finite real numbers, but {0}-th is {1}",<a name="line.208"></a>
+<FONT color="green">209</FONT>          "toutes les abscisses doivent \u00eatre des nombres r\u00e9els finis, mais l''abscisse {0} vaut {1}" },<a name="line.209"></a>
+<FONT color="green">210</FONT>        { "all ordinatae must be finite real numbers, but {0}-th is {1}",<a name="line.210"></a>
+<FONT color="green">211</FONT>          "toutes les ordonn\u00e9es doivent \u00eatre des nombres r\u00e9els finis, mais l''ordonn\u00e9e {0} vaut {1}" },<a name="line.211"></a>
+<FONT color="green">212</FONT>        { "all weights must be finite real numbers, but {0}-th is {1}",<a name="line.212"></a>
+<FONT color="green">213</FONT>          "tous les poids doivent \u00eatre des nombres r\u00e9els finis, mais le poids {0} vaut {1}" },<a name="line.213"></a>
+<FONT color="green">214</FONT>        { "the abscissae array must be sorted in a strictly increasing order, " +<a name="line.214"></a>
+<FONT color="green">215</FONT>          "but the {0}-th element is {1} whereas {2}-th is {3}",<a name="line.215"></a>
+<FONT color="green">216</FONT>          "les abscisses doivent \u00eatre en ordre strictement croissant, " +<a name="line.216"></a>
+<FONT color="green">217</FONT>          "mais l''\u00e9l\u00e9ment {0} vaut {1} alors que l''\u00e9l\u00e9ment {2} vaut {3}" },<a name="line.217"></a>
+<FONT color="green">218</FONT>    <a name="line.218"></a>
+<FONT color="green">219</FONT>        // org.apache.commons.math.util.ContinuedFraction<a name="line.219"></a>
+<FONT color="green">220</FONT>        { "Continued fraction convergents diverged to +/- infinity for value {0}",<a name="line.220"></a>
+<FONT color="green">221</FONT>          "Divergence de fraction continue \u00e0 l''infini pour la valeur {0}" },<a name="line.221"></a>
+<FONT color="green">222</FONT>        { "Continued fraction convergents failed to converge for value {0}",<a name="line.222"></a>
+<FONT color="green">223</FONT>          "\u00c9chec de convergence de fraction continue pour la valeur {0}" },<a name="line.223"></a>
+<FONT color="green">224</FONT>        { "Continued fraction diverged to NaN for value {0}",<a name="line.224"></a>
+<FONT color="green">225</FONT>          "Divergence de fraction continue \u00e0 NaN pour la valeur {0}"},<a name="line.225"></a>
+<FONT color="green">226</FONT>    <a name="line.226"></a>
+<FONT color="green">227</FONT>        // org.apache.commons.math.util.DefaultTransformer<a name="line.227"></a>
+<FONT color="green">228</FONT>        { "Conversion Exception in Transformation, Object is null",<a name="line.228"></a>
+<FONT color="green">229</FONT>          "Exception de conversion dans une transformation, l''objet est nul" },<a name="line.229"></a>
+<FONT color="green">230</FONT>        { "Conversion Exception in Transformation: {0}",<a name="line.230"></a>
+<FONT color="green">231</FONT>          "Exception de conversion dans une transformation : {0}" },<a name="line.231"></a>
+<FONT color="green">232</FONT>    <a name="line.232"></a>
+<FONT color="green">233</FONT>        // org.apache.commons.math.optimization.MultiStartOptimizer<a name="line.233"></a>
+<FONT color="green">234</FONT>        { "no optimum computed yet",<a name="line.234"></a>
+<FONT color="green">235</FONT>          "aucun optimum n''a encore \u00e9t\u00e9 calcul\u00e9" },<a name="line.235"></a>
+<FONT color="green">236</FONT>    <a name="line.236"></a>
+<FONT color="green">237</FONT>        // org.apache.commons.math.optimization.direct.DirectSearchOptimizer<a name="line.237"></a>
+<FONT color="green">238</FONT>        { "simplex must contain at least one point",<a name="line.238"></a>
+<FONT color="green">239</FONT>          "le simplex doit contenir au moins un point" },<a name="line.239"></a>
+<FONT color="green">240</FONT>        { "equal vertices {0} and {1} in simplex configuration",<a name="line.240"></a>
+<FONT color="green">241</FONT>          "sommets {0} et {1} \u00e9gaux dans la configuration du simplex" },<a name="line.241"></a>
+<FONT color="green">242</FONT>    <a name="line.242"></a>
+<FONT color="green">243</FONT>        // org.apache.commons.math.estimation.AbstractEstimation<a name="line.243"></a>
+<FONT color="green">244</FONT>        { "maximal number of evaluations exceeded ({0})",<a name="line.244"></a>
+<FONT color="green">245</FONT>          "nombre maximal d''\u00e9valuations d\u00e9pass\u00e9 ({0})" },<a name="line.245"></a>
+<FONT color="green">246</FONT>    <a name="line.246"></a>
+<FONT color="green">247</FONT>        // org.apache.commons.math.optimization.general.AbstractLeastSquaresOptimizer<a name="line.247"></a>
+<FONT color="green">248</FONT>        { "unable to compute covariances: singular problem",<a name="line.248"></a>
+<FONT color="green">249</FONT>          "impossible de calculer les covariances : probl\u00e8me singulier"},<a name="line.249"></a>
+<FONT color="green">250</FONT>        { "no degrees of freedom ({0} measurements, {1} parameters)",<a name="line.250"></a>
+<FONT color="green">251</FONT>          "aucun degr\u00e9 de libert\u00e9 ({0} mesures, {1} param\u00e8tres)" },<a name="line.251"></a>
+<FONT color="green">252</FONT>    <a name="line.252"></a>
+<FONT color="green">253</FONT>        // org.apache.commons.math.optimization.general.GaussNewtonOptimizer<a name="line.253"></a>
+<FONT color="green">254</FONT>        { "unable to solve: singular problem",<a name="line.254"></a>
+<FONT color="green">255</FONT>          "r\u00e9solution impossible : probl\u00e8me singulier" },<a name="line.255"></a>
+<FONT color="green">256</FONT>    <a name="line.256"></a>
+<FONT color="green">257</FONT>        // org.apache.commons.math.optimization.general.LevenbergMarquardtEstimator<a name="line.257"></a>
+<FONT color="green">258</FONT>        { "cost relative tolerance is too small ({0}), no further reduction in the sum of squares is possible",<a name="line.258"></a>
+<FONT color="green">259</FONT>          "trop petite tol\u00e9rance relative sur le co\u00fbt ({0}), aucune r\u00e9duction de la somme des carr\u00e9s n''est possible" },<a name="line.259"></a>
+<FONT color="green">260</FONT>        { "parameters relative tolerance is too small ({0}), no further improvement in the approximate solution is possible",<a name="line.260"></a>
+<FONT color="green">261</FONT>          "trop petite tol\u00e9rance relative sur les param\u00e8tres ({0}), aucune am\u00e9lioration de la solution approximative n''est possible" },<a name="line.261"></a>
+<FONT color="green">262</FONT>        { "orthogonality tolerance is too small ({0}), solution is orthogonal to the jacobian",<a name="line.262"></a>
+<FONT color="green">263</FONT>          "trop petite tol\u00e9rance sur l''orthogonalit\u00e9 ({0}), la solution est orthogonale \u00e0 la jacobienne" },<a name="line.263"></a>
+<FONT color="green">264</FONT>        { "unable to perform Q.R decomposition on the {0}x{1} jacobian matrix",<a name="line.264"></a>
+<FONT color="green">265</FONT>          "impossible de calculer la factorisation Q.R de la matrice jacobienne {0}x{1}" },<a name="line.265"></a>
+<FONT color="green">266</FONT>    <a name="line.266"></a>
+<FONT color="green">267</FONT>        // org.apache.commons.math.optimization.general.NonLinearConjugateGradientOptimizer<a name="line.267"></a>
+<FONT color="green">268</FONT>        { "unable to bracket optimum in line search",<a name="line.268"></a>
+<FONT color="green">269</FONT>          "impossible d''encadrer l''optimum lors de la recherche lin\u00e9aire" },<a name="line.269"></a>
+<FONT color="green">270</FONT>    <a name="line.270"></a>
+<FONT color="green">271</FONT>        // org.apache.commons.math.optimization.fitting.HarmonicCoefficientsGuesser<a name="line.271"></a>
+<FONT color="green">272</FONT>        { "unable to first guess the harmonic coefficients",<a name="line.272"></a>
+<FONT color="green">273</FONT>          "impossible de faire une premi\u00e8re estimation des coefficients harmoniques" },<a name="line.273"></a>
+<FONT color="green">274</FONT>    <a name="line.274"></a>
+<FONT color="green">275</FONT>        // org.apache.commons.math.optimization.fitting.HarmonicCoefficientsGuesser<a name="line.275"></a>
+<FONT color="green">276</FONT>        { "sample contains {0} observed points, at least {1} are required",<a name="line.276"></a>
+<FONT color="green">277</FONT>          "l''\u00e9chantillon ne contient que {0} points alors qu''au moins {1} sont n\u00e9cessaires" },<a name="line.277"></a>
+<FONT color="green">278</FONT>    <a name="line.278"></a>
+<FONT color="green">279</FONT>        // org.apache.commons.math.optimization.linear.NoFeasibleSolutionException<a name="line.279"></a>
+<FONT color="green">280</FONT>        { "no feasible solution",<a name="line.280"></a>
+<FONT color="green">281</FONT>          "aucune solution r\u00e9alisable" },<a name="line.281"></a>
+<FONT color="green">282</FONT>    <a name="line.282"></a>
+<FONT color="green">283</FONT>        // org.apache.commons.math.optimization.linear.UnboundedSolutionException<a name="line.283"></a>
+<FONT color="green">284</FONT>        { "unbounded solution",<a name="line.284"></a>
+<FONT color="green">285</FONT>          "solution non born\u00e9e" },<a name="line.285"></a>
+<FONT color="green">286</FONT>    <a name="line.286"></a>
+<FONT color="green">287</FONT>        // org.apache.commons.math.geometry.CardanEulerSingularityException<a name="line.287"></a>
+<FONT color="green">288</FONT>        { "Cardan angles singularity",<a name="line.288"></a>
+<FONT color="green">289</FONT>          "singularit\u00e9 d''angles de Cardan" },<a name="line.289"></a>
+<FONT color="green">290</FONT>        { "Euler angles singularity",<a name="line.290"></a>
+<FONT color="green">291</FONT>          "singularit\u00e9 d''angles d''Euler" },<a name="line.291"></a>
+<FONT color="green">292</FONT>    <a name="line.292"></a>
+<FONT color="green">293</FONT>        // org.apache.commons.math.geometry.Rotation<a name="line.293"></a>
+<FONT color="green">294</FONT>        { "a {0}x{1} matrix cannot be a rotation matrix",<a name="line.294"></a>
+<FONT color="green">295</FONT>          "une matrice {0}x{1} ne peut pas \u00eatre une matrice de rotation" },<a name="line.295"></a>
+<FONT color="green">296</FONT>        { "the closest orthogonal matrix has a negative determinant {0}",<a name="line.296"></a>
+<FONT color="green">297</FONT>          "la matrice orthogonale la plus proche a un d\u00e9terminant n\u00e9gatif {0}" },<a name="line.297"></a>
+<FONT color="green">298</FONT>        { "unable to orthogonalize matrix in {0} iterations",<a name="line.298"></a>
+<FONT color="green">299</FONT>          "impossible de rendre la matrice orthogonale en {0} it\u00e9rations" },<a name="line.299"></a>
+<FONT color="green">300</FONT>    <a name="line.300"></a>
+<FONT color="green">301</FONT>        // org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator<a name="line.301"></a>
+<FONT color="green">302</FONT>        { "minimal step size ({0,number,0.00E00}) reached, integration needs {1,number,0.00E00}",<a name="line.302"></a>
+<FONT color="green">303</FONT>          "pas minimal ({0,number,0.00E00}) atteint, l''int\u00e9gration n\u00e9cessite {1,number,0.00E00}" },<a name="line.303"></a>
+<FONT color="green">304</FONT>        { "dimensions mismatch: state vector has dimension {0}, absolute tolerance vector has dimension {1}",<a name="line.304"></a>
+<FONT color="green">305</FONT>          "incompatibilit\u00e9 de dimensions entre le vecteur d''\u00e9tat ({0}), et le vecteur de tol\u00e9rance absolue ({1})" },<a name="line.305"></a>
+<FONT color="green">306</FONT>        { "dimensions mismatch: state vector has dimension {0}, relative tolerance vector has dimension {1}",<a name="line.306"></a>
+<FONT color="green">307</FONT>          "incompatibilit\u00e9 de dimensions entre le vecteur d''\u00e9tat ({0}), et le vecteur de tol\u00e9rance relative ({1})" },<a name="line.307"></a>
+<FONT color="green">308</FONT>    <a name="line.308"></a>
+<FONT color="green">309</FONT>        // org.apache.commons.math.ode.nonstiff.AdaptiveStepsizeIntegrator,<a name="line.309"></a>
+<FONT color="green">310</FONT>        // org.apache.commons.math.ode.nonstiff.RungeKuttaIntegrator<a name="line.310"></a>
+<FONT color="green">311</FONT>        { "dimensions mismatch: ODE problem has dimension {0}, initial state vector has dimension {1}",<a name="line.311"></a>
+<FONT color="green">312</FONT>          "incompatibilit\u00e9 de dimensions entre le probl\u00e8me ODE ({0}), et le vecteur d''\u00e9tat initial ({1})" },<a name="line.312"></a>
+<FONT color="green">313</FONT>        { "dimensions mismatch: ODE problem has dimension {0}, final state vector has dimension {1}",<a name="line.313"></a>
+<FONT color="green">314</FONT>          "incompatibilit\u00e9 de dimensions entre le probl\u00e8me ODE ({0}), et le vecteur d''\u00e9tat final ({1})" },<a name="line.314"></a>
+<FONT color="green">315</FONT>        { "too small integration interval: length = {0}",<a name="line.315"></a>
+<FONT color="green">316</FONT>          "intervalle d''int\u00e9gration trop petit : {0}" },<a name="line.316"></a>
+<FONT color="green">317</FONT>    <a name="line.317"></a>
+<FONT color="green">318</FONT>        // org.apache.commons.math.ode.MultistepIntegrator<a name="line.318"></a>
+<FONT color="green">319</FONT>        { "{0} method needs at least one previous point",<a name="line.319"></a>
+<FONT color="green">320</FONT>          "la m\u00e9thode {0} n\u00e9cessite au moins un point pr\u00e9c\u00e9dent" },<a name="line.320"></a>
+<FONT color="green">321</FONT>    <a name="line.321"></a>
+<FONT color="green">322</FONT>        // org.apache.commons.math.ode.ContinuousOutputModel<a name="line.322"></a>
+<FONT color="green">323</FONT>        // org.apache.commons.math.optimization.direct.DirectSearchOptimizer<a name="line.323"></a>
+<FONT color="green">324</FONT>        { "unexpected exception caught",<a name="line.324"></a>
+<FONT color="green">325</FONT>          "exception inattendue lev\u00e9e" },<a name="line.325"></a>
+<FONT color="green">326</FONT>        { "propagation direction mismatch",<a name="line.326"></a>
+<FONT color="green">327</FONT>          "directions de propagation incoh\u00e9rentes" },<a name="line.327"></a>
+<FONT color="green">328</FONT>        { "{0} wide hole between models time ranges",<a name="line.328"></a>
+<FONT color="green">329</FONT>          "trou de longueur {0} entre les domaines temporels des mod\u00e8les" },<a name="line.329"></a>
+<FONT color="green">330</FONT>    <a name="line.330"></a>
+<FONT color="green">331</FONT>        // org.apache.commons.math.optimization.direct.DirectSearchOptimizer<a name="line.331"></a>
+<FONT color="green">332</FONT>        { "none of the {0} start points lead to convergence",<a name="line.332"></a>
+<FONT color="green">333</FONT>          "aucun des {0} points de d\u00e9part n''aboutit \u00e0 une convergence"  },<a name="line.333"></a>
+<FONT color="green">334</FONT>    <a name="line.334"></a>
+<FONT color="green">335</FONT>        // org.apache.commons.math.random.ValueServer<a name="line.335"></a>
+<FONT color="green">336</FONT>        { "unknown mode {0}, known modes: {1} ({2}), {3} ({4}), {5} ({6}), {7} ({8}), {9} ({10}) and {11} ({12})",<a name="line.336"></a>
+<FONT color="green">337</FONT>          "mode {0} inconnu, modes connus : {1} ({2}), {3} ({4}), {5} ({6}), {7} ({8}), {9} ({10}) et {11} ({12})" },<a name="line.337"></a>
+<FONT color="green">338</FONT>        { "digest not initialized",<a name="line.338"></a>
+<FONT color="green">339</FONT>          "mod\u00e8le empirique non initialis\u00e9" },<a name="line.339"></a>
+<FONT color="green">340</FONT>    <a name="line.340"></a>
+<FONT color="green">341</FONT>        // org.apache.commons.math.random.EmpiricalDistributionImpl<a name="line.341"></a>
+<FONT color="green">342</FONT>        { "distribution not loaded",<a name="line.342"></a>
+<FONT color="green">343</FONT>          "aucune distribution n''a \u00e9t\u00e9 charg\u00e9e" },<a name="line.343"></a>
+<FONT color="green">344</FONT>        { "no bin selected",<a name="line.344"></a>
+<FONT color="green">345</FONT>          "aucun compartiment s\u00e9lectionn\u00e9" },<a name="line.345"></a>
+<FONT color="green">346</FONT>        { "input data comes from unsupported datasource: {0}, supported sources: {1}, {2}",<a name="line.346"></a>
+<FONT color="green">347</FONT>          "les donn\u00e9es d''entr\u00e9e proviennent " +<a name="line.347"></a>
+<FONT color="green">348</FONT>          "d''une source non support\u00e9e : {0}, sources support\u00e9es : {1}, {2}" },<a name="line.348"></a>
+<FONT color="green">349</FONT>    <a name="line.349"></a>
+<FONT color="green">350</FONT>        // org.apache.commons.math.random.EmpiricalDistributionImpl<a name="line.350"></a>
+<FONT color="green">351</FONT>        // org.apache.commons.math.random.ValueServer<a name="line.351"></a>
+<FONT color="green">352</FONT>        { "URL {0} contains no data",<a name="line.352"></a>
+<FONT color="green">353</FONT>          "l''adresse {0} ne contient aucune donn\u00e9e" },<a name="line.353"></a>
+<FONT color="green">354</FONT>    <a name="line.354"></a>
+<FONT color="green">355</FONT>        // org.apache.commons.math.random.AbstractRandomGenerator<a name="line.355"></a>
+<FONT color="green">356</FONT>        // org.apache.commons.math.random.BitsStreamGenerator<a name="line.356"></a>
+<FONT color="green">357</FONT>        { "upper bound must be positive ({0})",<a name="line.357"></a>
+<FONT color="green">358</FONT>          "la borne sup\u00e9rieure doit \u00eatre positive ({0})" },<a name="line.358"></a>
+<FONT color="green">359</FONT>    <a name="line.359"></a>
+<FONT color="green">360</FONT>        // org.apache.commons.math.random.RandomDataImpl<a name="line.360"></a>
+<FONT color="green">361</FONT>        { "length must be positive ({0})",<a name="line.361"></a>
+<FONT color="green">362</FONT>          "la longueur doit \u00eatre positive ({0})" },<a name="line.362"></a>
+<FONT color="green">363</FONT>        { "upper bound ({0}) must be greater than lower bound ({1})",<a name="line.363"></a>
+<FONT color="green">364</FONT>          "la borne sup\u00e9rieure ({0}) doit \u00eatre sup\u00e9rieure" +<a name="line.364"></a>
+<FONT color="green">365</FONT>          " \u00e0 la borne inf\u00e9rieure ({1})" },<a name="line.365"></a>
+<FONT color="green">366</FONT>        { "permutation k ({0}) exceeds n ({1})",<a name="line.366"></a>
+<FONT color="green">367</FONT>          "la permutation k ({0}) d\u00e9passe n ({1})" },<a name="line.367"></a>
+<FONT color="green">368</FONT>        { "permutation k ({0}) must be positive",<a name="line.368"></a>
+<FONT color="green">369</FONT>          "la permutation k ({0}) doit \u00eatre positive" },<a name="line.369"></a>
+<FONT color="green">370</FONT>        { "sample size ({0}) exceeds collection size ({1})",<a name="line.370"></a>
+<FONT color="green">371</FONT>          "la taille de l''\u00e9chantillon ({0}) d\u00e9passe la taille de la collection ({1})" },<a name="line.371"></a>
+<FONT color="green">372</FONT>    <a name="line.372"></a>
+<FONT color="green">373</FONT>        // org.apache.commons.math.linear.decomposition.EigenDecompositionImpl<a name="line.373"></a>
+<FONT color="green">374</FONT>        { "cannot solve degree {0} equation",<a name="line.374"></a>
+<FONT color="green">375</FONT>          "impossible de r\u00e9soudre une \u00e9quation de degr\u00e9 {0}" },<a name="line.375"></a>
+<FONT color="green">376</FONT>        { "eigen decomposition of assymetric matrices not supported yet",<a name="line.376"></a>
+<FONT color="green">377</FONT>          "la d\u00e9composition en valeurs/vecteurs propres de matrices " +<a name="line.377"></a>
+<FONT color="green">378</FONT>          "non sym\u00e9triques n''est pas encore disponible" },<a name="line.378"></a>
+<FONT color="green">379</FONT>    <a name="line.379"></a>
+<FONT color="green">380</FONT>        // org.apache.commons.math.linear.decomposition.NonSquareMatrixException<a name="line.380"></a>
+<FONT color="green">381</FONT>        // org.apache.commons.math.stat.regression.AbstractMultipleLinearRegression<a name="line.381"></a>
+<FONT color="green">382</FONT>        { "a {0}x{1} matrix was provided instead of a square matrix",<a name="line.382"></a>
+<FONT color="green">383</FONT>          "une matrice {0}x{1} a \u00e9t\u00e9 fournie \u00e0 la place d''une matrice carr\u00e9e" },<a name="line.383"></a>
+<FONT color="green">384</FONT>    <a name="line.384"></a>
+<FONT color="green">385</FONT>        // org.apache.commons.math.linear.decomposition.SingularMatrixException<a name="line.385"></a>
+<FONT color="green">386</FONT>        { "matrix is singular",<a name="line.386"></a>
+<FONT color="green">387</FONT>          "matrice singuli\u00e8re" },<a name="line.387"></a>
+<FONT color="green">388</FONT>    <a name="line.388"></a>
+<FONT color="green">389</FONT>        // org.apache.commons.math.linear.decomposition.SingularValueDecompositionImpl<a name="line.389"></a>
+<FONT color="green">390</FONT>        { "cutoff singular value is {0}, should be at most {1}",<a name="line.390"></a>
+<FONT color="green">391</FONT>          "la valeur singuli\u00e8re de coupure vaut {0}, elle ne devrait pas d\u00e9passer {1}" },<a name="line.391"></a>
+<FONT color="green">392</FONT>    <a name="line.392"></a>
+<FONT color="green">393</FONT>        // org.apache.commons.math.linear.decomposition.CholeskyDecompositionImpl<a name="line.393"></a>
+<FONT color="green">394</FONT>        // org.apache.commons.math.linear.decomposition.EigenDecompositionImpl<a name="line.394"></a>
+<FONT color="green">395</FONT>        // org.apache.commons.math.linear.decomposition.LUDecompositionImpl<a name="line.395"></a>
+<FONT color="green">396</FONT>        // org.apache.commons.math.linear.decomposition.QRDecompositionImpl<a name="line.396"></a>
+<FONT color="green">397</FONT>        // org.apache.commons.math.linear.decomposition.SingularValueDecompositionImpl<a name="line.397"></a>
+<FONT color="green">398</FONT>        { "dimensions mismatch: got {0}x{1} but expected {2}x{3}",<a name="line.398"></a>
+<FONT color="green">399</FONT>          "dimensions incoh\u00e9rentes : {0}x{1} \u00e0 la place de {2}x{3}" },<a name="line.399"></a>
+<FONT color="green">400</FONT>    <a name="line.400"></a>
+<FONT color="green">401</FONT>        // org.apache.commons.math.linear.decomposition.CholeskyDecompositionImpl<a name="line.401"></a>
+<FONT color="green">402</FONT>        // org.apache.commons.math.linear.decomposition.EigenDecompositionImpl<a name="line.402"></a>
+<FONT color="green">403</FONT>        // org.apache.commons.math.linear.decomposition.LUDecompositionImpl<a name="line.403"></a>
+<FONT color="green">404</FONT>        // org.apache.commons.math.linear.decomposition.QRDecompositionImpl<a name="line.404"></a>
+<FONT color="green">405</FONT>        // org.apache.commons.math.linear.decomposition.SingularValueDecompositionImpl<a name="line.405"></a>
+<FONT color="green">406</FONT>        // org.apache.commons.math.linear.ArrayRealVector<a name="line.406"></a>
+<FONT color="green">407</FONT>        // org.apache.commons.math.linear.SparseRealVector<a name="line.407"></a>
+<FONT color="green">408</FONT>        { "vector length mismatch: got {0} but expected {1}",<a name="line.408"></a>
+<FONT color="green">409</FONT>          "taille de vecteur invalide : {0} au lieu de {1} attendue" },<a name="line.409"></a>
+<FONT color="green">410</FONT>    <a name="line.410"></a>
+<FONT color="green">411</FONT>        // org.apache.commons.math.linear.ArrayRealVector<a name="line.411"></a>
+<FONT color="green">412</FONT>        // org.apache.commons.math.linear.ArrayFieldVector<a name="line.412"></a>
+<FONT color="green">413</FONT>        // org.apache.commons.math.linear.SparseRealVector<a name="line.413"></a>
+<FONT color="green">414</FONT>        { "index {0} out of allowed range [{1}, {2}]",<a name="line.414"></a>
+<FONT color="green">415</FONT>          "index {0} hors de la plage autoris\u00e9e [{1}, {2}]" },<a name="line.415"></a>
+<FONT color="green">416</FONT>        { "vector must have at least one element",<a name="line.416"></a>
+<FONT color="green">417</FONT>          "un vecteur doit comporter au moins un \u00e9l\u00e9ment" },<a name="line.417"></a>
+<FONT color="green">418</FONT>        { "position {0} and size {1} don't fit to the size of the input array {2}",<a name="line.418"></a>
+<FONT color="green">419</FONT>          "la position {0} et la taille {1} sont incompatibles avec la taille du tableau d''entr\u00e9e {2}"},<a name="line.419"></a>
+<FONT color="green">420</FONT>    <a name="line.420"></a>
+<FONT color="green">421</FONT>        // org.apache.commons.math.linear.AbstractRealMatrix<a name="line.421"></a>
+<FONT color="green">422</FONT>        // org.apache.commons.math.linear.AbstractFieldMatrix<a name="line.422"></a>
+<FONT color="green">423</FONT>        { "invalid row dimension: {0} (must be positive)",<a name="line.423"></a>
+<FONT color="green">424</FONT>          "nombre de lignes invalide : {0} (doit \u00eatre positif)" },<a name="line.424"></a>
+<FONT color="green">425</FONT>        { "invalid column dimension: {0} (must be positive)",<a name="line.425"></a>
+<FONT color="green">426</FONT>          "nombre de colonnes invalide : {0} (doit \u00eatre positif)" },<a name="line.426"></a>
+<FONT color="green">427</FONT>        { "matrix must have at least one row",<a name="line.427"></a>
+<FONT color="green">428</FONT>          "une matrice doit comporter au moins une ligne" },<a name="line.428"></a>
+<FONT color="green">429</FONT>        { "matrix must have at least one column",<a name="line.429"></a>
+<FONT color="green">430</FONT>          "une matrice doit comporter au moins une colonne" },<a name="line.430"></a>
+<FONT color="green">431</FONT>    <a name="line.431"></a>
+<FONT color="green">432</FONT>        // org.apache.commons.math.linear.AbstractRealMatrix<a name="line.432"></a>
+<FONT color="green">433</FONT>        // org.apache.commons.math.linear.AbstractFieldMatrix<a name="line.433"></a>
+<FONT color="green">434</FONT>        // org.apache.commons.math.stat.inference.ChiSquareTestImpl<a name="line.434"></a>
+<FONT color="green">435</FONT>        { "some rows have length {0} while others have length {1}",<a name="line.435"></a>
+<FONT color="green">436</FONT>          "certaines lignes ont une longueur de {0} alors que d''autres ont une longueur de {1}" },<a name="line.436"></a>
+<FONT color="green">437</FONT>    <a name="line.437"></a>
+<FONT color="green">438</FONT>        // org.apache.commons.math.linear.MatrixUtils<a name="line.438"></a>
+<FONT color="green">439</FONT>        { "row index {0} out of allowed range [{1}, {2}]",<a name="line.439"></a>
+<FONT color="green">440</FONT>          "index de ligne {0} hors de la plage autoris\u00e9e [{1}, {2}]" },<a name="line.440"></a>
+<FONT color="green">441</FONT>        { "column index {0} out of allowed range [{1}, {2}]",<a name="line.441"></a>
+<FONT color="green">442</FONT>          "index de colonne {0} hors de la plage autoris\u00e9e [{1}, {2}]" },<a name="line.442"></a>
+<FONT color="green">443</FONT>        { "initial row {0} after final row {1}",<a name="line.443"></a>
+<FONT color="green">444</FONT>          "ligne initiale {0} apr\u00e8s la ligne finale {1}" },<a name="line.444"></a>
+<FONT color="green">445</FONT>        { "initial column {0} after final column {1}",<a name="line.445"></a>
+<FONT color="green">446</FONT>          "colonne initiale {0} apr\u00e8s la colonne finale {1}" },<a name="line.446"></a>
+<FONT color="green">447</FONT>        { "empty selected row index array",<a name="line.447"></a>
+<FONT color="green">448</FONT>          "tableau des indices de lignes s\u00e9lectionn\u00e9es vide" },<a name="line.448"></a>
+<FONT color="green">449</FONT>        { "empty selected column index array",<a name="line.449"></a>
+<FONT color="green">450</FONT>          "tableau des indices de colonnes s\u00e9lectionn\u00e9es vide" },<a name="line.450"></a>
+<FONT color="green">451</FONT>        { "{0}x{1} and {2}x{3} matrices are not addition compatible",<a name="line.451"></a>
+<FONT color="green">452</FONT>          "les dimensions {0}x{1} et {2}x{3} sont incompatibles pour l'addition matricielle" },<a name="line.452"></a>
+<FONT color="green">453</FONT>        { "{0}x{1} and {2}x{3} matrices are not subtraction compatible",<a name="line.453"></a>
+<FONT color="green">454</FONT>          "les dimensions {0}x{1} et {2}x{3} sont incompatibles pour la soustraction matricielle" },<a name="line.454"></a>
+<FONT color="green">455</FONT>        { "{0}x{1} and {2}x{3} matrices are not multiplication compatible",<a name="line.455"></a>
+<FONT color="green">456</FONT>          "les dimensions {0}x{1} et {2}x{3} sont incompatibles pour la multiplication matricielle" },<a name="line.456"></a>
+<FONT color="green">457</FONT>    <a name="line.457"></a>
+<FONT color="green">458</FONT>        // org.apache.commons.math.linear.BlockRealMatrix<a name="line.458"></a>
+<FONT color="green">459</FONT>        { "wrong array shape (block length = {0}, expected {1})",<a name="line.459"></a>
+<FONT color="green">460</FONT>          "forme de tableau erron\u00e9e (bloc de longueur {0} au lieu des {1} attendus)" },<a name="line.460"></a>
+<FONT color="green">461</FONT>    <a name="line.461"></a>
+<FONT color="green">462</FONT>        // org.apache.commons.math.complex.Complex<a name="line.462"></a>
+<FONT color="green">463</FONT>        { "cannot compute nth root for null or negative n: {0}",<a name="line.463"></a>
+<FONT color="green">464</FONT>         "impossible de calculer la racine ni\u00e8me pour n n\u00e9gatif ou nul : {0}" },<a name="line.464"></a>
+<FONT color="green">465</FONT>    <a name="line.465"></a>
+<FONT color="green">466</FONT>       // org.apache.commons.math.complex.ComplexFormat<a name="line.466"></a>
+<FONT color="green">467</FONT>       { "unparseable complex number: \"{0}\"",<a name="line.467"></a>
+<FONT color="green">468</FONT>         "\u00e9chec d''analyse du nombre complexe \"{0}\"" },<a name="line.468"></a>
+<FONT color="green">469</FONT>       { "cannot format a {0} instance as a complex number",<a name="line.469"></a>
+<FONT color="green">470</FONT>         "impossible de formater une instance de {0} comme un nombre complexe" },<a name="line.470"></a>
+<FONT color="green">471</FONT>       { "empty string for imaginary character",<a name="line.471"></a>
+<FONT color="green">472</FONT>         "cha\u00eene vide pour le caract\u00e8 imaginaire" },<a name="line.472"></a>
+<FONT color="green">473</FONT>       { "null imaginary format",<a name="line.473"></a>
+<FONT color="green">474</FONT>         "format imaginaire nul" },<a name="line.474"></a>
+<FONT color="green">475</FONT>       { "null real format",<a name="line.475"></a>
+<FONT color="green">476</FONT>         "format r\u00e9el nul" },<a name="line.476"></a>
+<FONT color="green">477</FONT>    <a name="line.477"></a>
+<FONT color="green">478</FONT>       // org.apache.commons.math.complex.ComplexUtils<a name="line.478"></a>
+<FONT color="green">479</FONT>       { "negative complex module {0}",<a name="line.479"></a>
+<FONT color="green">480</FONT>         "module n\u00e9gatif ({0}) pour un nombre complexe" },<a name="line.480"></a>
+<FONT color="green">481</FONT>    <a name="line.481"></a>
+<FONT color="green">482</FONT>       // org.apache.commons.math.geometry.Vector3DFormat<a name="line.482"></a>
+<FONT color="green">483</FONT>       { "unparseable 3D vector: \"{0}\"",<a name="line.483"></a>
+<FONT color="green">484</FONT>         "\u00e9chec d''analyse du vecteur de dimension 3 \"{0}\"" },<a name="line.484"></a>
+<FONT color="green">485</FONT>       { "cannot format a {0} instance as a 3D vector",<a name="line.485"></a>
+<FONT color="green">486</FONT>         "impossible de formater une instance de {0} comme un vecteur de dimension 3" },<a name="line.486"></a>
+<FONT color="green">487</FONT>    <a name="line.487"></a>
+<FONT color="green">488</FONT>       // org.apache.commons.math.linear.RealVectorFormat<a name="line.488"></a>
+<FONT color="green">489</FONT>       { "unparseable real vector: \"{0}\"",<a name="line.489"></a>
+<FONT color="green">490</FONT>         "\u00e9chec d''analyse du vecteur r\u00e9el \"{0}\"" },<a name="line.490"></a>
+<FONT color="green">491</FONT>       { "cannot format a {0} instance as a real vector",<a name="line.491"></a>
+<FONT color="green">492</FONT>         "impossible de formater une instance de {0} comme un vecteur r\u00e9el" },<a name="line.492"></a>
+<FONT color="green">493</FONT>    <a name="line.493"></a>
+<FONT color="green">494</FONT>       // org.apache.commons.math.util.ResizableDoubleArray<a name="line.494"></a>
+<FONT color="green">495</FONT>       { "the index specified: {0} is larger than the current maximal index {1}",<a name="line.495"></a>
+<FONT color="green">496</FONT>         "l''index sp\u00e9cifi\u00e9 ({0}) d\u00e9passe l''index maximal courant ({1})" },<a name="line.496"></a>
+<FONT color="green">497</FONT>       { "elements cannot be retrieved from a negative array index {0}",<a name="line.497"></a>
+<FONT color="green">498</FONT>         "impossible d''extraire un \u00e9l\u00e9ment \u00e0 un index n\u00e9gatif ({0})" },<a name="line.498"></a>
+<FONT color="green">499</FONT>       { "cannot set an element at a negative index {0}",<a name="line.499"></a>
+<FONT color="green">500</FONT>         "impossible de mettre un \u00e9l\u00e9ment \u00e0 un index n\u00e9gatif ({0})" },<a name="line.500"></a>
+<FONT color="green">501</FONT>       { "cannot substitute an element from an empty array",<a name="line.501"></a>
+<FONT color="green">502</FONT>         "impossible de substituer un \u00e9l\u00e9ment dans un tableau vide" },<a name="line.502"></a>
+<FONT color="green">503</FONT>       { "contraction criteria ({0}) smaller than the expansion factor ({1}).  This would " +<a name="line.503"></a>
+<FONT color="green">504</FONT>         "lead to a never ending loop of expansion and contraction as a newly expanded " +<a name="line.504"></a>
+<FONT color="green">505</FONT>         "internal storage array would immediately satisfy the criteria for contraction.",<a name="line.505"></a>
+<FONT color="green">506</FONT>         "crit\u00e8re de contraction ({0}) inf\u00e9rieur au facteur d''extension. Ceci " +<a name="line.506"></a>
+<FONT color="green">507</FONT>         "induit une boucle infinie d''extensions/contractions car tout tableau de stockage " +<a name="line.507"></a>
+<FONT color="green">508</FONT>         "fra\u00eechement \u00e9tendu respecte imm\u00e9diatement le crit\u00e8re de contraction."},<a name="line.508"></a>
+<FONT color="green">509</FONT>       { "contraction criteria smaller than one ({0}).  This would lead to a never ending " +<a name="line.509"></a>
+<FONT color="green">510</FONT>         "loop of expansion and contraction as an internal storage array length equal " +<a name="line.510"></a>
+<FONT color="green">511</FONT>         "to the number of elements would satisfy the contraction criteria.",<a name="line.511"></a>
+<FONT color="green">512</FONT>         "crit\u00e8re de contraction inf\u00e9rieur \u00e0 un ({0}). Ceci induit une boucle " +<a name="line.512"></a>
+<FONT color="green">513</FONT>         "infinie d''extensions/contractions car tout tableau de stockage de longueur \u00e9gale " +<a name="line.513"></a>
+<FONT color="green">514</FONT>         "au nombre d''\u00e9l\u00e9ments respecte le crit\u00e8re de contraction." },<a name="line.514"></a>
+<FONT color="green">515</FONT>       { "expansion factor smaller than one ({0})",<a name="line.515"></a>
+<FONT color="green">516</FONT>         "facteur d''extension inf\u00e9rieur \u00e0 un ({0})"},<a name="line.516"></a>
+<FONT color="green">517</FONT>       { "cannot discard {0} elements from a {1} elements array",<a name="line.517"></a>
+<FONT color="green">518</FONT>         "impossible d''enlever {0} \u00e9l\u00e9ments d''un tableau en contenant {1}"},<a name="line.518"></a>
+<FONT color="green">519</FONT>       { "cannot discard a negative number of elements ({0})",<a name="line.519"></a>
+<FONT color="green">520</FONT>         "impossible d''enlever un nombre d''\u00e9l\u00e9ments{0} n\u00e9gatif"},<a name="line.520"></a>
+<FONT color="green">521</FONT>       { "unsupported expansion mode {0}, supported modes are {1} ({2}) and {3} ({4})",<a name="line.521"></a>
+<FONT color="green">522</FONT>         "mode d''extension {0} no support\u00e9, les modes support\u00e9s sont {1} ({2}) et {3} ({4})" },<a name="line.522"></a>
+<FONT color="green">523</FONT>       { "initial capacity ({0}) is not positive",<a name="line.523"></a>
+<FONT color="green">524</FONT>         "la capacit\u00e9 initiale ({0}) n''est pas positive" },<a name="line.524"></a>
+<FONT color="green">525</FONT>       { "index ({0}) is not positive",<a name="line.525"></a>
+<FONT color="green">526</FONT>         "l''indice ({0}) n''est pas positif" },<a name="line.526"></a>
+<FONT color="green">527</FONT>    <a name="line.527"></a>
+<FONT color="green">528</FONT>       // org.apache.commons.math.analysis.polynomials.PolynomialFunction<a name="line.528"></a>
+<FONT color="green">529</FONT>       // org.apache.commons.math.analysis.polynomials.PolynomialFunctionNewtonForm<a name="line.529"></a>
+<FONT color="green">530</FONT>       { "empty polynomials coefficients array",<a name="line.530"></a>
+<FONT color="green">531</FONT>         "tableau de coefficients polyn\u00f4miaux vide" },<a name="line.531"></a>
+<FONT color="green">532</FONT>    <a name="line.532"></a>
+<FONT color="green">533</FONT>       // org.apache.commons.math.analysis.polynomials.PolynomialFunctionNewtonForm<a name="line.533"></a>
+<FONT color="green">534</FONT>       { "array sizes should have difference 1 ({0} != {1} + 1)",<a name="line.534"></a>
+<FONT color="green">535</FONT>         "les tableaux devraient avoir une diff\u00e9rence de taille de 1 ({0} != {1} + 1)" },<a name="line.535"></a>
+<FONT color="green">536</FONT>    <a name="line.536"></a>
+<FONT color="green">537</FONT>       // org.apache.commons.math.analysis.polynomials.PolynomialFunctionLagrangeForm<a name="line.537"></a>
+<FONT color="green">538</FONT>       { "identical abscissas x[{0}] == x[{1}] == {2} cause division by zero",<a name="line.538"></a>
+<FONT color="green">539</FONT>         "division par z\u00e9ro caus\u00e9e par les abscisses identiques x[{0}] == x[{1}] == {2}" },<a name="line.539"></a>
+<FONT color="green">540</FONT>    <a name="line.540"></a>
+<FONT color="green">541</FONT>       // org.apache.commons.math.analysis.polynomials.PolynomialSplineFunction<a name="line.541"></a>
+<FONT color="green">542</FONT>       { "spline partition must have at least {0} points, got {1}",<a name="line.542"></a>
+<FONT color="green">543</FONT>         "une partiction spline n\u00e9cessite au moins {0} points, seuls {1} ont \u00e9t\u00e9 fournis" },<a name="line.543"></a>
+<FONT color="green">544</FONT>       { "knot values must be strictly increasing",<a name="line.544"></a>
+<FONT color="green">545</FONT>         "les n\u0153uds d''interpolation doivent \u00eatre strictement croissants" },<a name="line.545"></a>
+<FONT color="green">546</FONT>       { "number of polynomial interpolants must match the number of segments ({0} != {1} - 1)",<a name="line.546"></a>
+<FONT color="green">547</FONT>         "le nombre d''interpolants polyn\u00f4miaux doit correspondre au nombre de segments ({0} != {1} - 1)" },<a name="line.547"></a>
+<FONT color="green">548</FONT>    <a name="line.548"></a>
+<FONT color="green">549</FONT>       // org.apache.commons.math.analysis.solvers.UnivariateRealSolverImpl<a name="line.549"></a>
+<FONT color="green">550</FONT>       { "function to solve cannot be null",<a name="line.550"></a>
+<FONT color="green">551</FONT>         "la fonction \u00e0 r\u00e9soudre ne peux pas \u00eatre nulle" },<a name="line.551"></a>
+<FONT color="green">552</FONT>       { "invalid interval, initial value parameters:  lower={0}, initial={1}, upper={2}",<a name="line.552"></a>
+<FONT color="green">553</FONT>         "param\u00e8tres de l''intervalle initial invalides : borne inf = {0}, valeur initiale = {1}, borne sup = {2}" },<a name="line.553"></a>
+<FONT color="green">554</FONT>    <a name="line.554"></a>
+<FONT color="green">555</FONT>       // org.apache.commons.math.analysis.solvers.UnivariateRealSolverImpl<a name="line.555"></a>
+<FONT color="green">556</FONT>       // org.apache.commons.math.analysis.solvers.BrentSolver<a name="line.556"></a>
+<FONT color="green">557</FONT>       { "function values at endpoints do not have different signs.  Endpoints: [{0}, {1}], Values: [{2}, {3}]",<a name="line.557"></a>
+<FONT color="green">558</FONT>         "les valeurs de la fonction aux bornes n''ont pas des signes diff\u00e9rents. Bornes : [{0}, {1}], valeurs : [{2}, {3}]" },<a name="line.558"></a>
+<FONT color="green">559</FONT>    <a name="line.559"></a>
+<FONT color="green">560</FONT>       // org.apache.commons.math.analysis.solvers.UnivariateRealSolverImpl<a name="line.560"></a>
+<FONT color="green">561</FONT>       // org.apache.commons.math.analysis.integration.UnivariateRealIntegratorImpl<a name="line.561"></a>
+<FONT color="green">562</FONT>       // org.apache.commons.math.transform.FastFourierTransformer<a name="line.562"></a>
+<FONT color="green">563</FONT>       { "endpoints do not specify an interval: [{0}, {1}]",<a name="line.563"></a>
+<FONT color="green">564</FONT>         "les extr\u00e9mit\u00e9s ne constituent pas un intervalle : [{0}, {1}]" },<a name="line.564"></a>
+<FONT color="green">565</FONT>    <a name="line.565"></a>
+<FONT color="green">566</FONT>       // org.apache.commons.math.analysis.solvers.LaguerreSolver<a name="line.566"></a>
+<FONT color="green">567</FONT>       { "function is not polynomial",<a name="line.567"></a>
+<FONT color="green">568</FONT>         "la fonction n''est pas p\u00f4lynomiale" },<a name="line.568"></a>
+<FONT color="green">569</FONT>    <a name="line.569"></a>
+<FONT color="green">570</FONT>       // org.apache.commons.math.analysis.solvers.NewtonSolver<a name="line.570"></a>
+<FONT color="green">571</FONT>       { "function is not differentiable",<a name="line.571"></a>
+<FONT color="green">572</FONT>         "la fonction n''est pas diff\u00e9rentiable" },<a name="line.572"></a>
+<FONT color="green">573</FONT>    <a name="line.573"></a>
+<FONT color="green">574</FONT>       // org.apache.commons.math.analysis.integration.UnivariateRealIntegratorImpl<a name="line.574"></a>
+<FONT color="green">575</FONT>       { "invalid iteration limits: min={0}, max={1}",<a name="line.575"></a>
+<FONT color="green">576</FONT>         "limites d''it\u00e9rations invalides : min = {0}, max = {1}" },<a name="line.576"></a>
+<FONT color="green">577</FONT>    <a name="line.577"></a>
+<FONT color="green">578</FONT>       // org.apache.commons.math.analysis.integration.LegendreGaussIntegrator<a name="line.578"></a>
+<FONT color="green">579</FONT>       { "{0} points Legendre-Gauss integrator not supported," +<a name="line.579"></a>
+<FONT color="green">580</FONT>         " number of points must be in the {1}-{2} range",<a name="line.580"></a>
+<FONT color="green">581</FONT>         "int\u00e9grateur de Legendre-Gauss non support\u00e9 en {0} points, " +<a name="line.581"></a>
+<FONT color="green">582</FONT>         "le nombre de points doit \u00eatre entre {1} et {2}" },<a name="line.582"></a>
+<FONT color="green">583</FONT>    <a name="line.583"></a>
+<FONT color="green">584</FONT>       // org.apache.commons.math.fraction.Fraction<a name="line.584"></a>
+<FONT color="green">585</FONT>       { "zero denominator in fraction {0}/{1}",<a name="line.585"></a>
+<FONT color="green">586</FONT>         "d\u00e9nominateur null dans le nombre rationnel {0}/{1}" },<a name="line.586"></a>
+<FONT color="green">587</FONT>       { "overflow in fraction {0}/{1}, cannot negate",<a name="line.587"></a>
+<FONT color="green">588</FONT>         "d\u00e9passement de capacit\u00e9 pour la fraction {0}/{1}, son signe ne peut \u00eatre chang\u00e9" },<a name="line.588"></a>
+<FONT color="green">589</FONT>       { "overflow, numerator too large after multiply: {0}",<a name="line.589"></a>
+<FONT color="green">590</FONT>         "d\u00e9passement de capacit\u00e9 pour le num\u00e9rateur apr\u00e8s multiplication : {0}" },<a name="line.590"></a>
+<FONT color="green">591</FONT>       { "the fraction to divide by must not be zero: {0}/{1}",<a name="line.591"></a>
+<FONT color="green">592</FONT>         "division par un nombre rationnel nul : {0}/{1}" },<a name="line.592"></a>
+<FONT color="green">593</FONT>       { "null fraction",<a name="line.593"></a>
+<FONT color="green">594</FONT>         "fraction nulle" },<a name="line.594"></a>
+<FONT color="green">595</FONT>    <a name="line.595"></a>
+<FONT color="green">596</FONT>       // org.apache.commons.math.geometry.Rotation<a name="line.596"></a>
+<FONT color="green">597</FONT>       { "zero norm for rotation axis",<a name="line.597"></a>
+<FONT color="green">598</FONT>         "norme nulle pour un axe de rotation" },<a name="line.598"></a>
+<FONT color="green">599</FONT>       { "zero norm for rotation defining vector",<a name="line.599"></a>
+<FONT color="green">600</FONT>         "norme nulle pour un axe de d\u00e9finition de rotation" },<a name="line.600"></a>
+<FONT color="green">601</FONT>    <a name="line.601"></a>
+<FONT color="green">602</FONT>       // org.apache.commons.math.geometry.Vector3D<a name="line.602"></a>
+<FONT color="green">603</FONT>       // org.apache.commons.math.linear.ArrayRealVector<a name="line.603"></a>
+<FONT color="green">604</FONT>       { "cannot normalize a zero norm vector",<a name="line.604"></a>
+<FONT color="green">605</FONT>         "impossible de normer un vecteur de norme nulle" },<a name="line.605"></a>
+<FONT color="green">606</FONT>       { "zero norm",<a name="line.606"></a>
+<FONT color="green">607</FONT>         "norme nulle" },<a name="line.607"></a>
+<FONT color="green">608</FONT>    <a name="line.608"></a>
+<FONT color="green">609</FONT>       // org.apache.commons.math.ConvergingAlgorithmImpl<a name="line.609"></a>
+<FONT color="green">610</FONT>       { "no result available",<a name="line.610"></a>
+<FONT color="green">611</FONT>         "aucun r\u00e9sultat n''est disponible" },<a name="line.611"></a>
+<FONT color="green">612</FONT>    <a name="line.612"></a>
+<FONT color="green">613</FONT>       // org.apache.commons.math.linear.BigMatrixImpl<a name="line.613"></a>
+<FONT color="green">614</FONT>       { "first {0} rows are not initialized yet",<a name="line.614"></a>
+<FONT color="green">615</FONT>         "les {0} premi\u00e8res lignes ne sont pas encore initialis\u00e9es" },<a name="line.615"></a>
+<FONT color="green">616</FONT>       { "first {0} columns are not initialized yet",<a name="line.616"></a>
+<FONT color="green">617</FONT>         "les {0} premi\u00e8res colonnes ne sont pas encore initialis\u00e9es" },<a name="line.617"></a>
+<FONT color="green">618</FONT>    <a name="line.618"></a>
+<FONT color="green">619</FONT>       // org.apache.commons.math.stat.Frequency<a name="line.619"></a>
+<FONT color="green">620</FONT>       { "class ({0}) does not implement Comparable",<a name="line.620"></a>
+<FONT color="green">621</FONT>         "la classe ({0}) n''implante pas l''interface Comparable" },<a name="line.621"></a>
+<FONT color="green">622</FONT>       { "instance of class {0} not comparable to existing values",<a name="line.622"></a>
+<FONT color="green">623</FONT>         "l''instance de la classe {0} n''est pas comparable aux valeurs existantes" },<a name="line.623"></a>
+<FONT color="green">624</FONT>    <a name="line.624"></a>
+<FONT color="green">625</FONT>       // org.apache.commons.math.stat.StatUtils<a name="line.625"></a>
+<FONT color="green">626</FONT>       { "input arrays must have the same positive length ({0} and {1})",<a name="line.626"></a>
+<FONT color="green">627</FONT>         "les tableaux d''entr\u00e9e doivent avoir la m\u00eame taille positive ({0} et {1})" },<a name="line.627"></a>
+<FONT color="green">628</FONT>       { "input arrays must have the same length and at least two elements ({0} and {1})",<a name="line.628"></a>
+<FONT color="green">629</FONT>         "les tableaux d''entr\u00e9e doivent avoir la m\u00eame taille" +<a name="line.629"></a>
+<FONT color="green">630</FONT>         " et au moins deux \u00e9l\u00e9ments ({0} et {1})" },<a name="line.630"></a>
+<FONT color="green">631</FONT>    <a name="line.631"></a>
+<FONT color="green">632</FONT>       // org.apache.commons.math.stat.correlation.Covariance<a name="line.632"></a>
+<FONT color="green">633</FONT>       { "arrays must have the same length and both must have at " +<a name="line.633"></a>
+<FONT color="green">634</FONT>         "least two elements. xArray has size {0}, yArray has {1} elements",<a name="line.634"></a>
+<FONT color="green">635</FONT>         "les tableaux doivent avoir la m\u00eame taille " +<a name="line.635"></a>
+<FONT color="green">636</FONT>         "et comporter au moins deux \u00e9l\u00e9ments. " +<a name="line.636"></a>
+<FONT color="green">637</FONT>         "xArray a une taille de {0}, yArray a {1} \u00e9l\u00e9ments"},<a name="line.637"></a>
+<FONT color="green">638</FONT>       { "insufficient data: only {0} rows and {1} columns.",<a name="line.638"></a>
+<FONT color="green">639</FONT>         "donn\u00e9es insuffisantes : seulement {0} lignes et {1} colonnes." },<a name="line.639"></a>
+<FONT color="green">640</FONT>    <a name="line.640"></a>
+<FONT color="green">641</FONT>       // org.apache.commons.math.stat.correlation.PearsonsCorrelation<a name="line.641"></a>
+<FONT color="green">642</FONT>       { "covariance matrix is null",<a name="line.642"></a>
+<FONT color="green">643</FONT>         "la matrice de covariance est nulle" },<a name="line.643"></a>
+<FONT color="green">644</FONT>       { "invalid array dimensions. xArray has size {0}; yArray has {1} elements",<a name="line.644"></a>
+<FONT color="green">645</FONT>         "dimensions de tableaux invalides. xArray a une taille de {0}, " +<a name="line.645"></a>
+<FONT color="green">646</FONT>         "yArray a {1} \u00e9l\u00e9ments" },<a name="line.646"></a>
+<FONT color="green">647</FONT>    <a name="line.647"></a>
+<FONT color="green">648</FONT>       // org.apache.commons.math.stat.descriptive.DescriptiveStatistics<a name="line.648"></a>
+<FONT color="green">649</FONT>       { "window size must be positive ({0})",<a name="line.649"></a>
+<FONT color="green">650</FONT>         "la taille de la fen\u00eatre doit \u00eatre positive ({0})" },<a name="line.650"></a>
+<FONT color="green">651</FONT>       { "percentile implementation {0} does not support {1}",<a name="line.651"></a>
+<FONT color="green">652</FONT>         "l''implantation de pourcentage {0} ne dispose pas de la m\u00e9thode {1}" },<a name="line.652"></a>
+<FONT color="green">653</FONT>       { "cannot access {0} method in percentile implementation {1}",<a name="line.653"></a>
+<FONT color="green">654</FONT>         "acc\u00e8s impossible \u00e0 la m\u00e9thode {0}" +<a name="line.654"></a>
+<FONT color="green">655</FONT>         " dans l''implantation de pourcentage {1}" },<a name="line.655"></a>
+<FONT color="green">656</FONT>       { "out of bounds quantile value: {0}, must be in (0, 100]",<a name="line.656"></a>
+<FONT color="green">657</FONT>         "valeur de quantile {0} hors bornes, doit \u00eatre dans l''intervalle ]0, 100]" },<a name="line.657"></a>
+<FONT color="green">658</FONT>    <a name="line.658"></a>
+<FONT color="green">659</FONT>       // org.apache.commons.math.stat.descriptive.moment.Variance<a name="line.659"></a>
+<FONT color="green">660</FONT>       // org.apache.commons.math.stat.descriptive.moment.SemiVariance<a name="line.660"></a>
+<FONT color="green">661</FONT>       // org.apache.commons.math.stat.descriptive.AbstractStorelessUnivariateStatistic<a name="line.661"></a>
+<FONT color="green">662</FONT>       // org.apache.commons.math.stat.descriptive.AbstractUnivariateStatistic<a name="line.662"></a>
+<FONT color="green">663</FONT>       { "input values array is null",<a name="line.663"></a>
+<FONT color="green">664</FONT>         "le tableau des valeurs d''entr\u00e9es est nul" },<a name="line.664"></a>
+<FONT color="green">665</FONT>    <a name="line.665"></a>
+<FONT color="green">666</FONT>       // org.apache.commons.math.stat.descriptive.AbstractUnivariateStatistic<a name="line.666"></a>
+<FONT color="green">667</FONT>       { "start position cannot be negative ({0})",<a name="line.667"></a>
+<FONT color="green">668</FONT>         "la position de d\u00e9part ne peut pas \u00eatre n\u00e9gative" },<a name="line.668"></a>
+<FONT color="green">669</FONT>       { "length cannot be negative ({0})",<a name="line.669"></a>
+<FONT color="green">670</FONT>         "la longueur ne peut pas \u00eatre n\u00e9gative" },<a name="line.670"></a>
+<FONT color="green">671</FONT>       { "subarray ends after array end",<a name="line.671"></a>
+<FONT color="green">672</FONT>         "le sous-tableau se termine apr\u00e8s la fin du tableau" },<a name="line.672"></a>
+<FONT color="green">673</FONT>    <a name="line.673"></a>
+<FONT color="green">674</FONT>       // org.apache.commons.math.stat.descriptive.moment.GeometricMean<a name="line.674"></a>
+<FONT color="green">675</FONT>       // org.apache.commons.math.stat.descriptive.MultivariateSummaryStatistics<a name="line.675"></a>
+<FONT color="green">676</FONT>       // org.apache.commons.math.stat.descriptive.SummaryStatistics<a name="line.676"></a>
+<FONT color="green">677</FONT>       { "{0} values have been added before statistic is configured",<a name="line.677"></a>
+<FONT color="green">678</FONT>         "{0} valeurs ont \u00e9t\u00e9 ajout\u00e9es " +<a name="line.678"></a>
+<FONT color="green">679</FONT>         "avant que la statistique ne soit configur\u00e9e" },<a name="line.679"></a>
+<FONT color="green">680</FONT>    <a name="line.680"></a>
+<FONT color="green">681</FONT>       // org.apache.commons.math.stat.descriptive.moment.Kurtosis<a name="line.681"></a>
+<FONT color="green">682</FONT>       { "statistics constructed from external moments cannot be incremented",<a name="line.682"></a>
+<FONT color="green">683</FONT>         "les statistiques bas\u00e9es sur des moments externes ne peuvent pas \u00eatre incr\u00e9ment\u00e9es" },<a name="line.683"></a>
+<FONT color="green">684</FONT>       { "statistics constructed from external moments cannot be cleared",<a name="line.684"></a>
+<FONT color="green">685</FONT>         "les statistiques bas\u00e9es sur des moments externes ne peuvent pas \u00eatre remises \u00e0 z\u00e9ro" },<a name="line.685"></a>
+<FONT color="green">686</FONT>    <a name="line.686"></a>
+<FONT color="green">687</FONT>       // org.apache.commons.math.stat.inference.ChiSquareTestImpl<a name="line.687"></a>
+<FONT color="green">688</FONT>       { "expected array length = {0}, must be at least 2",<a name="line.688"></a>
+<FONT color="green">689</FONT>         "le tableau des valeurs attendues a une longueur de {0}, elle devrait \u00eatre au moins de 2" },<a name="line.689"></a>
+<FONT color="green">690</FONT>       { "observed array length = {0}, must be at least 2",<a name="line.690"></a>
+<FONT color="green">691</FONT>         "le tableau des valeurs observ\u00e9es a une longueur de {0}, elle devrait \u00eatre au moins de 2" },<a name="line.691"></a>
+<FONT color="green">692</FONT>       { "observed counts are all 0 in first observed array",<a name="line.692"></a>
+<FONT color="green">693</FONT>         "aucune occurrence dans le premier tableau des observations" },<a name="line.693"></a>
+<FONT color="green">694</FONT>       { "observed counts are all 0 in second observed array",<a name="line.694"></a>
+<FONT color="green">695</FONT>         "aucune occurrence dans le second tableau des observations" },<a name="line.695"></a>
+<FONT color="green">696</FONT>       { "observed counts are both zero for entry {0}",<a name="line.696"></a>
+<FONT color="green">697</FONT>         "les occurrences observ\u00e9es sont toutes deux nulles pour l'entr\u00e9e {0}" },<a name="line.697"></a>
+<FONT color="green">698</FONT>       { "invalid row dimension: {0} (must be at least 2)",<a name="line.698"></a>
+<FONT color="green">699</FONT>         "nombre de lignes invalide : {0} (doit \u00eatre au moins de 2)" },<a name="line.699"></a>
+<FONT color="green">700</FONT>       { "invalid column dimension: {0} (must be at least 2)",<a name="line.700"></a>
+<FONT color="green">701</FONT>         "nombre de colonnes invalide : {0} (doit \u00eatre au moins de 2)" },<a name="line.701"></a>
+<FONT color="green">702</FONT>       { "element {0} is not positive: {1}",<a name="line.702"></a>
+<FONT color="green">703</FONT>         "l''\u00e9l\u00e9ment {0} n''est pas positif : {1}" },<a name="line.703"></a>
+<FONT color="green">704</FONT>       { "element {0} is negative: {1}",<a name="line.704"></a>
+<FONT color="green">705</FONT>         "l''\u00e9l\u00e9ment {0} est n\u00e9gatif : {1}" },<a name="line.705"></a>
+<FONT color="green">706</FONT>       { "element ({0}, {1}) is negative: {2}",<a name="line.706"></a>
+<FONT color="green">707</FONT>         "l''\u00e9l\u00e9ment ({0}, {1}) est n\u00e9gatif : {2}" },<a name="line.707"></a>
+<FONT color="green">708</FONT>    <a name="line.708"></a>
+<FONT color="green">709</FONT>       // org.apache.commons.math.stat.inference.OneWayAnovaImpl<a name="line.709"></a>
+<FONT color="green">710</FONT>       { "two or more categories required, got {0}",<a name="line.710"></a>
+<FONT color="green">711</FONT>         "deux cat\u00e9gories ou plus sont n\u00e9cessaires, il y en a {0}" },<a name="line.711"></a>
+<FONT color="green">712</FONT>       { "two or more values required in each category, one has {0}",<a name="line.712"></a>
+<FONT color="green">713</FONT>         "deux valeurs ou plus sont n\u00e9cessaires pour chaque cat\u00e9gorie, une cat\u00e9gorie en a {0}" },<a name="line.713"></a>
+<FONT color="green">714</FONT>    <a name="line.714"></a>
+<FONT color="green">715</FONT>       // org.apache.commons.math.stat.inference.TTestImpl<a name="line.715"></a>
+<FONT color="green">716</FONT>       { "insufficient data for t statistic, needs at least 2, got {0}",<a name="line.716"></a>
+<FONT color="green">717</FONT>         "deux valeurs ou plus sont n\u00e9cessaires pour la statistique t, il y en a {0}" },<a name="line.717"></a>
+<FONT color="green">718</FONT>    <a name="line.718"></a>
+<FONT color="green">719</FONT>       // org.apache.commons.math.stat.inference.ChiSquareTestImpl<a name="line.719"></a>
+<FONT color="green">720</FONT>       // org.apache.commons.math.stat.inference.TTestImpl<a name="line.720"></a>
+<FONT color="green">721</FONT>       // org.apache.commons.math.stat.inference.OneWayAnovaImpl<a name="line.721"></a>
+<FONT color="green">722</FONT>       // org.apache.commons.math.stat.Regression<a name="line.722"></a>
+<FONT color="green">723</FONT>       { "out of bounds significance level {0}, must be between {1} and {2}",<a name="line.723"></a>
+<FONT color="green">724</FONT>         "niveau de signification {0} hors domaine, doit \u00eatre entre {1} et {2}" },<a name="line.724"></a>
+<FONT color="green">725</FONT>    <a name="line.725"></a>
+<FONT color="green">726</FONT>       // org.apache.commons.math.stat.regression.AbstractMultipleLinearRegression<a name="line.726"></a>
+<FONT color="green">727</FONT>       { "not enough data ({0} rows) for this many predictors ({1} predictors)",<a name="line.727"></a>
+<FONT color="green">728</FONT>         "pas assez de donn\u00e9es ({0} lignes) pour {1} pr\u00e9dicteurs" },<a name="line.728"></a>
+<FONT color="green">729</FONT>    <a name="line.729"></a>
+<FONT color="green">730</FONT>       // org.apache.commons.math.distribution.AbstractContinuousDistribution<a name="line.730"></a>
+<FONT color="green">731</FONT>       // org.apache.commons.math.distribution.AbstractIntegerDistribution<a name="line.731"></a>
+<FONT color="green">732</FONT>       // org.apache.commons.math.distribution.ExponentialDistributionImpl<a name="line.732"></a>
+<FONT color="green">733</FONT>       // org.apache.commons.math.distribution.BinomialDistributionImpl<a name="line.733"></a>
+<FONT color="green">734</FONT>       // org.apache.commons.math.distribution.CauchyDistributionImpl<a name="line.734"></a>
+<FONT color="green">735</FONT>       // org.apache.commons.math.distribution.PascalDistributionImpl<a name="line.735"></a>
+<FONT color="green">736</FONT>       // org.apache.commons.math.distribution.WeibullDistributionImpl<a name="line.736"></a>
+<FONT color="green">737</FONT>       { "{0} out of [{1}, {2}] range",<a name="line.737"></a>
+<FONT color="green">738</FONT>         "{0} hors du domaine [{1}, {2}]" },<a name="line.738"></a>
+<FONT color="green">739</FONT>    <a name="line.739"></a>
+<FONT color="green">740</FONT>       // org.apache.commons.math.distribution.AbstractDistribution<a name="line.740"></a>
+<FONT color="green">741</FONT>       // org.apache.commons.math.distribution.AbstractIntegerDistribution<a name="line.741"></a>
+<FONT color="green">742</FONT>       { "lower endpoint ({0}) must be less than or equal to upper endpoint ({1})",<a name="line.742"></a>
+<FONT color="green">743</FONT>         "la borne inf\u00e9rieure ({0}) devrait \u00eatre inf\u00e9rieure " +<a name="line.743"></a>
+<FONT color="green">744</FONT>         "ou \u00e9gale \u00e0 la borne sup\u00e9rieure ({1})" },<a name="line.744"></a>
+<FONT color="green">745</FONT>    <a name="line.745"></a>
+<FONT color="green">746</FONT>       // org.apache.commons.math.distribution.AbstractContinuousDistribution<a name="line.746"></a>
+<FONT color="green">747</FONT>       { "Cumulative probability function returned NaN for argument {0} p = {1}",<a name="line.747"></a>
+<FONT color="green">748</FONT>         "Fonction de probabilit\u00e9 cumulative retourn\u00e9 NaN \u00e0 l''argument de {0} p = {1}" },<a name="line.748"></a>
+<FONT color="green">749</FONT>       { "This distribution does not have a density function implemented",<a name="line.749"></a>
+<FONT color="green">750</FONT>         "La fonction de densit\u00e9 pour cette distribution n'a pas \u00e9t\u00e9 mis en oeuvre" },<a name="line.750"></a>
+<FONT color="green">751</FONT>    <a name="line.751"></a>
+<FONT color="green">752</FONT>       // org.apache.commons.math.distribution.AbstractIntegerDistribution<a name="line.752"></a>
+<FONT color="green">753</FONT>       { "Discrete cumulative probability function returned NaN for argument {0}",<a name="line.753"></a>
+<FONT color="green">754</FONT>         "Discr\u00e8tes fonction de probabilit\u00e9 cumulative retourn\u00e9 NaN \u00e0 l''argument de {0}" },<a name="line.754"></a>
+<FONT color="green">755</FONT>    <a name="line.755"></a>
+<FONT color="green">756</FONT>    <a name="line.756"></a>
+<FONT color="green">757</FONT>       // org.apache.commons.math.distribution.BinomialDistributionImpl<a name="line.757"></a>
+<FONT color="green">758</FONT>       { "number of trials must be non-negative ({0})",<a name="line.758"></a>
+<FONT color="green">759</FONT>         "le nombre d''essais ne doit pas \u00eatre n\u00e9gatif ({0})" },<a name="line.759"></a>
+<FONT color="green">760</FONT>    <a name="line.760"></a>
+<FONT color="green">761</FONT>       // org.apache.commons.math.distribution.ExponentialDistributionImpl<a name="line.761"></a>
+<FONT color="green">762</FONT>       // org.apache.commons.math.random.RandomDataImpl<a name="line.762"></a>
+<FONT color="green">763</FONT>       { "mean must be positive ({0})",<a name="line.763"></a>
+<FONT color="green">764</FONT>         "la moyenne doit \u00eatre positive ({0})" },<a name="line.764"></a>
+<FONT color="green">765</FONT>    <a name="line.765"></a>
+<FONT color="green">766</FONT>       // org.apache.commons.math.distribution.FDistributionImpl<a name="line.766"></a>
+<FONT color="green">767</FONT>       // org.apache.commons.math.distribution.TDistributionImpl<a name="line.767"></a>
+<FONT color="green">768</FONT>       { "degrees of freedom must be positive ({0})",<a name="line.768"></a>
+<FONT color="green">769</FONT>         "les degr\u00e9s de libert\u00e9 doivent \u00eatre positifs ({0})" },<a name="line.769"></a>
+<FONT color="green">770</FONT>    <a name="line.770"></a>
+<FONT color="green">771</FONT>       // org.apache.commons.math.distribution.GammaDistributionImpl<a name="line.771"></a>
+<FONT color="green">772</FONT>       { "alpha must be positive ({0})",<a name="line.772"></a>
+<FONT color="green">773</FONT>         "alpha doit \u00eatre positif ({0})" },<a name="line.773"></a>
+<FONT color="green">774</FONT>       { "beta must be positive ({0})",<a name="line.774"></a>
+<FONT color="green">775</FONT>         "beta doit \u00eatre positif ({0})" },<a name="line.775"></a>
+<FONT color="green">776</FONT>    <a name="line.776"></a>
+<FONT color="green">777</FONT>       // org.apache.commons.math.distribution.HypergeometricDistributionImpl<a name="line.777"></a>
+<FONT color="green">778</FONT>       { "number of successes ({0}) must be less than or equal to population size ({1})",<a name="line.778"></a>
+<FONT color="green">779</FONT>         "le nombre de succ\u00e8s doit \u00eatre inf\u00e9rieur " +<a name="line.779"></a>
+<FONT color="green">780</FONT>         "ou \u00e9gal \u00e0 la taille de la population ({1})" },<a name="line.780"></a>
+<FONT color="green">781</FONT>       { "sample size ({0}) must be less than or equal to population size ({1})",<a name="line.781"></a>
+<FONT color="green">782</FONT>         "la taille de l''\u00e9chantillon doit \u00eatre inf\u00e9rieure " +<a name="line.782"></a>
+<FONT color="green">783</FONT>         "ou \u00e9gale \u00e0 la taille de la population ({1})" },<a name="line.783"></a>
+<FONT color="green">784</FONT>       { "population size must be positive ({0})",<a name="line.784"></a>
+<FONT color="green">785</FONT>         "la taille de la population doit \u00eatre positive ({0})" },<a name="line.785"></a>
+<FONT color="green">786</FONT>    <a name="line.786"></a>
+<FONT color="green">787</FONT>       // org.apache.commons.math.distribution.HypergeometricDistributionImpl<a name="line.787"></a>
+<FONT color="green">788</FONT>       // org.apache.commons.math.random.RandomDataImpl<a name="line.788"></a>
+<FONT color="green">789</FONT>       { "sample size must be positive ({0})",<a name="line.789"></a>
+<FONT color="green">790</FONT>         "la taille de l''\u00e9chantillon doit \u00eatre positive ({0})" },<a name="line.790"></a>
+<FONT color="green">791</FONT>    <a name="line.791"></a>
+<FONT color="green">792</FONT>       // org.apache.commons.math.distribution.HypergeometricDistributionImpl<a name="line.792"></a>
+<FONT color="green">793</FONT>       // org.apache.commons.math.distribution.PascalDistributionImpl<a name="line.793"></a>
+<FONT color="green">794</FONT>       { "number of successes must be non-negative ({0})",<a name="line.794"></a>
+<FONT color="green">795</FONT>         "le nombre de succ\u00e8s ne doit pas \u00eatre n\u00e9gatif ({0})" },<a name="line.795"></a>
+<FONT color="green">796</FONT>    <a name="line.796"></a>
+<FONT color="green">797</FONT>       // org.apache.commons.math.distribution.NormalDistributionImpl<a name="line.797"></a>
+<FONT color="green">798</FONT>       // org.apache.commons.math.random.RandomDataImpl<a name="line.798"></a>
+<FONT color="green">799</FONT>       { "standard deviation must be positive ({0})",<a name="line.799"></a>
+<FONT color="green">800</FONT>         "l''\u00e9cart type doit \u00eatre positif ({0})" },<a name="line.800"></a>
+<FONT color="green">801</FONT>    <a name="line.801"></a>
+<FONT color="green">802</FONT>       // org.apache.commons.math.distribution.PoissonDistributionImpl<a name="line.802"></a>
+<FONT color="green">803</FONT>       // org.apache.commons.math.random.RandomDataImpl<a name="line.803"></a>
+<FONT color="green">804</FONT>       { "the Poisson mean must be positive ({0})",<a name="line.804"></a>
+<FONT color="green">805</FONT>         "la moyenne de Poisson doit \u00eatre positive ({0})" },<a name="line.805"></a>
+<FONT color="green">806</FONT>    <a name="line.806"></a>
+<FONT color="green">807</FONT>       // org.apache.commons.math.distribution.WeibullDistributionImpl<a name="line.807"></a>
+<FONT color="green">808</FONT>       { "shape must be positive ({0})",<a name="line.808"></a>
+<FONT color="green">809</FONT>         "le facteur de forme doit \u00eatre positif ({0})" },<a name="line.809"></a>
+<FONT color="green">810</FONT>    <a name="line.810"></a>
+<FONT color="green">811</FONT>       // org.apache.commons.math.distribution.WeibullDistributionImpl<a name="line.811"></a>
+<FONT color="green">812</FONT>       // org.apache.commons.math.distribution.CauchyDistributionImpl<a name="line.812"></a>
+<FONT color="green">813</FONT>       { "scale must be positive ({0})",<a name="line.813"></a>
+<FONT color="green">814</FONT>         "l''\u00e9chelle doit \u00eatre positive ({0})" },<a name="line.814"></a>
+<FONT color="green">815</FONT>    <a name="line.815"></a>
+<FONT color="green">816</FONT>       // org.apache.commons.math.distribution.ZipfDistributionImpl<a name="line.816"></a>
+<FONT color="green">817</FONT>       { "invalid number of elements {0} (must be positive)",<a name="line.817"></a>
+<FONT color="green">818</FONT>         "nombre d''\u00e9l\u00e9ments {0} invalide (doit \u00eatre positif)" },<a name="line.818"></a>
+<FONT color="green">819</FONT>       { "invalid exponent {0} (must be positive)",<a name="line.819"></a>
+<FONT color="green">820</FONT>         "exposant {0} invalide (doit \u00eatre positif)" },<a name="line.820"></a>
+<FONT color="green">821</FONT>    <a name="line.821"></a>
+<FONT color="green">822</FONT>       // org.apache.commons.math.transform.FastHadamardTransformer<a name="line.822"></a>
+<FONT color="green">823</FONT>       { "{0} is not a power of 2",<a name="line.823"></a>
+<FONT color="green">824</FONT>         "{0} n''est pas une puissance de 2" },<a name="line.824"></a>
+<FONT color="green">825</FONT>    <a name="line.825"></a>
+<FONT color="green">826</FONT>       // org.apache.commons.math.transform.FastFourierTransformer<a name="line.826"></a>
+<FONT color="green">827</FONT>       { "cannot compute 0-th root of unity, indefinite result",<a name="line.827"></a>
+<FONT color="green">828</FONT>         "impossible de calculer la racine z\u00e9roi\u00e8me de l''unit\u00e9, " +<a name="line.828"></a>
+<FONT color="green">829</FONT>         "r\u00e9sultat ind\u00e9fini" },<a name="line.829"></a>
+<FONT color="green">830</FONT>       { "roots of unity have not been computed yet",<a name="line.830"></a>
+<FONT color="green">831</FONT>         "les racines de l''unit\u00e9 n''ont pas encore \u00e9t\u00e9 calcul\u00e9es" },<a name="line.831"></a>
+<FONT color="green">832</FONT>       { "out of range root of unity index {0} (must be in [{1};{2}])",<a name="line.832"></a>
+<FONT color="green">833</FONT>         "index de racine de l''unit\u00e9 hors domaine (devrait \u00eatre dans [{1}; {2}])" },<a name="line.833"></a>
+<FONT color="green">834</FONT>       { "number of sample is not positive: {0}",<a name="line.834"></a>
+<FONT color="green">835</FONT>         "le nombre d''\u00e9chantillons n''est pas positif : {0}" },<a name="line.835"></a>
+<FONT color="green">836</FONT>       { "{0} is not a power of 2, consider padding for fix",<a name="line.836"></a>
+<FONT color="green">837</FONT>         "{0} n''est pas une puissance de 2, ajoutez des \u00e9l\u00e9ments pour corriger" },<a name="line.837"></a>
+<FONT color="green">838</FONT>       { "some dimensions don't match: {0} != {1}",<a name="line.838"></a>
+<FONT color="green">839</FONT>         "certaines dimensions sont incoh\u00e9rentes : {0} != {1}" },<a name="line.839"></a>
+<FONT color="green">840</FONT>    <a name="line.840"></a>
+<FONT color="green">841</FONT>       // org.apache.commons.math.transform.FastCosineTransformer<a name="line.841"></a>
+<FONT color="green">842</FONT>       { "{0} is not a power of 2 plus one",<a name="line.842"></a>
+<FONT color="green">843</FONT>         "{0} n''est pas une puissance de 2 plus un" },<a name="line.843"></a>
+<FONT color="green">844</FONT>    <a name="line.844"></a>
+<FONT color="green">845</FONT>       // org.apache.commons.math.transform.FastSineTransformer<a name="line.845"></a>
+<FONT color="green">846</FONT>       { "first element is not 0: {0}",<a name="line.846"></a>
+<FONT color="green">847</FONT>         "le premier \u00e9l\u00e9ment n''est pas nul : {0}" },<a name="line.847"></a>
+<FONT color="green">848</FONT>    <a name="line.848"></a>
+<FONT color="green">849</FONT>       // org.apache.commons.math.util.OpenIntToDoubleHashMap<a name="line.849"></a>
+<FONT color="green">850</FONT>       { "map has been modified while iterating",<a name="line.850"></a>
+<FONT color="green">851</FONT>         "la table d''adressage a \u00e9t\u00e9 modifi\u00e9e pendant l''it\u00e9ration" },<a name="line.851"></a>
+<FONT color="green">852</FONT>       { "iterator exhausted",<a name="line.852"></a>
+<FONT color="green">853</FONT>         "it\u00e9ration achev\u00e9e" },<a name="line.853"></a>
+<FONT color="green">854</FONT>    <a name="line.854"></a>
+<FONT color="green">855</FONT>       // org.apache.commons.math.MathRuntimeException<a name="line.855"></a>
+<FONT color="green">856</FONT>       { "internal error, please fill a bug report at {0}",<a name="line.856"></a>
+<FONT color="green">857</FONT>         "erreur interne, veuillez signaler l''erreur \u00e0 {0}" }<a name="line.857"></a>
+<FONT color="green">858</FONT>    <a name="line.858"></a>
+<FONT color="green">859</FONT>      };<a name="line.859"></a>
+<FONT color="green">860</FONT>    <a name="line.860"></a>
+<FONT color="green">861</FONT>      /**<a name="line.861"></a>
+<FONT color="green">862</FONT>       * Simple constructor.<a name="line.862"></a>
+<FONT color="green">863</FONT>       */<a name="line.863"></a>
+<FONT color="green">864</FONT>      public MessagesResources_fr() {<a name="line.864"></a>
+<FONT color="green">865</FONT>      }<a name="line.865"></a>
+<FONT color="green">866</FONT>    <a name="line.866"></a>
+<FONT color="green">867</FONT>      /**<a name="line.867"></a>
+<FONT color="green">868</FONT>       * Get the non-translated/translated messages arrays from this resource bundle.<a name="line.868"></a>
+<FONT color="green">869</FONT>       * @return non-translated/translated messages arrays<a name="line.869"></a>
+<FONT color="green">870</FONT>       */<a name="line.870"></a>
+<FONT color="green">871</FONT>      @Override<a name="line.871"></a>
+<FONT color="green">872</FONT>      public Object[][] getContents() {<a name="line.872"></a>
+<FONT color="green">873</FONT>        return CONTENTS.clone();<a name="line.873"></a>
+<FONT color="green">874</FONT>      }<a name="line.874"></a>
+<FONT color="green">875</FONT>    <a name="line.875"></a>
+<FONT color="green">876</FONT>    }<a name="line.876"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

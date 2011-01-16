@@ -84,7 +84,6 @@ object PlantPrinter {
   def main(args: Array[String]) {
     import org.tearne.beaner.plant._
     import org.tearne.beaner.cross._
-    import org.tearne.beaner.chroma._
 
     //
     // Setup
@@ -118,19 +117,19 @@ object PlantPrinter {
     val colours = new Colour(cAll, pV)
 
     val plantsList = List(
-      Name(pV, "Preferred Variety"),
-      Name(p1, "First Donor"),
-      Name(p2, "Second Donor"),
-      Name(p3, "Third Donor"),
-      Name(p4, "Fourth Donor"),
-      Name(f1_p1p2, "F1 (p1 x p2)"),
-      Name(f1_p3p4, "F1 (p3 x p4)"),
-      Name(f1_p1p2p3p4, "F1 ((p1 x p2) x (p3 x p4))"),
-      Name(bc1, "Backcross 1"),
-      Name(bc2, "Backcross 2"),
-      Name(bc3, "Backcross 3"),
-      Name(bc4, "Backcross 4"),
-      Name(fin, "Selfed")
+      NamedPlant(pV, "Pref Var"),
+      NamedPlant(p1, "First Donor"),
+      NamedPlant(p2, "Second Donor"),
+      NamedPlant(p3, "Third Donor"),
+      NamedPlant(p4, "Fourth Donor"),
+      NamedPlant(f1_p1p2, "F1 (p1 x p2)"),
+      NamedPlant(f1_p3p4, "F1 (p3 x p4)"),
+      NamedPlant(f1_p1p2p3p4, "F1 ((p1 x p2) x (p3 x p4))"),
+      NamedPlant(bc1, "Backcross 1"),
+      NamedPlant(bc2, "Backcross 2"),
+      NamedPlant(bc3, "Backcross 3"),
+      NamedPlant(bc4, "Backcross 4"),
+      NamedPlant(fin, "Selfed")
     )
 
     new PlantPrinter(plantsList, colours).makePdf()

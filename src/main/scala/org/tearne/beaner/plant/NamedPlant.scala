@@ -17,6 +17,6 @@ package org.tearne.beaner.plant
 
 class NamedPlant(val plant: Plant, val name: String)
 
-object Name{
+object NamedPlant{
   def apply(plant: Plant, name: String) = new NamedPlant(plant, name)
 }

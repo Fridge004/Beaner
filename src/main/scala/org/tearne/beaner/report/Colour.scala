@@ -57,7 +57,8 @@ class Colour(criteria: Set[Criterion], val prefVar: Plant){
 }
 object Colour {
   val p = new PApplet()
-  val prefVar = p.color(127,127,127)
+  //val prefVar = p.color(127,127,127)
+  val prefVar = p.color(255,255,255)
 
   val donorColours = Array(
     p.color(161,218,0),

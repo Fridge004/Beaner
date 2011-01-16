@@ -36,6 +36,7 @@ class ChromatidView(chromatid:Chromatid, isLeft:Boolean, colour:Colour, pApplet:
     chromatid.cMArray.zipWithIndex.foreach{
       case (cM,index) => {
 	      pApplet.fill(colour(cM))
+        pApplet.stroke(150,150,150)
         pApplet.rect(0, cMHeight*index, 10, cMHeight)
    }}
   }
