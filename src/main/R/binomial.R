@@ -20,4 +20,5 @@
 pbinom(20, 100, 0.2)
 
 # How many plants are needed to have a 95% change of 20 successes when p=0.1
-pbinom(20, 286, 0.1, lower.tail=F) #286
+pbinom(19, 275, 0.1, lower.tail=F) #286
+pbinom(19,275,0.1)

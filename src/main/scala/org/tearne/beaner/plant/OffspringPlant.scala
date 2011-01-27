@@ -18,10 +18,10 @@ package org.tearne.beaner.plant
 import org.tearne.beaner.chroma._
 import org.apache.commons.math.distribution.BinomialDistributionImpl
 
-class OffspringPlant(val chromasomes: Array[Chromosome], 
-		     val spec: PlantSpec, 
-		     val selectionProbability: Option[Double]
-		     ) extends Plant {
+class OffspringPlant(
+  val chromasomes: Array[Chromosome],
+  val spec: PlantSpec,
+	val selectionProbability: Option[Double]) extends Plant {
   
   def this(chromasomes: Array[Chromosome], 
 	   spec: PlantSpec) = 

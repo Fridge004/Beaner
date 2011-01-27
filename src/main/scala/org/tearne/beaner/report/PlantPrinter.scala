@@ -19,8 +19,9 @@ import org.tearne.beaner.plant._
 import processing.pdf._
 import processing.core._
 import com.lowagie.text.PageSize
+import org.tearne.beaner.cross.Criterion
 
-class PlantPrinter(plants: List[NamedPlant], colour: Colour) extends processing.core.PApplet {
+class PlantPrinter(plants: List[NamedPlant], criteria: Set[Criterion], colour: Colour) extends processing.core.PApplet {
   val margin = 0.05
   val headerSpace = 20
   private val f:PFont = createFont("GillSans-Bold", 10);
@@ -132,6 +133,6 @@ object PlantPrinter {
       NamedPlant(fin, "Selfed")
     )
 
-    new PlantPrinter(plantsList, colours).makePdf()
+    new PlantPrinter(plantsList, cAll, colours).makePdf()
   }
 }

@@ -17,6 +17,7 @@ package org.tearne.beaner.report
 
 import processing.core.PApplet
 import org.tearne.beaner.chroma._
+import collection.mutable.ListBuffer
 
 class ChromatidView(chromatid:Chromatid, isLeft:Boolean, colour:Colour, pApplet:PApplet) {
   private val length = chromatid.size
@@ -26,18 +27,47 @@ class ChromatidView(chromatid:Chromatid, isLeft:Boolean, colour:Colour, pApplet:
     pApplet.pushMatrix
     if(!isLeft){
       pApplet.translate(10,0)
-    } 
-    drawChromatids()
-    
+    }
+
+    drawCMColours()
+    drawOutline()
+
     pApplet.popMatrix
   }
   
-  private def drawChromatids() {
+  private def drawCMColours() {
+    val nonTrivial = detectIfNonTrivialChromatid(0)
+    var highlights = new ListBuffer[Int]()
+
     chromatid.cMArray.zipWithIndex.foreach{
       case (cM,index) => {
-	      pApplet.fill(colour(cM))
-        pApplet.stroke(150,150,150)
+        val c = colour(cM)
+	      pApplet.fill(c)
+        pApplet.stroke(c)
+        if(nonTrivial && cM.alleles.size == 1)
+          highlights += index
         pApplet.rect(0, cMHeight*index, 10, cMHeight)
    }}
+
+    pApplet.strokeWeight(1f)
+    highlights.foreach{index =>
+      pApplet.noFill
+      pApplet.stroke(0)
+      pApplet.rect(0, cMHeight*index, 10, cMHeight)
+    }
+    pApplet.strokeWeight(0.1f)
+
+  }
+
+  private def drawOutline() {
+    pApplet.stroke(0,0,0)
+    pApplet.noFill()
+    pApplet.rect(0, 0, 10, chromatid.size*cMHeight)
+  }
+
+  private def detectIfNonTrivialChromatid(startIndex: Int): Boolean = {
+    if(chromatid.cMArray(startIndex).alleles.size > 1) true
+    else if(startIndex+1==chromatid.cMArray.size ) false
+    else detectIfNonTrivialChromatid(startIndex+1)
   }
 }

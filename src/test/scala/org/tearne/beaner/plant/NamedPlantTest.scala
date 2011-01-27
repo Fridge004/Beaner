@@ -13,18 +13,18 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.report
+package org.tearne.beaner.plant
 
 import org.junit.Test
 import org.scalatest.junit.JUnitSuite
 import org.scalatest.mock.MockitoSugar
-import org.tearne.beaner.plant.{Name, Plant}
+import org.tearne.beaner.plant._
 
-class NameTest extends JUnitSuite with MockitoSugar{
+class NamedPlantTest extends JUnitSuite with MockitoSugar{
   @Test def naming{
     val myPlant = mock[Plant]
 
-    val named = Name(myPlant,"bert")
+    val named = NamedPlant(myPlant,"bert")
 
     assert("bert" === named.name)
     assert(myPlant === named.plant)
