@@ -21,7 +21,7 @@ import collection.mutable.ListBuffer
 
 class ChromatidView(chromatid:Chromatid, isLeft:Boolean, colour:Colour, pApplet:PApplet) {
   private val length = chromatid.size
-  val cMHeight = 3
+  private val cMHeight = 2
 
   def display(){
     pApplet.pushMatrix
