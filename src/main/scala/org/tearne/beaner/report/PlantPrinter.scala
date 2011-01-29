@@ -20,27 +20,28 @@ import processing.pdf._
 import processing.core._
 import org.tearne.beaner.cross.Criterion
 
-class PlantPrinter(plants: List[NamedPlant], criteria: Set[Criterion], colour: Colour, pApplet: PApplet){
+class PlantPrinter(plant: NamedPlant, criteria: Set[Criterion], colour: Colour, position: (Int, Int), size: (Int,Int), pApplet: PApplet){
   val margin = 0.05
   val headerSpace = 20
 
   def display() {
-    val pGraphics = pApplet.g.asInstanceOf[PGraphicsPDF]
+    val (xPos, yPos) = position
 
-    val plantIterator = plants.iterator
-    while(plantIterator.hasNext){
-      printPlant(plantIterator.next)
-      if(plantIterator.hasNext)
-	      pGraphics.nextPage
-    }
+    pApplet.translate(xPos, yPos)
+    pApplet.pushMatrix
+
+    printPlant(plant, size)
+
+    pApplet.popMatrix
   }
 
-  private def printPlant(namedPlant:NamedPlant){
+  private def printPlant(namedPlant:NamedPlant, size: (Int,Int)){
+    val (width, height) = size
     val numChromasomes = namedPlant.plant.chromasomes.size
 
-    val widthWithoutMargin = (pApplet.width*(1-margin)).asInstanceOf[Int]
-    val marginWidth = pApplet.width - widthWithoutMargin
-    val marginHeight = (pApplet.height * margin /2.0).asInstanceOf[Int]
+    val widthWithoutMargin = (width*(1-margin)).asInstanceOf[Int]
+    val marginWidth = width - widthWithoutMargin
+    val marginHeight = (height * margin /2.0).asInstanceOf[Int]
 
     //pushMatrix
     //translate(0,marginHeight)

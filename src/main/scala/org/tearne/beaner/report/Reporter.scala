@@ -19,9 +19,11 @@ import com.lowagie.text.PageSize
 import org.tearne.beaner.cross.Criterion
 import org.tearne.beaner.plant.NamedPlant
 import processing.core.{PApplet, PFont}
+import processing.pdf.PGraphicsPDF
 
 class Reporter(plants: List[NamedPlant], criteria: Set[Criterion], colour: Colour) extends PApplet {
   private val f:PFont = createFont("GillSans-Bold", 10);
+  private val pageSplit = 0.3
 
   def makePDF(){
     this.init
@@ -41,7 +43,16 @@ class Reporter(plants: List[NamedPlant], criteria: Set[Criterion], colour: Colou
     stroke(0);
     strokeWeight(0.1f);
 
-    new PlantPrinter(plants, criteria, colour, this).display
+
+    val pGraphics = g.asInstanceOf[PGraphicsPDF]
+
+    val plantIterator = plants.iterator
+    while(plantIterator.hasNext){
+      new PlantPrinter(plantIterator.next, criteria, colour, (200,10), (400,0), this).display
+      if(plantIterator.hasNext)
+	      pGraphics.nextPage
+    }
+
   }
 }
 
