@@ -13,20 +13,27 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.plant
+package org.tearne.beaner.report
 
-import org.junit.Test
-import org.scalatest.junit.JUnitSuite
-import org.scalatest.mock.MockitoSugar
-import org.tearne.beaner.plant._
+import processing.core.PApplet
+import org.tearne.beaner.plant.{OffspringPlant, Plant}
 
-class NamedPlantTest extends JUnitSuite with MockitoSugar{
-  @Test def naming{
-    val myPlant = mock[Plant]
+class StatsPrinter(position: (Int, Int), plant: Plant, parent: Reporter){
 
-    val named = NamedPlant(myPlant,"bert")
+  def display(){
+    parent.textFont(parent.f,12)
+    parent.fill(0)
 
-    assert("bert" === named.name)
-    assert(myPlant === named.plant)
+    if(plant.isInstanceOf[OffspringPlant]){
+
+      parent.pushMatrix()
+      parent.translate(position._1, position._2)
+      plotStats()
+      parent.popMatrix()
+    }
+  }
+
+  private def plotStats(){
+    parent.text("Hello Bean")
   }
 }

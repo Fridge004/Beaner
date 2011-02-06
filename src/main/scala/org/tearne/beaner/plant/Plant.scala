@@ -19,9 +19,12 @@ import org.tearne.beaner.chroma._
 import org.tearne.beaner.cross.PlantPair
 
 trait Plant {
+  type P <: Plant
+
 	val chromasomes:Array[Chromosome]
 	val spec:PlantSpec
-  val friendlyName = "NoNameSet"
+  val name: Option[String]
 	
 	def x(that:Plant):PlantPair = PlantPair(this, that)
+  def named(newName:String):P
 }

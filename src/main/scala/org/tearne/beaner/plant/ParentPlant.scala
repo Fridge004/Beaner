@@ -18,10 +18,20 @@ package org.tearne.beaner.plant
 import org.tearne.beaner.plant._
 import org.tearne.beaner.chroma._
 
-class ParentPlant(val spec: PlantSpec) extends Plant {
+case class ParentPlant(
+  val spec: PlantSpec,
+  name: Option[String] = None) extends Plant {
+
+  type P = ParentPlant
+
+  def this(spec: PlantSpec, name:String) = this(spec, Option(name))
+
   val chromasomes: Array[Chromosome] = new Array[Chromosome](spec.chromasomeLengths.size)
 
   for (i <- 0 until spec.chromasomeLengths.size) {
     chromasomes(i) = new Chromosome(this, spec.chromasomeLengths(i))
   }
+
+  @Override
+  def named(newName:String) = this.copy(name=Option(newName))
 }

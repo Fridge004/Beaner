@@ -36,11 +36,11 @@ class SysTest extends JUnitSuite with MockitoSugar {
     object MyPlantSpec extends PlantSpec{
       val chromasomeLengths = Array(5, 6, 3, 7, 5)
     }
-    val p1 = MyPlantSpec()
-    val p2 = MyPlantSpec()
-    val p3 = MyPlantSpec()
-    val p4 = MyPlantSpec()
-    val pV = MyPlantSpec()
+    val p1 = MyPlantSpec("donor1")
+    val p2 = MyPlantSpec("donor2")
+    val p3 = MyPlantSpec("donor3")
+    val p4 = MyPlantSpec("donor4")
+    val pV = MyPlantSpec("donor5")
 
     val c1 = new Criterion(p1, 0, 1)
     val c2 = new Criterion(p2, 1, 5)
@@ -48,16 +48,16 @@ class SysTest extends JUnitSuite with MockitoSugar {
     val c4 = new Criterion(p4, 3, 3)
     val cAll = c1 + c2 + c3 + c4
 
-    val f1_p1p2 = p1 x p2 selectHet c1 + c2
-    val f1_p3p4 = p3 x p4 selectHet c3 + c4
-    val f1_p1p2p3p4 = f1_p1p2 x f1_p3p4 selectHet cAll
+    val f1_p1p2 = p1 x p2 selectHet c1 + c2 named "f1_p1p2"
+    val f1_p3p4 = p3 x p4 selectHet c3 + c4 named "f1_p3p4"
+    val f1_p1p2p3p4 = f1_p1p2 x f1_p3p4 selectHet cAll named "f1_p1p2p3p4"
 
-    val bc1 = f1_p1p2p3p4 x pV selectHet cAll
-    val bc2 = bc1 x pV selectHet cAll
-    val bc3 = bc2 x pV selectHet cAll
-    val bc4 = bc3 x pV selectHet cAll
+    val bc1 = f1_p1p2p3p4 x pV selectHet cAll named "bc1"
+    val bc2 = bc1 x pV selectHet cAll named "bc2"
+    val bc3 = bc2 x pV selectHet cAll named "bc3"
+    val bc4 = bc3 x pV selectHet cAll named "bc4"
 
-    val fin = bc4 x bc4 selectHom cAll
+    val fin = bc4 x bc4 selectHom cAll named "fin"
 
     assertEquals(0.0, f1_p1p2.proportionOf(pV), lowTolerance)
     assertEquals(0.0, f1_p3p4.proportionOf(pV), lowTolerance)
@@ -95,9 +95,9 @@ class SysTest extends JUnitSuite with MockitoSugar {
       val chromasomeLengths = Array[Int](50, 70, 90)
     }
 
-    val p1 = MyPlantSpec()
-    val p2 = MyPlantSpec()
-    val pV = MyPlantSpec()
+    val p1 = MyPlantSpec("p1")
+    val p2 = MyPlantSpec("p2")
+    val pV = MyPlantSpec("p3")
 
     val crit1 = new Criterion(p1, 0, 9)
     val crit2 = new Criterion(p2, 1, 39)
@@ -105,9 +105,9 @@ class SysTest extends JUnitSuite with MockitoSugar {
     PlantPair.setPlantCrosser(new PlantCrosser(new ChromosomeCrosser()))
 
     //Heterozygous selection
-    val f1 = p1 x p2 selectHet crit1 + crit1
-    val bc1 = f1 x pV selectHet crit1 + crit2
-    val bc2 = bc1 x pV selectHet crit1 + crit2
+    val f1 = p1 x p2 selectHet crit1 + crit1 named "f1"
+    val bc1 = f1 x pV selectHet crit1 + crit2 named "bc1"
+    val bc2 = bc1 x pV selectHet crit1 + crit2  named "bc2"
 
     //Homozygous selection
     val fin = bc2 x bc2 selectHom crit1 + crit2

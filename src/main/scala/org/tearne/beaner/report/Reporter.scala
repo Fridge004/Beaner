@@ -17,12 +17,12 @@ package org.tearne.beaner.report
 
 import com.lowagie.text.PageSize
 import org.tearne.beaner.cross.Criterion
-import org.tearne.beaner.plant.NamedPlant
+import org.tearne.beaner.plant.Plant
 import processing.core.{PApplet, PFont}
 import processing.pdf.PGraphicsPDF
 
-class Reporter(plants: List[NamedPlant], criteria: Set[Criterion], colour: Colour) extends PApplet {
-  private val f:PFont = createFont("GillSans-Bold", 10);
+class Reporter(plants: List[Plant], criteria: Set[Criterion], colour: Colour) extends PApplet {
+  val f:PFont = createFont("GillSans-Bold", 10);
   private val pageSplit = 0.3
 
   def makePDF(){
@@ -31,7 +31,6 @@ class Reporter(plants: List[NamedPlant], criteria: Set[Criterion], colour: Colou
 
   override def setup(){
     textFont(f,12)
-
     val page = PageSize.A5
     size(
       page.getHeight.asInstanceOf[Int],
@@ -40,15 +39,17 @@ class Reporter(plants: List[NamedPlant], criteria: Set[Criterion], colour: Colou
     )
     background(255)
 
-    stroke(0);
-    strokeWeight(0.1f);
-
+    stroke(0)
+    strokeWeight(0.1f)
+    noLoop()
 
     val pGraphics = g.asInstanceOf[PGraphicsPDF]
 
     val plantIterator = plants.iterator
     while(plantIterator.hasNext){
-      new PlantPrinter(plantIterator.next, criteria, colour, (200,10), (400,0), this).display
+      val plant = plantIterator.next
+      new PlantPrinter(plant, criteria, colour, (200,10), (400,0), this).display
+      //new StatsPrinter((10,10), plant, this).display
       if(plantIterator.hasNext)
 	      pGraphics.nextPage
     }
@@ -59,54 +60,49 @@ class Reporter(plants: List[NamedPlant], criteria: Set[Criterion], colour: Colou
 object Reporter {
    //For testing
   def main(args: Array[String]) {
+    // --- Preamble ---
     import org.tearne.beaner.plant._
     import org.tearne.beaner.cross._
-
-    // Setup
     PlantPair.setPlantCrosser(new PlantCrosser(new ChromosomeCrosser()))
 
-    val p1 = PhaseolusVulgaris()
-    val p2 = PhaseolusVulgaris()
-    val p3 = PhaseolusVulgaris()
-    val p4 = PhaseolusVulgaris()
-    val pV = PhaseolusVulgaris()
-
+    // --- Setup ---
+    // Starting plants
+    val pV = PhaseolusVulgaris("Pref Var")
+    val p1 = PhaseolusVulgaris("Donor1")
+    val p2 = PhaseolusVulgaris("Donor2")
+    val p3 = PhaseolusVulgaris("Donor3")
+    val p4 = PhaseolusVulgaris("Donor4")
+    // Selection criteria
     val c1 = new Criterion(p1, 1, 9)
     val c2 = new Criterion(p2, 3, 50)
     val c3 = new Criterion(p3, 4, 24)
     val c4 = new Criterion(p4, 7, 36)
     val cAll = c1 + c2 + c3 + c4
 
-    val f1_p1p2 = p1 x p2 selectHet c1 + c2
-    val f1_p3p4 = p3 x p4 selectHet c3 + c4
-    val f1_p1p2p3p4 = f1_p1p2 x f1_p3p4 selectHet cAll
 
-    val bc1 = f1_p1p2p3p4 x pV selectHet cAll
-    val bc2 = bc1 x pV selectHet cAll
-    val bc3 = bc2 x pV selectHet cAll
-    val bc4 = bc3 x pV selectHet cAll
+    // --- Crossings ---
+    // F1s
+    val f1_p1p2 = (p1 x p2) selectHet (c1 + c2) named "F1_p1p2"
+    val f1_p3p4 = (p3 x p4) selectHet (c3 + c4) named "F1_p3p4"
+    val f1_p1p2p3p4 = (f1_p1p2 x f1_p3p4) selectHet cAll named "F1_p1p2p3p4"
+    // Backcrossing
+    val bc1 = f1_p1p2p3p4 x pV selectHet cAll named "BC1"
+    val bc2 = bc1 x pV selectHet cAll named "BC2"
+    val bc3 = bc2 x pV selectHet cAll named "BC3"
+    val bc4 = bc3 x pV selectHet cAll named "BC4"
+    // Selfing
+    val fin = bc4 x bc4 selectHom cAll named "Final"
 
-    val fin = bc4 x bc4 selectHom cAll
-
-    //Make colour object
+    // --- Reporting ---
+    // Prepare for reporting
     val colours = new Colour(cAll, pV)
-
     val plantsList = List(
-      NamedPlant(pV, "Pref Var"),
-      NamedPlant(p1, "First Donor"),
-      NamedPlant(p2, "Second Donor"),
-      NamedPlant(p3, "Third Donor"),
-      NamedPlant(p4, "Fourth Donor"),
-      NamedPlant(f1_p1p2, "F1 (p1 x p2)"),
-      NamedPlant(f1_p3p4, "F1 (p3 x p4)"),
-      NamedPlant(f1_p1p2p3p4, "F1 ((p1 x p2) x (p3 x p4))"),
-      NamedPlant(bc1, "Backcross 1"),
-      NamedPlant(bc2, "Backcross 2"),
-      NamedPlant(bc3, "Backcross 3"),
-      NamedPlant(bc4, "Backcross 4"),
-      NamedPlant(fin, "Selfed")
+      pV, p1, p2, p3, p4,
+      f1_p1p2, f1_p3p4, f1_p1p2p3p4,
+      bc1, bc2, bc3, bc4,
+      fin
     )
-
+    // Produce PDF
     new Reporter(plantsList, cAll, colours).makePDF()
   }
 }

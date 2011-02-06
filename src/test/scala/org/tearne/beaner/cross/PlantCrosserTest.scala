@@ -29,13 +29,14 @@ import org.mockito.Matchers._
 
 class PlantCrosserTest extends JUnitSuite with MockitoSugar {
   val tolerance = 1e-16
+  val plantName = "myPlant"
 
   //Create simple namedPlant spec (3 chromasomes of lengths 3, 2 and 1)
   val spec = mock[PlantSpec]; when(spec.chromasomeLengths).thenReturn(Array[Int](3, 2, 1))
 
-  val p1 = new ParentPlant(spec)
-  val p2 = new ParentPlant(spec)
-  val p3 = new ParentPlant(spec)
+  val p1 = new ParentPlant(spec, "donor1")
+  val p2 = new ParentPlant(spec, "donor2")
+  val p3 = new ParentPlant(spec, "donor3")
 
   //Create criteria to select for 
   // p1 on the first chromasome, third cM
@@ -55,14 +56,29 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar {
   when(chromasome2.size).thenReturn(1)
   when(chromasome2.selectionProbability).thenReturn(None)
 
+  @Test
+  def cantCrossUnnamedOffspringPlants {
+    //fail("not written yet")
+
+		val chromas = Array(chromasome0, chromasome1, chromasome2)
+
+    val plantCrosser = new PlantCrosser(mock[ChromosomeCrosser])
+
+    val p1 = new OffspringPlant(chromas, spec, 0.1)
+    val p2 = new ParentPlant(spec, plantName)
+
+    intercept[UnnamedPlantException]{
+      plantCrosser.selectHeterozygousOffspring(p1 x p2, criteria)
+    }
+  }
 
   @Test
   def exceptionIfTryToBreedPlantsWithDifferentNumberOfChromosomes {
     var mockPlantSpec = mock[PlantSpec]
     when(mockPlantSpec.chromasomeLengths).thenReturn(Array(100))
 
-    val p1 = PhaseolusVulgaris()
-    val p2 = new ParentPlant(mockPlantSpec)
+    val p1 = PhaseolusVulgaris("myPlant")
+    val p2 = new ParentPlant(mockPlantSpec, "myOtherPlant")
 
     val plantCrosser = new PlantCrosser(mock[ChromosomeCrosser])
     intercept[PlantCrosserException] { plantCrosser.selectHeterozygousOffspring(PlantPair(p1, p2), null) }

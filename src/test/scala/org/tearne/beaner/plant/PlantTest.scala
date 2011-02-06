@@ -16,7 +16,6 @@
 package org.tearne.beaner.plant
 
 import org.scalatest.junit.JUnitSuite
-import org.junit.Test
 import org.mockito.Mockito._
 import org.mockito.Spy._
 import org.tearne.beaner.plant._
@@ -24,15 +23,32 @@ import org.tearne.beaner.chroma._
 import org.tearne.beaner.cross._
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.Assertions._
+import org.junit.{Before, Test}
 
 class PlantTest extends JUnitSuite with MockitoSugar{
 
-  class PlantImpl(val chromasomes:Array[Chromosome], val spec:PlantSpec) extends Plant{}
-  
+  case class PlantImpl(val chromasomes:Array[Chromosome], val spec:PlantSpec, name: Option[String] = None) extends Plant{
+    type P=PlantImpl
+    @Override def named(newName:String) = copy(name=Option(newName))
+  }
+  var p1, p2: PlantImpl = null
+
+
+  @Before def setup{
+    p1 = new PlantImpl(null, null)
+    p2 = new PlantImpl(null, null)
+  }
+
+  @Test def renaming {
+    val p1Named = p1 named "Bert"
+    assert(p1Named.name.get === "Bert")
+  }
+
+  @Test def defaultName {
+    assert(p1.name === None)
+  }
+
   @Test def pairs() {
-    val p1 = new PlantImpl(null, null)
-    val p2 = new PlantImpl(null, null)
-    
     val pair:PlantPair = p1 x p2
     assert(p1 === pair.first)
     assert(p2 === pair.second)

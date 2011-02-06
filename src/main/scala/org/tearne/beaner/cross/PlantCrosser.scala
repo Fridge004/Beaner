@@ -23,6 +23,8 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
   private def checkCanCross(plants: PlantPair) = {
     if (plants.first.spec != plants.second.spec)
       throw new PlantCrosserException("Cannot cross plants with different specs")
+    if(!plants.bothNamed)
+      throw new UnnamedPlantException()
   }
 
   def selectHeterozygousOffspring(plants: PlantPair, criteria: Set[Criterion]): Option[OffspringPlant] = {

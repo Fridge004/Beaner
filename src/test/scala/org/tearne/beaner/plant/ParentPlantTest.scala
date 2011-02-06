@@ -26,11 +26,11 @@ import org.scalatest.mock.MockitoSugar
 
 class ParentPlantTest extends JUnitSuite with MockitoSugar{
 	val tolerance = 1e-16
-	val plantName = "myPlant"
 	var p:Plant = null
+  val plantName = "myPlant"
 	
 	@Before def setup {
-		p = PhaseolusVulgaris()
+		p = PhaseolusVulgaris(plantName)
 	}
 		
 	@Test def creationOfChromasomes {
@@ -48,4 +48,12 @@ class ParentPlantTest extends JUnitSuite with MockitoSugar{
 	@Test def correctNumberOfChromasomes {
 		assertEquals(PhaseolusVulgaris.chromasomeLengths.size, p.chromasomes.size)
 	}
+
+  @Test def nameFromConstructor {
+    assert(p.name.get === plantName)
+
+    val otherName = "otherPlant"
+    p = new ParentPlant(PhaseolusVulgaris, otherName)
+    assert(p.name.get === otherName)
+  }
 }

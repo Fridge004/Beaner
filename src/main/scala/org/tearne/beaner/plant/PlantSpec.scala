@@ -18,7 +18,7 @@ package org.tearne.beaner.plant
 trait PlantSpec {
   val chromasomeLengths: Array[Int]
 
-  def apply() = new ParentPlant(this)
+  def apply(name: String) = new ParentPlant(this, Option(name))
 
 	override def equals(other: Any): Boolean = {
 		other match {

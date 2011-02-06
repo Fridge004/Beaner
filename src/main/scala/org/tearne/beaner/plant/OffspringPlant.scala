@@ -18,11 +18,14 @@ package org.tearne.beaner.plant
 import org.tearne.beaner.chroma._
 import org.apache.commons.math.distribution.BinomialDistributionImpl
 
-class OffspringPlant(
+case class OffspringPlant(
   val chromasomes: Array[Chromosome],
   val spec: PlantSpec,
-	val selectionProbability: Option[Double]) extends Plant {
-  
+	val selectionProbability: Option[Double],
+  name: Option[String] = None) extends Plant {
+
+  type P = OffspringPlant
+
   def this(chromasomes: Array[Chromosome], 
 	   spec: PlantSpec) = 
     this(chromasomes, spec, None)
@@ -42,6 +45,9 @@ class OffspringPlant(
     if (length1 != length)
       throw new OffspringPlantException("Chromasome " + i + " does not match spec (actual=" + chromasomes(i).size + ",spec=" + spec.chromasomeLengths(i) + ")")
   }
+
+  @Override
+  def named(newName:String) = this.copy(name=Option(newName))
 
   def proportionOf(plant: Plant): Double = {
     var sumP = 0.0

@@ -20,24 +20,27 @@ import processing.pdf._
 import processing.core._
 import org.tearne.beaner.cross.Criterion
 
-class PlantPrinter(plant: NamedPlant, criteria: Set[Criterion], colour: Colour, position: (Int, Int), size: (Int,Int), pApplet: PApplet){
+class PlantPrinter(plant: Plant, criteria: Set[Criterion], colour: Colour, position: (Int, Int), size: (Int,Int), parent: Reporter){
   val margin = 0.05
   val headerSpace = 20
 
   def display() {
     val (xPos, yPos) = position
+    parent.textFont(parent.f,12)
 
-    pApplet.translate(xPos, yPos)
-    pApplet.pushMatrix
+    //parent.pushMatrix
+    parent.pushMatrix
+    parent.translate(xPos, yPos)
 
     printPlant(plant, size)
 
-    pApplet.popMatrix
+    parent.popMatrix
+    //parent.popMatrix
   }
 
-  private def printPlant(namedPlant:NamedPlant, size: (Int,Int)){
+  private def printPlant(plant:Plant, size: (Int,Int)){
     val (width, height) = size
-    val numChromasomes = namedPlant.plant.chromasomes.size
+    val numChromasomes = plant.chromasomes.size
 
     val widthWithoutMargin = (width*(1-margin)).asInstanceOf[Int]
     val marginWidth = width - widthWithoutMargin
@@ -45,21 +48,21 @@ class PlantPrinter(plant: NamedPlant, criteria: Set[Criterion], colour: Colour, 
 
     //pushMatrix
     //translate(0,marginHeight)
-    pApplet.fill(0)
-    pApplet.textAlign(processing.core.PConstants.LEFT)
-    pApplet.text(namedPlant.name,10f,10f)
-    if(namedPlant.plant.isInstanceOf[OffspringPlant])
-      pApplet.text("%.1f".format(100*namedPlant.plant.asInstanceOf[OffspringPlant].proportionOf(colour.prefVar))+"%",10f,20f)
-    pApplet.translate(0,headerSpace)
+    parent.fill(0)
+    parent.textAlign(processing.core.PConstants.LEFT)
+    parent.text(plant.name.getOrElse(""),10f,10f)
+    if(plant.isInstanceOf[OffspringPlant])
+      parent.text("%.1f".format(100*plant.asInstanceOf[OffspringPlant].proportionOf(colour.prefVar))+"%",10f,22f)
+    parent.translate(0,headerSpace)
     //text
 
-    namedPlant.plant.chromasomes.zipWithIndex.foreach {
+    plant.chromasomes.zipWithIndex.foreach {
       case (chromasome, index) => {
-        pApplet.pushMatrix
+        parent.pushMatrix
         val xTrans = (marginWidth/2.0+(widthWithoutMargin*index) / numChromasomes.asInstanceOf[Double]).asInstanceOf[Int]
-        pApplet.translate(xTrans, headerSpace)
-        new ChromasomeView(chromasome, colour, pApplet).display
-        pApplet.popMatrix
+        parent.translate(xTrans, headerSpace)
+        new ChromasomeView(chromasome, colour, parent).display
+        parent.popMatrix
       }
     }
 

@@ -20,6 +20,8 @@ import org.tearne.beaner.plant._
 class PlantPair(val first:Plant, val second:Plant) { 
   import PlantPair.plantCrosser
 
+  def bothNamed() = first.name != None && second.name != None
+
   def selectHet(criteria: Set[Criterion]):OffspringPlant = {
     plantCrosser.selectHeterozygousOffspring(this, criteria).getOrElse{
 	      throw new OffspringPlantException()

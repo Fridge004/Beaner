@@ -15,8 +15,10 @@
 
 package org.tearne.beaner.plant
 
-class NamedPlant(val plant: Plant, val name: String)
+class UnnamedPlantException(message: String, cause: Throwable) extends RuntimeException(message, cause) {
 
-object NamedPlant{
-  def apply(plant: Plant, name: String) = new NamedPlant(plant, name)
+  def this(message: String) { this(message, null) }
+
+  def this() { this(null) }
+
 }

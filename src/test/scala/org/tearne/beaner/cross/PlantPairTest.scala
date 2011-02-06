@@ -39,6 +39,18 @@ class PlantPairTest extends JUnitSuite with MockitoSugar {
   }
 
   @Test
+  def checkedNamedPlants(){
+    val p1 = mock[Plant]
+    val p2 = mock[Plant]
+    when(p1.name).thenReturn(Option("myName"))
+    when(p2.name).thenReturn(None)
+
+    assert(PlantPair(p1,p2).bothNamed === false)
+    assert(PlantPair(p1,p1).bothNamed === true)
+    assert(PlantPair(p2,p2).bothNamed === false)
+  }
+
+  @Test
   def exceptionIfCrossingFails() {
     when(plantCrosser.selectHeterozygousOffspring(anyObject(), anyObject())).thenReturn(None)
     PlantPair.setPlantCrosser(plantCrosser)
