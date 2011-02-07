@@ -18,18 +18,17 @@ package org.tearne.beaner.report
 import processing.core.{PApplet, PFont}
 import org.tearne.beaner.chroma._
 
-class ChromasomeView(chromasome:Chromosome, colour: Colour, pApplet:PApplet) {
-  private val left = new ChromatidView(chromasome.firstChromatid, true, colour, pApplet)
-  private val right = new ChromatidView(chromasome.secondChromatid, false, colour, pApplet)
-  private val f:PFont = pApplet.createFont("GillSans-Bold", 10);
+class ChromasomeView(chromasome:Chromosome, colour: Colour, reporter:Reporter) {
+  private val left = new ChromatidView(chromasome.firstChromatid, true, colour, reporter)
+  private val right = new ChromatidView(chromasome.secondChromatid, false, colour, reporter)
   
   def display(){
-    pApplet.textFont(f,8)
-    pApplet.textAlign(processing.core.PConstants.CENTER)
+    reporter.textFont(reporter.f,8)
+    reporter.textAlign(processing.core.PConstants.CENTER)
     
     val percent = chromasome.proportionOf(colour.prefVar)*100
-    pApplet.fill(0)
-    pApplet.text("%.1f".format(percent)+"%",10, -6)
+    reporter.fill(0)
+    reporter.text("%.1f".format(percent)+"%",10, -6)
 
     left.display
     right.display

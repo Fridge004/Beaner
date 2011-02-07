@@ -15,25 +15,26 @@
 
 package org.tearne.beaner.report
 
-import processing.core.PApplet
+import processing.core.PConstants._
 import org.tearne.beaner.plant.{OffspringPlant, Plant}
 
 class StatsPrinter(position: (Int, Int), plant: Plant, parent: Reporter){
 
   def display(){
-    parent.textFont(parent.f,12)
+    parent.textFont(parent.f,9)
     parent.fill(0)
 
     if(plant.isInstanceOf[OffspringPlant]){
 
       parent.pushMatrix()
       parent.translate(position._1, position._2)
-      plotStats()
+      plotStats(plant.asInstanceOf[OffspringPlant])
       parent.popMatrix()
     }
   }
 
-  private def plotStats(){
-    parent.text("Hello Bean")
+  private def plotStats(p: OffspringPlant){
+    parent.textAlign(LEFT)
+    parent.text("Test "+p.numPlantsForConfidence(0.95, 5)+" for a 95% chance\nof selecting 5")
   }
 }

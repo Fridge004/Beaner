@@ -22,12 +22,17 @@ import processing.core.{PApplet, PFont}
 import processing.pdf.PGraphicsPDF
 
 class Reporter(plants: List[Plant], criteria: Set[Criterion], colour: Colour) extends PApplet {
-  val f:PFont = createFont("GillSans-Bold", 10);
+
+  private val fontName = PGraphicsPDF.listFonts().toList.find(f=>f.contains("Arial"))
+  println("Auto selected font: "+fontName.getOrElse("[Error, not font found]"))
+  val f:PFont = createFont(fontName.getOrElse("Arial Black"), 10);
+
   private val pageSplit = 0.3
 
   def makePDF(){
     this.init
   }
+
 
   override def setup(){
     textFont(f,12)
@@ -49,7 +54,7 @@ class Reporter(plants: List[Plant], criteria: Set[Criterion], colour: Colour) ex
     while(plantIterator.hasNext){
       val plant = plantIterator.next
       new PlantPrinter(plant, criteria, colour, (200,10), (400,0), this).display
-      //new StatsPrinter((10,10), plant, this).display
+      new StatsPrinter((2,50), plant, this).display
       if(plantIterator.hasNext)
 	      pGraphics.nextPage
     }
