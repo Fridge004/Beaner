@@ -7,7 +7,7 @@
 
 .DS_Store
 
-/output.pdf
+/Output.pdf
 out/
 bin/
 target/

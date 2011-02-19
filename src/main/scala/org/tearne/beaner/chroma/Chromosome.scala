@@ -52,7 +52,7 @@ class Chromosome(val firstChromatid: Chromatid, val secondChromatid: Chromatid, 
     val gamete = new Chromatid(firstChromatid)
     for (i <- 0 until gamete.size) {
       if (i == index && (firstChromatid(i).alleles(plant) != 1.0 || secondChromatid(i).alleles(plant) != 1.0))
-        throw new ChromasomeException("Can only select when allele is present with probability on one")
+        throw new ChromasomeException("Can only select when allele is present with probability one")
       else
         gamete(i) = new Centimorgan(plant)
       gamete(i) = firstChromatid(i).combinedWith(secondChromatid(i), 0.5)

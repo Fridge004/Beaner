@@ -68,10 +68,10 @@ class ChromosomeCrosser{
 	}
 
 	private def getResultGivenSelectionFromSingleChromasome(
-    firstChromasome:Chromosome,
-    secondChromasome:Chromosome,
-    plantToSelectFor:Plant,
-    positionForSelection:Int) = {
+      firstChromasome:Chromosome,
+      secondChromasome:Chromosome,
+      plantToSelectFor:Plant,
+      positionForSelection:Int) = {
 
 		var resultChromatidA:Chromatid = null
 		var resultChromatidB:Chromatid = null

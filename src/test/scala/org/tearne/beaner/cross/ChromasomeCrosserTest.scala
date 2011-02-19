@@ -39,7 +39,6 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 		when(spec.chromasomeLengths).thenReturn(Array(1))
 		p1 = mock[Plant]
 		p2 = mock[Plant]
-		
 	}
 	
 	@Test def getOffspringWithoutSelection {

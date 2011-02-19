@@ -33,14 +33,14 @@ class Reporter(plants: List[Plant], criteria: Set[Criterion], colour: Colour) ex
     this.init
   }
 
-
   override def setup(){
     textFont(f,12)
     val page = PageSize.A5
     size(
       page.getHeight.asInstanceOf[Int],
       page.getWidth.asInstanceOf[Int],
-      processing.core.PConstants.PDF, "output.pdf"
+      processing.core.PConstants.PDF,
+      "Output.pdf"
     )
     background(255)
 
@@ -58,7 +58,6 @@ class Reporter(plants: List[Plant], criteria: Set[Criterion], colour: Colour) ex
       if(plantIterator.hasNext)
 	      pGraphics.nextPage
     }
-
   }
 }
 

@@ -19,8 +19,8 @@ import org.tearne.beaner.plant._
 import org.tearne.beaner.chroma._
 
 case class ParentPlant(
-  val spec: PlantSpec,
-  name: Option[String] = None) extends Plant {
+    val spec: PlantSpec,
+    name: Option[String] = None) extends Plant {
 
   type P = ParentPlant
 
