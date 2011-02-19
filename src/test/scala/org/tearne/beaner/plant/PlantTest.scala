@@ -16,12 +16,12 @@
 package org.tearne.beaner.plant
 
 import org.scalatest.junit.JUnitSuite
+import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import org.mockito.Spy._
 import org.tearne.beaner.plant._
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.cross._
-import org.scalatest.mock.MockitoSugar
 import org.scalatest.Assertions._
 import org.junit.{Before, Test}
 
