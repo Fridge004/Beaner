@@ -15,16 +15,20 @@
 
 package org.tearne.beaner.plant
 
+import org.tearne.beaner.cross._
 import org.tearne.beaner.chroma._
-import org.tearne.beaner.cross.PlantPair
 
-trait Plant {
-  type P <: Plant
+trait Plant{
 
-	val chromasomes:Array[Chromosome]
-	val spec:PlantSpec
+  type Self <: Plant
   val name: Option[String]
-	
-	def x(that:Plant):PlantPair = PlantPair(this, that)
-  def named(newName:String):P
+
+  def x(that:Plant) = Parents(this, that)
+  def x(that:Cross) = Parents(this, that)
+
+  def named(newName:String):Self
+
+  val spec:PlantSpec
+	val chromosomes:Array[Chromosome]
+
 }

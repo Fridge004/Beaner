@@ -24,15 +24,15 @@ import org.scalatest.mock.MockitoSugar
 
 class PlantSpecTest extends JUnitSuite with MockitoSugar{
   class PlantSpecImpl1 extends PlantSpec{
-    val chromasomeLengths = Array(5,4,2)
+    val chromosomeLengths = Array(5,4,2)
   }
   class PlantSpecImpl2 extends PlantSpec{
-    val chromasomeLengths = Array(5,4,1)
+    val chromosomeLengths = Array(5,4,1)
   }
 
 	@Test def phaseolusVulgaris {
 		val expectedLengths = Array(107, 175, 132, 95, 72, 113, 102, 133, 105, 89, 100)
-		assertArrayEquals(expectedLengths, PhaseolusVulgaris.chromasomeLengths)
+		assertArrayEquals(expectedLengths, PhaseolusVulgaris.chromosomeLengths)
 	}
 	
 	@Test def equalityAndHashcode {

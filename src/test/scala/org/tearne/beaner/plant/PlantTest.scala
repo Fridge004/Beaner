@@ -24,11 +24,13 @@ import org.tearne.beaner.chroma._
 import org.tearne.beaner.cross._
 import org.scalatest.Assertions._
 import org.junit.{Before, Test}
+import org.junit.Assert._
 
-class PlantTest extends JUnitSuite with MockitoSugar{
 
-  case class PlantImpl(val chromasomes:Array[Chromosome], val spec:PlantSpec, name: Option[String] = None) extends Plant{
-    type P=PlantImpl
+class PlantTest extends JUnitSuite with MockitoSugar {
+
+  case class PlantImpl(val chromosomes:Array[Chromosome], val spec:PlantSpec, name: Option[String] = None) extends Plant{
+    type Self=PlantImpl
     @Override def named(newName:String) = copy(name=Option(newName))
   }
   var p1, p2: PlantImpl = null
@@ -37,6 +39,11 @@ class PlantTest extends JUnitSuite with MockitoSugar{
   @Before def setup{
     p1 = new PlantImpl(null, null)
     p2 = new PlantImpl(null, null)
+  }
+
+  @Test def plantAndCrossReturnsCrossParents {
+    val cross = mock[Cross]
+    assertTrue(p1.x(cross).isInstanceOf[MixedPair])
   }
 
   @Test def renaming {

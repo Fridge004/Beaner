@@ -40,7 +40,7 @@ class PlantPrinter(plant: Plant, criteria: Set[Criterion], colour: Colour, posit
 
   private def printPlant(plant:Plant, size: (Int,Int)){
     val (width, height) = size
-    val numChromasomes = plant.chromasomes.size
+    val numChromasomes = plant.chromosomes.size
 
     val widthWithoutMargin = (width*(1-margin)).asInstanceOf[Int]
     val marginWidth = width - widthWithoutMargin
@@ -56,7 +56,7 @@ class PlantPrinter(plant: Plant, criteria: Set[Criterion], colour: Colour, posit
     parent.translate(0,headerSpace)
     //text
 
-    plant.chromasomes.zipWithIndex.foreach {
+    plant.chromosomes.zipWithIndex.foreach {
       case (chromasome, index) => {
         parent.pushMatrix
         val xTrans = (marginWidth/2.0+(widthWithoutMargin*index) / numChromasomes.asInstanceOf[Double]).asInstanceOf[Int]

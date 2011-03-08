@@ -12,9 +12,8 @@
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  */
+package org.tearne.beaner.cross
 
-package org.tearne.beaner.plant
-
-object PhaseolusVulgaris extends PlantSpec{
-  val chromosomeLengths = Array(107, 175, 132, 95, 72, 113, 102, 133, 105, 89, 100)
+object SelectionType extends Enumeration{
+  val Heterozygous, Homozygous = Value
 }

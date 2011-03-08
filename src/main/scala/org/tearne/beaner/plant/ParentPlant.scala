@@ -22,14 +22,14 @@ case class ParentPlant(
     val spec: PlantSpec,
     name: Option[String] = None) extends Plant {
 
-  type P = ParentPlant
+  type Self = ParentPlant
 
   def this(spec: PlantSpec, name:String) = this(spec, Option(name))
 
-  val chromasomes: Array[Chromosome] = new Array[Chromosome](spec.chromasomeLengths.size)
+  val chromosomes: Array[Chromosome] = new Array[Chromosome](spec.chromosomeLengths.size)
 
-  for (i <- 0 until spec.chromasomeLengths.size) {
-    chromasomes(i) = new Chromosome(this, spec.chromasomeLengths(i))
+  for (i <- 0 until spec.chromosomeLengths.size) {
+    chromosomes(i) = new Chromosome(this, spec.chromosomeLengths(i))
   }
 
   @Override

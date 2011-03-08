@@ -19,12 +19,12 @@ import org.tearne.beaner.chroma._
 import org.apache.commons.math.distribution.BinomialDistributionImpl
 
 case class OffspringPlant(
-  val chromasomes: Array[Chromosome],
+  val chromosomes: Array[Chromosome],
   val spec: PlantSpec,
 	val selectionProbability: Option[Double],
   name: Option[String] = None) extends Plant {
 
-  type P = OffspringPlant
+  type Self = OffspringPlant
 
   def this(chromasomes: Array[Chromosome], 
 	   spec: PlantSpec) = 
@@ -39,11 +39,11 @@ case class OffspringPlant(
       Some(selectionProbability)
     })
 
-  for (i <- 0 until chromasomes.size) {
-    val length1 = chromasomes(i).size
-    val length = spec.chromasomeLengths(i)
+  for (i <- 0 until chromosomes.size) {
+    val length1 = chromosomes(i).size
+    val length = spec.chromosomeLengths(i)
     if (length1 != length)
-      throw new OffspringPlantException("Chromasome " + i + " does not match spec (actual=" + chromasomes(i).size + ",spec=" + spec.chromasomeLengths(i) + ")")
+      throw new OffspringPlantException("Chromosome " + i + " does not match spec (actual=" + chromosomes(i).size + ",spec=" + spec.chromosomeLengths(i) + ")")
   }
 
   @Override
@@ -52,9 +52,9 @@ case class OffspringPlant(
   def proportionOf(plant: Plant): Double = {
     var sumP = 0.0
     var cMCount = 0
-    for (i <- 0 until chromasomes.size) {
-      sumP += chromasomes(i).proportionOf(plant) * spec.chromasomeLengths(i)
-      cMCount += spec.chromasomeLengths(i)
+    for (i <- 0 until chromosomes.size) {
+      sumP += chromosomes(i).proportionOf(plant) * spec.chromosomeLengths(i)
+      cMCount += spec.chromosomeLengths(i)
     }
     sumP / cMCount
   }

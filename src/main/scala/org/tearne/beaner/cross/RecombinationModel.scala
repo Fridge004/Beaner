@@ -14,4 +14,18 @@
  */
 package org.tearne.beaner.cross
 
-class RecombinationModel
+import scala.math._
+
+class RecombinationModel{
+
+  def probInAtDistance(distance: Int): Double = {
+    val dist = abs(distance)
+    1.0-0.5*(1.0-exp(-2.0*dist/100.0))
+
+    //if (distance > 1) {
+    //  val probIN = probInAtDist(distance - 1)
+    //  0.99 * probIN + 0.01 * (1 - probIN)
+    //} else
+    //  0.99
+  }
+}

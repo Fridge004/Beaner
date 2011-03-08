@@ -15,7 +15,47 @@
 package org.tearne.beaner.cross
 
 import org.tearne.beaner.plant._
+import org.tearne.beaner.chroma._
 
-class Cross(val plantPair:PlantPair, val criteria: Set[Criterion]) {
-  def evaluareWith(recombinationModel: RecombinationModel): OffspringPlant = null
+case class Cross(
+    val pair:ParentPair,
+    val criteria: Set[Criterion],
+    name: Option[String] = None,
+    val selectionType: Option[SelectionType.Value] = None) {
+
+  type Self = Cross
+
+  def this(pair:ParentPair,
+           criteria: Set[Criterion],
+           selectionType: SelectionType.Value) = this(pair, criteria, None, Option(selectionType))
+
+  def x(plant: Plant) = Parents(this, plant)
+  def x(that: Cross) = Parents(this, that)
+
+  def named(newName:String) = copy(name=Option(newName))
+
+  def evaluateUsing(plantCrosser: PlantCrosser): OffspringPlant = {
+    if(name == None)
+      throw new UnnamedPlantException()
+
+    val plantPair: PlantPair = pair match{
+      case CrossPair(first, second) =>
+        PlantPair(first.evaluateUsing(plantCrosser), second.evaluateUsing(plantCrosser))
+      case MixedPair(first, second) =>
+        PlantPair(first.evaluateUsing(plantCrosser), second)
+      case p:PlantPair => p
+    }
+
+
+    val result = selectionType match{
+      case Some(SelectionType.Heterozygous) =>
+        plantCrosser.selectHeterozygousOffspring(plantPair, criteria)
+      case Some(SelectionType.Homozygous) =>
+        plantCrosser.selectHomozygousOffspring(plantPair, criteria)
+      //TODO test
+      case None => throw new RuntimeException("No selection type specified")
+    }
+
+    result.get named name.get
+  }
 }

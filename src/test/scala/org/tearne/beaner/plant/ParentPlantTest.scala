@@ -34,19 +34,19 @@ class ParentPlantTest extends JUnitSuite with MockitoSugar{
 	}
 		
 	@Test def creationOfChromasomes {
-		assertEquals(PhaseolusVulgaris.chromasomeLengths(0), p.chromasomes(0).size)
-		assertEquals(PhaseolusVulgaris.chromasomeLengths(3), p.chromasomes(3).size)
-		assertEquals(PhaseolusVulgaris.chromasomeLengths(6), p.chromasomes(6).size)
+		assertEquals(PhaseolusVulgaris.chromosomeLengths(0), p.chromosomes(0).size)
+		assertEquals(PhaseolusVulgaris.chromosomeLengths(3), p.chromosomes(3).size)
+		assertEquals(PhaseolusVulgaris.chromosomeLengths(6), p.chromosomes(6).size)
 		
-		val c = p.chromasomes(6)
-		for(i<-0 until p.chromasomes(6).size){
+		val c = p.chromosomes(6)
+		for(i<-0 until p.chromosomes(6).size){
 			assertEquals(1.0, c.firstChromatid.probabilityOf(p,i), tolerance)
 			assertEquals(1.0, c.secondChromatid.probabilityOf(p,i), tolerance)
 		}
 	}
 		
 	@Test def correctNumberOfChromasomes {
-		assertEquals(PhaseolusVulgaris.chromasomeLengths.size, p.chromasomes.size)
+		assertEquals(PhaseolusVulgaris.chromosomeLengths.size, p.chromosomes.size)
 	}
 
   @Test def nameFromConstructor {

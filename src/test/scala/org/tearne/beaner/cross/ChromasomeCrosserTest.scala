@@ -28,29 +28,33 @@ import org.junit.Before
 class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 
 	val tolerance = 1e-16
-	var chromasome1, chromasome2 : Chromosome = null
+	var chromosome1, chromosome2: Chromosome = null
 	var p1,p2:Plant = null
+  var gamete1, gamete2: Chromatid = null
 	
-	var chromasomeCrosser:ChromosomeCrosser = null
+	var chromosomeCrosser:ChromosomeCrosser = null
+  var gameter:Gameter = null;
 	
 	@Before def setup{
-		chromasomeCrosser = new ChromosomeCrosser()
+    gameter = mock[Gameter]
+		chromosomeCrosser = new ChromosomeCrosser(gameter)
+
 		val spec = mock[PlantSpec]
-		when(spec.chromasomeLengths).thenReturn(Array(1))
+		when(spec.chromosomeLengths).thenReturn(Array(1))
 		p1 = mock[Plant]
 		p2 = mock[Plant]
+
+    chromosome1 = mock[Chromosome]
+    chromosome2 = mock[Chromosome]
+    gamete1 = mock[Chromatid]
+    gamete2 = mock[Chromatid]
 	}
 	
 	@Test def getOffspringWithoutSelection {
-		val gamete1 = mock[Chromatid]
-		val gamete2 = mock[Chromatid]
-		
-		chromasome1 = mock[Chromosome]
-		when(chromasome1.makeGameteNoSelection).thenReturn(gamete1)
-		chromasome2 = mock[Chromosome]
-		when(chromasome2.makeGameteNoSelection).thenReturn(gamete2)
-		
-		val result = chromasomeCrosser.getOffspringWithoutSelection(chromasome1, chromasome2).get
+	  when(gameter.withoutSelection(chromosome1)).thenReturn(gamete1)
+    when(gameter.withoutSelection(chromosome2)).thenReturn(gamete2)
+
+		val result = chromosomeCrosser.getOffspringWithoutSelection(chromosome1, chromosome2).get
 		
 		assertEquals(gamete1, result.firstChromatid)
 		assertEquals(gamete2, result.secondChromatid)
@@ -58,28 +62,23 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 	}
 	
 	@Test def failedHomozygousSelection {
-		chromasome1 = mock[Chromosome]
-		when(chromasome1.probabilityGameteContains(p1, 50)).thenReturn(0)
-		chromasome2 = mock[Chromosome]
-		when(chromasome2.probabilityGameteContains(p1, 50)).thenReturn(0)
-		
-		val result = chromasomeCrosser.selectHomozygousOffspring(chromasome1, chromasome2, p1, 50)
+    when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0)
+    when(gameter.probContains(p1, 50, chromosome2)).thenReturn(0)
+
+		val result = chromosomeCrosser.selectHomozygousOffspring(chromosome1, chromosome2, p1, 50)
 		
 		assertEquals(None, result)
+    verify(gameter).probContains(p1, 50, chromosome1)
+    verify(gameter).probContains(p1, 50, chromosome2)
 	}
 	
 	@Test def homozygousSelection {
-		val gamete1 = mock[Chromatid]
-		val gamete2 = mock[Chromatid]
-		
-		chromasome1 = mock[Chromosome]
-		when(chromasome1.probabilityGameteContains(p1, 50)).thenReturn(0.5)
-		when(chromasome1.makeGameteSelectingFor(p1, 50)).thenReturn(gamete1)
-		chromasome2 = mock[Chromosome]
-		when(chromasome2.probabilityGameteContains(p1, 50)).thenReturn(0.4)
-		when(chromasome2.makeGameteSelectingFor(p1, 50)).thenReturn(gamete2)
-		
-		val result = chromasomeCrosser.selectHomozygousOffspring(chromasome1, chromasome2, p1, 50).get
+    when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0.5)
+    when(gameter.probContains(p1, 50 ,chromosome2)).thenReturn(0.4)
+    when(gameter.selectOn(p1, 50, chromosome1)).thenReturn(gamete1)
+    when(gameter.selectOn(p1, 50, chromosome2)).thenReturn(gamete2)
+
+		val result = chromosomeCrosser.selectHomozygousOffspring(chromosome1, chromosome2, p1, 50).get
 		
 		assertEquals(gamete1, result.firstChromatid)
 		assertEquals(gamete2, result.secondChromatid)
@@ -87,98 +86,37 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 	}
 	
 	@Test def failedHeterozygousSelection {
-		chromasome1 = mock[Chromosome]
-		when(chromasome1.probabilityGameteContains(p1, 50)).thenReturn(0)
-		chromasome2 = mock[Chromosome]
-		when(chromasome2.probabilityGameteContains(p1, 50)).thenReturn(0)
-		
-		val result = chromasomeCrosser.selectHeterozygousOffspring(chromasome1, chromasome2, p1, 50)
+    when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0)
+    when(gameter.probContains(p1, 50, chromosome2)).thenReturn(0)
+
+		val result = chromosomeCrosser.selectHeterozygousOffspring(chromosome1, chromosome2, p1, 50)
 		
 		assertEquals(None,result)
+    verify(gameter).probContains(p1, 50, chromosome1)
+    verify(gameter).probContains(p1, 50, chromosome2)
 	}
 	
 	@Test def simpleHeterozygousSelection {
-		val gamete1 = mock[Chromatid]
-		val gamete2 = mock[Chromatid]
-		
-		chromasome1 = mock[Chromosome]
-		when(chromasome1.probabilityGameteContains(p1, 50)).thenReturn(0.4)
-		when(chromasome1.makeGameteSelectingFor(p1, 50)).thenReturn(gamete1)
-		chromasome2 = mock[Chromosome]
-		when(chromasome2.probabilityGameteContains(p1, 50)).thenReturn(0)
-		when(chromasome2.makeGameteNoSelection).thenReturn(gamete2)
+    when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0.4)
+    when(gameter.probContains(p1, 50, chromosome2)).thenReturn(0)
+    when(gameter.selectOn(p1, 50, chromosome1)).thenReturn(gamete1)
+    when(gameter.withoutSelection(chromosome2)).thenReturn(gamete2)
 
-		val result = chromasomeCrosser.selectHeterozygousOffspring(chromasome1, chromasome2, p1, 50).get
+		val result = chromosomeCrosser.selectHeterozygousOffspring(chromosome1, chromosome2, p1, 50).get
 		
 		assertEquals(gamete1, result.firstChromatid)
 		assertEquals(gamete2, result.secondChromatid)
 		assertEquals(0.4, result.selectionProbability.get, tolerance)
 		
-		verify(chromasome2, never()).makeGameteSelectingFor(anyObject(),anyInt())
+		verify(gameter, never()).withoutSelection(chromosome1)
 	}
 	
 	@Test def exceptionIfTryHeterozygousSelectionAndBothChromosomesCanSupplyAllele {
-		chromasome1 = mock[Chromosome]
-		when(chromasome1.probabilityGameteContains(p1, 50)).thenReturn(0.5)
-		chromasome2 = mock[Chromosome]
-		when(chromasome2.probabilityGameteContains(p1, 50)).thenReturn(0.5)
+		when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0.5)
+    when(gameter.probContains(p1, 50, chromosome2)).thenReturn(0.5)
 
 		intercept[ChromasomeCrosserException]{
-			chromasomeCrosser.selectHeterozygousOffspring(chromasome1, chromasome2, p1, 50) 
+			chromosomeCrosser.selectHeterozygousOffspring(chromosome1, chromosome2, p1, 50)
 		}
 	}
-	
-//	@Test def zeroSuccessHeterozygousSelectionProbability {
-//		val chromatid1a = makeChromatidWithPlantAtIndex(p1, 100, 0.0)
-//		val chromatid1b = makeChromatidWithPlantAtIndex(p1, 100, 0.0)
-//		
-//		val chromatid2a = makeChromatidWithPlantAtIndex(p1, 100, 0.0)
-//		val chromatid2b = makeChromatidWithPlantAtIndex(p1, 100, 0.0)
-//
-//		chromasome1 = new Chromasome(chromatid1a, chromatid1b)
-//		chromasome2 = new Chromasome(chromatid2a, chromatid2b)
-//		
-//		val expectedSuccessProbability = 0.0
-//		val successProbability = chromasomeCrosser.probabilityOf(chromasome1, chromasome2, p1, 100)
-//
-//		assertEquals(expectedSuccessProbability, successProbability, tolerance)
-//	}
-//	
-//	@Test def nonZeroSuccessHeterozygousSelectionProbabilty {
-//		val chromatid1a = makeChromatidWithPlantAtIndex(p1, 100, 0.5)
-//		val chromatid1b = makeChromatidWithPlantAtIndex(p1, 100, 0)
-//		
-//		val chromatid2a = makeChromatidWithPlantAtIndex(p1, 100, 0.5)
-//		val chromatid2b = makeChromatidWithPlantAtIndex(p1, 100, 0.5)
-//
-//		chromasome1 = new Chromasome(chromatid1a, chromatid1b)
-//		chromasome2 = new Chromasome(chromatid2a, chromatid2b)
-//		
-//		val expectedSuccessProbability = 0.625
-//		val successProbability = chromasomeCrosser.probabilityOf(chromasome1, chromasome2,p1, 100)
-//		
-//		assertEquals(expectedSuccessProbability, successProbability, tolerance)
-//	}
-//	
-//	@Test def certainSuccessHeterozygousSelectionProbabilty {
-//		val chromatid1a = makeChromatidWithPlantAtIndex(p1, 100, 1)
-//		val chromatid1b = makeChromatidWithPlantAtIndex(p1, 100, 1)
-//		
-//		val chromatid2a = makeChromatidWithPlantAtIndex(p1, 100, 0)
-//		val chromatid2b = makeChromatidWithPlantAtIndex(p1, 100, 0)
-//
-//		chromasome1 = new Chromasome(chromatid1a, chromatid1b)
-//		chromasome2 = new Chromasome(chromatid2a, chromatid2b)
-//		
-//		val expectedSuccessProbability = 1
-//		val successProbability = chromasomeCrosser.probabilityOf(chromasome1, chromasome2, p1, 100)
-//		
-//		assertEquals(expectedSuccessProbability, successProbability, tolerance)
-//	}
-//	
-//	private def makeChromatidWithPlantAtIndex(namedPlant:Plant, index:Int, prob:Double)={
-//		val chromatid = mock[Chromatid]
-//		when(chromatid.probabilityOf(namedPlant, index)).thenReturn(prob)
-//		chromatid
-//	}
 }

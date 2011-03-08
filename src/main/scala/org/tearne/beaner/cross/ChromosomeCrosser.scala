@@ -18,12 +18,15 @@ package org.tearne.beaner.cross
 import org.tearne.beaner.plant._
 import org.tearne.beaner.chroma._
 
-class ChromosomeCrosser{
+class ChromosomeCrosser(val gameter: Gameter){
 	
 	def getOffspringWithoutSelection(
 			firstChromasome:Chromosome,
 			secondChromasome:Chromosome):Option[Chromosome] = {
-		Some(new Chromosome(firstChromasome.makeGameteNoSelection, secondChromasome.makeGameteNoSelection))
+		Some(new Chromosome(
+      gameter.withoutSelection(firstChromasome),
+      gameter.withoutSelection(secondChromasome)
+    ))
 	}
 	
 	def selectHomozygousOffspring(
@@ -31,54 +34,52 @@ class ChromosomeCrosser{
 			secondChromasome:Chromosome,
 			plantToSelectFor:Plant,
 			positionForSelection:Int):Option[Chromosome] = {
-		
+
 		val selectionProbability = 
-			firstChromasome.probabilityGameteContains(plantToSelectFor, positionForSelection)*
-			secondChromasome.probabilityGameteContains(plantToSelectFor, positionForSelection)
+			gameter.probContains(plantToSelectFor, positionForSelection, firstChromasome) *
+			gameter.probContains(plantToSelectFor, positionForSelection, secondChromasome)
 		
 		if(selectionProbability==0.0)
 			None
 		else
 			Some(new Chromosome(
-				firstChromasome.makeGameteSelectingFor(plantToSelectFor, positionForSelection),
-				secondChromasome.makeGameteSelectingFor(plantToSelectFor, positionForSelection),
+				gameter.selectOn(plantToSelectFor, positionForSelection, firstChromasome),
+				gameter.selectOn(plantToSelectFor, positionForSelection, secondChromasome),
 				selectionProbability
 			))
 	}
 	
 	def selectHeterozygousOffspring(
-			firstChromasome:Chromosome, 
-			secondChromasome:Chromosome, 
+			firstChromosome:Chromosome,
+			secondChromosome:Chromosome,
 			plantToSelectFor:Plant, 
 			positionForSelection:Int):Option[Chromosome] = {
-		
-		if(firstChromasome.probabilityGameteContains(plantToSelectFor, positionForSelection)>0){
-			if(secondChromasome.probabilityGameteContains(plantToSelectFor, positionForSelection)>0){
+
+		if(gameter.probContains(plantToSelectFor, positionForSelection, firstChromosome)>0){
+			if(gameter.probContains(plantToSelectFor, positionForSelection, secondChromosome)>0){
 				//Both chromatids
 				throw new ChromasomeCrosserException("Not supported: Heterozygous selection when both chromasome can supply allele")
 			}
 			//Only first chromatid
-			Some(getResultGivenSelectionFromSingleChromasome(firstChromasome, secondChromasome, plantToSelectFor:Plant, positionForSelection:Int))
-		} else if(secondChromasome.probabilityGameteContains(plantToSelectFor, positionForSelection)>0){
+			Some(getResultGivenSelectionFromSingleChromasome(firstChromosome, secondChromosome, plantToSelectFor:Plant, positionForSelection:Int))
+		} else if(gameter.probContains(plantToSelectFor, positionForSelection, secondChromosome)>0){
 			//Only second chromatid
-			Some(getResultGivenSelectionFromSingleChromasome(secondChromasome, firstChromasome, plantToSelectFor:Plant, positionForSelection:Int))
+			Some(getResultGivenSelectionFromSingleChromasome(secondChromosome, firstChromosome, plantToSelectFor:Plant, positionForSelection:Int))
 		} else {
 			None
 		}
 	}
 
 	private def getResultGivenSelectionFromSingleChromasome(
-      firstChromasome:Chromosome,
-      secondChromasome:Chromosome,
+      firstChromosome:Chromosome,
+      secondChromosome:Chromosome,
       plantToSelectFor:Plant,
       positionForSelection:Int) = {
 
-		var resultChromatidA:Chromatid = null
-		var resultChromatidB:Chromatid = null
-		
-		resultChromatidA = firstChromasome.makeGameteSelectingFor(plantToSelectFor, positionForSelection)
-		resultChromatidB = secondChromasome.makeGameteNoSelection;
-		
-		new Chromosome(resultChromatidA, resultChromatidB, firstChromasome.probabilityGameteContains(plantToSelectFor, positionForSelection))
+		val resultChromatidA = gameter.selectOn(plantToSelectFor, positionForSelection, firstChromosome)
+		val resultChromatidB = gameter.withoutSelection(secondChromosome);
+    val selectionProb = gameter.probContains(plantToSelectFor, positionForSelection, firstChromosome)
+
+		new Chromosome(resultChromatidA, resultChromatidB, selectionProb)
 	}
 }

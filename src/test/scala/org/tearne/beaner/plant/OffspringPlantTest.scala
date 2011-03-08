@@ -30,7 +30,7 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 	
 	@Before def setup {
 		spec = mock[PlantSpec]
-		when(spec.chromasomeLengths).thenReturn(Array[Int](1,2,3))
+		when(spec.chromosomeLengths).thenReturn(Array[Int](1,2,3))
 		
 		chroma1 = new Chromosome(mock[Plant],1)
 		chroma2 = new Chromosome(mock[Plant],2)
@@ -59,9 +59,9 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 		chromas = Array(chroma1, chroma2, chroma3)
 		
 		val plant = new OffspringPlant(chromas, spec)
-		val expectedProportion = (1.0*spec.chromasomeLengths(0)+
-								  0.5*spec.chromasomeLengths(1)+
-								  2.0/3.0*spec.chromasomeLengths(2))/6
+		val expectedProportion = (1.0*spec.chromosomeLengths(0)+
+								  0.5*spec.chromosomeLengths(1)+
+								  2.0/3.0*spec.chromosomeLengths(2))/6
 		
 		assertEquals(expectedProportion, plant.proportionOf(p), tolerance)
 	}
@@ -99,10 +99,10 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 		val plant = new OffspringPlant(chromas, spec, 0.5)
 		
 		assertTrue(plant.isInstanceOf[Plant])
-		assertEquals(3, plant.chromasomes.size)
-		assertEquals(chromas(0), plant.chromasomes(0))
-		assertEquals(chromas(1), plant.chromasomes(1))
-		assertEquals(chromas(2), plant.chromasomes(2))
+		assertEquals(3, plant.chromosomes.size)
+		assertEquals(chromas(0), plant.chromosomes(0))
+		assertEquals(chromas(1), plant.chromosomes(1))
+		assertEquals(chromas(2), plant.chromosomes(2))
 		assertEquals(0.5, plant.selectionProbability.get, tolerance)
 	}
 }

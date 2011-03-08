@@ -16,7 +16,7 @@
 package org.tearne.beaner.plant
 
 trait PlantSpec {
-  val chromasomeLengths: Array[Int]
+  val chromosomeLengths: Array[Int]
 
   def apply(name: String) = new ParentPlant(this, Option(name))
 
@@ -24,7 +24,7 @@ trait PlantSpec {
 		other match {
 			case that: PlantSpec => {
 				val a = (that canEqual this)
-				val b = chromasomeLengths.sameElements(that.chromasomeLengths)
+				val b = chromosomeLengths.sameElements(that.chromosomeLengths)
 				a && b
 			}
 			case _ => false
@@ -34,6 +34,6 @@ trait PlantSpec {
 	def canEqual(other:Any):Boolean = other.isInstanceOf[PlantSpec]
 	
 	override def hashCode: Int = {
-		chromasomeLengths.foldLeft(41)((b,a) => 41*(a)+b)
+		chromosomeLengths.foldLeft(41)((b,a) => 41*(a)+b)
 	}
 }
