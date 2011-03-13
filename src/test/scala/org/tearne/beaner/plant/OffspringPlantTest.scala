@@ -16,6 +16,7 @@
 package org.tearne.beaner.plant
 
 import org.tearne.beaner.chroma._
+import org.tearne.beaner.cross._
 import org.junit.{Test, Before}
 import org.junit.Assert._
 import org.scalatest.junit.JUnitSuite
@@ -27,6 +28,8 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 	var chroma1, chroma2, chroma3 : Chromosome = null
 	var spec : PlantSpec = null
 	var chromas:Array[Chromosome] = null
+  val name = "name"
+  var parents:PlantPair = null
 	
 	@Before def setup {
 		spec = mock[PlantSpec]
@@ -37,6 +40,8 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 		chroma3 = new Chromosome(mock[Plant],3)
 		
 		chromas = Array(chroma1, chroma2, chroma3)
+
+    parents = mock[PlantPair]
 	}
 
   @Test def numRequiredForConfidenceInSelection {
@@ -92,6 +97,13 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 			new OffspringPlant(chromas, spec, -1.1)
 		}
 	}
+
+  @Test def attributes_nameAndParents {
+    val plant = new OffspringPlant(chromas, spec, None, Option(name), Option(parents))
+
+    assert(plant.parents.get === parents)
+    assert(plant.name.get === name)
+  }
 	
 	@Test def attributes {		
 		val chromas = Array(chroma1, chroma2, chroma3)

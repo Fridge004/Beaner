@@ -16,13 +16,15 @@
 package org.tearne.beaner.plant
 
 import org.tearne.beaner.chroma._
+import org.tearne.beaner.cross._
 import org.apache.commons.math.distribution.BinomialDistributionImpl
 
 case class OffspringPlant(
   val chromosomes: Array[Chromosome],
   val spec: PlantSpec,
 	val selectionProbability: Option[Double],
-  name: Option[String] = None) extends Plant {
+  name: Option[String] = None,
+  val parents: Option[PlantPair] = None) extends Plant {
 
   type Self = OffspringPlant
 

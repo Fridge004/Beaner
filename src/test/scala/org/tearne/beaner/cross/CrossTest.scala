@@ -32,7 +32,6 @@ class CrossTest extends JUnitSuite with MockitoSugar{
   var cross: Cross = null
 
   @Before def setup {
-
     plantPair = mock[PlantPair]
     criteria = Set(mock[Criterion])
     plantCrosser = mock[PlantCrosser]
@@ -40,46 +39,14 @@ class CrossTest extends JUnitSuite with MockitoSugar{
     cross = new Cross(plantPair, criteria, null)
   }
 
-  @Test def crossAndPlantReturnsCrossParents {
+  @Test def crossWithPlantReturnsMixedPait {
     val plant = mock[Plant]
     assertTrue(cross.x(plant).isInstanceOf[MixedPair])
   }
 
-//  @Test def crossDrillsDownToParentPlantsWithSpec {
-//    spec = mock[Spec]
-//    parent1 = mock[ParentPlant]
-//    parent2 = mock[ParentPlant]
-//    parent3 = mock[ParentPlant]
-//    parent4 = mock[ParentPlant]
-//    when(parent1.spec).thenReturn(spec)
-//    when(parent2.spec).thenReturn(spec)
-//    when(parent3.spec).thenReturn(spec)
-//    when(parent4.spec).thenReturn(spec)
-//
-//    val cross1 = new Cross(new PlantPair(parent1, parent2), null, null)
-//    val cross2 = new Cross(new PlantPair(parent3, parent4), null, null)
-//    val cross3 = new Cross(new CrossPair(cross1, cross2), null, null)
-//
-//    assert(cross1.spec === spec)
-//    assert(cross2.spec === spec)
-//    assert(cross3.spec === spec)
-//  }
-
-//  @Test def exceptionIfCantDrillDownToParentSpec {
-//    fail("not written yet")
-//  }
-
-//  @Test def aCrossIsAlsoAPlant {
-//    fail("not written yet")
-//    val cross = new Cross(plantPair, criteria, SelectionType.Homozygous)
-//
-//    assert(classOf[Plant] === cross.getClass)
-//  }
 
   @Test def exceptionIfNotNamed {
-    when(plantCrosser.selectHomozygousOffspring(plantPair, criteria)).thenReturn(None)
-
-    val cross = new Cross(plantPair, criteria, SelectionType.Homozygous)
+    val cross = new Cross(plantPair, criteria, Option(SelectionType.Homozygous))
 
     intercept[UnnamedPlantException]{
       cross.evaluateUsing(plantCrosser)
@@ -87,7 +54,7 @@ class CrossTest extends JUnitSuite with MockitoSugar{
   }
 
   @Test def naming {
-    val cross = new Cross(plantPair, criteria, SelectionType.Homozygous)
+    val cross = new Cross(plantPair, criteria, Option(SelectionType.Homozygous))
     val namedCross: Cross = cross named name
 
     assert(classOf[Cross] === namedCross.getClass)
@@ -98,22 +65,22 @@ class CrossTest extends JUnitSuite with MockitoSugar{
   }
 
   @Test def evaluatingHomozygous {
-    val cross = new Cross(plantPair, criteria, SelectionType.Homozygous) named name
+    val cross = new Cross(plantPair, criteria, Option(SelectionType.Homozygous), Option(name))
 
-    var expected = new OffspringPlant(Array(), mock[PlantSpec], None, Option(name))
+    var expected = new OffspringPlant(Array(), mock[PlantSpec], None, Option(name), None)
 
-    when(plantCrosser.selectHomozygousOffspring(plantPair, criteria)).thenReturn(Option(expected))
+    when(plantCrosser.selectHomozygousOffspring(plantPair, criteria)).thenReturn(expected)
     val result = cross.evaluateUsing(plantCrosser)
 
     assert(result === expected)
   }
 
   @Test def evaluatingHeterozygous {
-    val cross = new Cross(plantPair, criteria, Option(name), Option(SelectionType.Heterozygous))
+    val cross = new Cross(plantPair, criteria, Option(SelectionType.Heterozygous), Option(name))
 
-    var expected = new OffspringPlant(Array(), mock[PlantSpec], None, Option(name))
+    var expected = new OffspringPlant(Array(), mock[PlantSpec], None, Option(name), None)
 
-    when(plantCrosser.selectHeterozygousOffspring(plantPair, criteria)).thenReturn(Option(expected))
+    when(plantCrosser.selectHeterozygousOffspring(plantPair, criteria)).thenReturn(expected)
     val result = cross.evaluateUsing(plantCrosser)
 
     assert(result === expected)

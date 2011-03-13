@@ -56,15 +56,17 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar {
   when(chromasome2.size).thenReturn(1)
   when(chromasome2.selectionProbability).thenReturn(None)
 
+  @Test def parentsSetOnOffspringPlant {
+
+  }
+
   @Test
   def cantCrossUnnamedOffspringPlants {
-    //fail("not written yet")
-
 		val chromas = Array(chromasome0, chromasome1, chromasome2)
 
     val plantCrosser = new PlantCrosser(mock[ChromosomeCrosser])
 
-    val p1 = new OffspringPlant(chromas, spec, 0.1)
+    val p1 = new OffspringPlant(chromas, spec, Some(0.1))
     val p2 = new ParentPlant(spec, plantName)
 
     intercept[UnnamedPlantException]{
@@ -88,66 +90,43 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar {
   @Test
   def heterozygousCrossing {
     val chromasomeCrosser = mock[ChromosomeCrosser]
-    when(chromasomeCrosser.selectHeterozygousOffspring(p1.chromosomes(0), p2.chromosomes(0), p1, 2)).thenReturn(Some(chromasome0))
-    when(chromasomeCrosser.selectHeterozygousOffspring(p1.chromosomes(1), p2.chromosomes(1), p2, 1)).thenReturn(Some(chromasome1))
-    when(chromasomeCrosser.getOffspringWithoutSelection(p1.chromosomes(2), p2.chromosomes(2))).thenReturn(Some(chromasome2))
+    when(chromasomeCrosser.selectHeterozygousOffspring(p1.chromosomes(0), p2.chromosomes(0), p1, 2)).thenReturn(chromasome0)
+    when(chromasomeCrosser.selectHeterozygousOffspring(p1.chromosomes(1), p2.chromosomes(1), p2, 1)).thenReturn(chromasome1)
+    when(chromasomeCrosser.getOffspringWithoutSelection(p1.chromosomes(2), p2.chromosomes(2))).thenReturn(chromasome2)
+    val plantPair = PlantPair(p1, p2)
 
     val plantCrosser = new PlantCrosser(chromasomeCrosser)
-    val offspring = plantCrosser.selectHeterozygousOffspring(PlantPair(p1, p2), criteria).get
+    val offspring = plantCrosser.selectHeterozygousOffspring(plantPair, criteria)
 
     assertEquals(chromasome0, offspring.chromosomes(0))
     assertEquals(chromasome1, offspring.chromosomes(1))
     assertEquals(chromasome2, offspring.chromosomes(2))
+    assert(offspring.parents.get === plantPair)
 
     val expectedSelectionProb = chromasome0.selectionProbability.get *
       chromasome1.selectionProbability.get
     //No selection probability on third chromasome since pretending there is no selection on it
     assertEquals(expectedSelectionProb, offspring.selectionProbability.get, tolerance)
-  }
-
-  @Test
-  def failedHeteroxygousCrossing {
-    val chromasomeCrosser = mock[ChromosomeCrosser]
-    when(chromasomeCrosser.selectHeterozygousOffspring(p1.chromosomes(0), p2.chromosomes(0), p1, 2)).thenReturn(Some(chromasome0))
-    when(chromasomeCrosser.selectHeterozygousOffspring(p1.chromosomes(1), p2.chromosomes(1), p2, 1)).thenReturn(None)
-    when(chromasomeCrosser.getOffspringWithoutSelection(p1.chromosomes(2), p2.chromosomes(2))).thenReturn(Some(chromasome2))
-
-    val plantCrosser = new PlantCrosser(chromasomeCrosser)
-    val offspring = plantCrosser.selectHeterozygousOffspring(PlantPair(p1, p2), criteria)
-
-    assertTrue(offspring == None)
   }
 
   @Test
   def homozygousCrossing {
     val chromasomeCrosser = mock[ChromosomeCrosser]
-    when(chromasomeCrosser.selectHomozygousOffspring(p1.chromosomes(0), p2.chromosomes(0), p1, 2)).thenReturn(Some(chromasome0))
-    when(chromasomeCrosser.selectHomozygousOffspring(p1.chromosomes(1), p2.chromosomes(1), p2, 1)).thenReturn(Some(chromasome1))
-    when(chromasomeCrosser.getOffspringWithoutSelection(p1.chromosomes(2), p2.chromosomes(2))).thenReturn(Some(chromasome2))
+    when(chromasomeCrosser.selectHomozygousOffspring(p1.chromosomes(0), p2.chromosomes(0), p1, 2)).thenReturn(chromasome0)
+    when(chromasomeCrosser.selectHomozygousOffspring(p1.chromosomes(1), p2.chromosomes(1), p2, 1)).thenReturn(chromasome1)
+    when(chromasomeCrosser.getOffspringWithoutSelection(p1.chromosomes(2), p2.chromosomes(2))).thenReturn(chromasome2)
+    val plantPair = PlantPair(p1, p2)
 
     val plantCrosser = new PlantCrosser(chromasomeCrosser)
-    val offspring = plantCrosser.selectHomozygousOffspring(PlantPair(p1, p2), criteria).get
+    val offspring = plantCrosser.selectHomozygousOffspring(plantPair, criteria)
 
     assertEquals(chromasome0, offspring.chromosomes(0))
     assertEquals(chromasome1, offspring.chromosomes(1))
     assertEquals(chromasome2, offspring.chromosomes(2))
+    assert(offspring.parents.get === plantPair)
 
-    val expectedSelectionProb = chromasome0.selectionProbability.get *
-      chromasome1.selectionProbability.get
+    val expectedSelectionProb = chromasome0.selectionProbability.get * chromasome1.selectionProbability.get
     //No selection probability on third chromasome since pretending there is no selection on it
     assertEquals(expectedSelectionProb, offspring.selectionProbability.get, tolerance)
-  }
-
-  @Test
-  def failedHomozygousCrossing {
-    val chromasomeCrosser = mock[ChromosomeCrosser]
-    when(chromasomeCrosser.selectHomozygousOffspring(p1.chromosomes(0), p2.chromosomes(0), p1, 2)).thenReturn(None)
-    when(chromasomeCrosser.selectHomozygousOffspring(p1.chromosomes(1), p2.chromosomes(1), p2, 1)).thenReturn(Some(chromasome1))
-    when(chromasomeCrosser.getOffspringWithoutSelection(p1.chromosomes(2), p2.chromosomes(2))).thenReturn(Some(chromasome2))
-
-    val plantCrosser = new PlantCrosser(chromasomeCrosser)
-    val offspring = plantCrosser.selectHomozygousOffspring(PlantPair(p1, p2), criteria)
-
-    assertTrue(offspring == None)
   }
 }

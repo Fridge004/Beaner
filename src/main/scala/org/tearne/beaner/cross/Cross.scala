@@ -20,14 +20,15 @@ import org.tearne.beaner.chroma._
 case class Cross(
     val pair:ParentPair,
     val criteria: Set[Criterion],
-    name: Option[String] = None,
-    val selectionType: Option[SelectionType.Value] = None) {
+    val selectionType: Option[SelectionType.Value] = None,
+    name: Option[String] = None) {
 
   type Self = Cross
 
-  def this(pair:ParentPair,
-           criteria: Set[Criterion],
-           selectionType: SelectionType.Value) = this(pair, criteria, None, Option(selectionType))
+//  def this(pair:ParentPair,
+//           criteria: Set[Criterion],
+//           selectionType: SelectionType.Value,
+//           name: Option[String] = None) = this(pair, criteria, Option(selectionType), name)
 
   def x(plant: Plant) = Parents(this, plant)
   def x(that: Cross) = Parents(this, that)
@@ -39,13 +40,12 @@ case class Cross(
       throw new UnnamedPlantException()
 
     val plantPair: PlantPair = pair match{
-      case CrossPair(first, second) =>
+      case CrossPair(first, second) =>first
         PlantPair(first.evaluateUsing(plantCrosser), second.evaluateUsing(plantCrosser))
       case MixedPair(first, second) =>
         PlantPair(first.evaluateUsing(plantCrosser), second)
       case p:PlantPair => p
     }
-
 
     val result = selectionType match{
       case Some(SelectionType.Heterozygous) =>
@@ -56,6 +56,6 @@ case class Cross(
       case None => throw new RuntimeException("No selection type specified")
     }
 
-    result.get named name.get
+    result named name.get
   }
 }

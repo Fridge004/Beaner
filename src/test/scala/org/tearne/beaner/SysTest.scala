@@ -29,10 +29,6 @@ class SysTest extends JUnitSuite with MockitoSugar {
   val lowTolerance = 1e-4
   val plantCrosser = new PlantCrosser(new ChromosomeCrosser(new Gameter(new RecombinationModel)))
 
-//  @Before def setup {
-//    PlantPair.setPlantCrosser(new PlantCrosser(new ChromosomeCrosser(null)))
-//  }
-
   @Test def megansSecondExcelSheetTest_4Markers {
     object MyPlantSpec extends PlantSpec{
       val chromosomeLengths = Array(5, 6, 3, 7, 5)
@@ -111,36 +107,40 @@ class SysTest extends JUnitSuite with MockitoSugar {
     //Homozygous selection
     val fin = bc2 x bc2 selectHom crit1 + crit2 named "final"
 
-    assertEquals(1.0, f1.evaluateUsing(plantCrosser).selectionProbability.get, tolerance)
-    assertEquals(0.0, f1.evaluateUsing(plantCrosser).chromosomes(2).proportionOf(pV), tolerance)
+    val f1Result = f1.evaluateUsing(plantCrosser)
+    assertEquals(1.0, f1Result.selectionProbability.get, tolerance)
+    assertEquals(0.0, f1Result.chromosomes(2).proportionOf(pV), tolerance)
 
-    assertEquals(0.25, bc1.evaluateUsing(plantCrosser).selectionProbability.get, tolerance)
-    assertEquals(0.5, bc1.evaluateUsing(plantCrosser).chromosomes(2).proportionOf(pV), tolerance)
+    val bc1Result = bc1.evaluateUsing(plantCrosser)
+    assertEquals(0.25, bc1Result.selectionProbability.get, tolerance)
+    assertEquals(0.5, bc1Result.chromosomes(2).proportionOf(pV), tolerance)
 
-    assertEquals(0.25, bc2.evaluateUsing(plantCrosser).selectionProbability.get, tolerance)
-    assertEquals(0.75, bc2.evaluateUsing(plantCrosser).chromosomes(2).proportionOf(pV), tolerance)
+    val bc2Result = bc2.evaluateUsing(plantCrosser)
+    assertEquals(0.25, bc2Result.selectionProbability.get, tolerance)
+    assertEquals(0.75, bc2Result.chromosomes(2).proportionOf(pV), tolerance)
 
-    assertEquals(1.0 / 16.0, fin.evaluateUsing(plantCrosser).selectionProbability.get, tolerance)
-    assertEquals(0.75, fin.evaluateUsing(plantCrosser).chromosomes(2).proportionOf(pV), tolerance)
+    val finResult = fin.evaluateUsing(plantCrosser)
+    assertEquals(1.0 / 16.0, finResult.selectionProbability.get, tolerance)
+    assertEquals(0.75, finResult.chromosomes(2).proportionOf(pV), tolerance)
 
-    assertEquals(0.772698, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 0), lowTolerance)
-    assertEquals(0.794207, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 1), lowTolerance)
-    assertEquals(0.816559, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 2), lowTolerance)
-    assertEquals(0.839790, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 3), lowTolerance)
-    assertEquals(0.863940, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 4), lowTolerance)
-    assertEquals(0.889051, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 5), lowTolerance)
-    assertEquals(0.915165, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 6), lowTolerance)
-    assertEquals(0.942329, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 7), lowTolerance)
-    assertEquals(0.970591, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 8), lowTolerance)
-    assertEquals(1.000000, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 9), lowTolerance)
-    assertEquals(0.970591, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 10), lowTolerance)
-    assertEquals(0.942329, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 11), lowTolerance)
-    assertEquals(0.915165, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 12), lowTolerance)
-    assertEquals(0.889051, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 13), lowTolerance)
-    assertEquals(0.863940, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 14), lowTolerance)
-    assertEquals(0.839790, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 15), lowTolerance)
-    assertEquals(0.816559, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 16), lowTolerance)
-    assertEquals(0.794207, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 17), lowTolerance)
-    assertEquals(0.772698, fin.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid.probabilityOf(p1, 18), lowTolerance)
+    assertEquals(0.772698, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 0), lowTolerance)
+    assertEquals(0.794207, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 1), lowTolerance)
+    assertEquals(0.816559, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 2), lowTolerance)
+    assertEquals(0.839790, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 3), lowTolerance)
+    assertEquals(0.863940, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 4), lowTolerance)
+    assertEquals(0.889051, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 5), lowTolerance)
+    assertEquals(0.915165, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 6), lowTolerance)
+    assertEquals(0.942329, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 7), lowTolerance)
+    assertEquals(0.970591, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 8), lowTolerance)
+    assertEquals(1.000000, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 9), lowTolerance)
+    assertEquals(0.970591, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 10), lowTolerance)
+    assertEquals(0.942329, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 11), lowTolerance)
+    assertEquals(0.915165, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 12), lowTolerance)
+    assertEquals(0.889051, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 13), lowTolerance)
+    assertEquals(0.863940, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 14), lowTolerance)
+    assertEquals(0.839790, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 15), lowTolerance)
+    assertEquals(0.816559, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 16), lowTolerance)
+    assertEquals(0.794207, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 17), lowTolerance)
+    assertEquals(0.772698, finResult.chromosomes(0).firstChromatid.probabilityOf(p1, 18), lowTolerance)
   }
 }

@@ -27,7 +27,7 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
       throw new UnnamedPlantException()
   }
 
-  def selectHeterozygousOffspring(pair: PlantPair, criteria: Set[Criterion]): Option[OffspringPlant] = {
+  def selectHeterozygousOffspring(pair: PlantPair, criteria: Set[Criterion]): OffspringPlant = {
     checkCanCross(pair)
 
     val resultGenome = new Array[Chromosome](pair.first.spec.chromosomeLengths.size)
@@ -39,9 +39,7 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
         throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
 
       val selectedChroma = getHeterozygousSelectedChroma(pair, criteria)
-      if (selectedChroma == None)
-        return None
-      resultGenome(chromaNum) = selectedChroma.get
+      resultGenome(chromaNum) = selectedChroma
     })
 
     for (i <- 0 until resultGenome.size) {
@@ -49,10 +47,10 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
         resultGenome(i) = getUnselectedtedChroma(pair, i)
     }
 
-    Some(new OffspringPlant(resultGenome, pair.first.spec, getSelectionProbability(resultGenome)))
+    new OffspringPlant(resultGenome, pair.first.spec, Some(getSelectionProbability(resultGenome)), None, Some(pair))
   }
 
-  private def getHeterozygousSelectedChroma(pair: PlantPair, criterion: Criterion): Option[Chromosome] = {
+  private def getHeterozygousSelectedChroma(pair: PlantPair, criterion: Criterion): Chromosome = {
     val chromaNum = criterion.chromasomeIndex
     val cMNum = criterion.cMIndex
     val plant = criterion.plant
@@ -60,10 +58,10 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
   }
 
   private def getUnselectedtedChroma(pair: PlantPair, chromaNum: Int): Chromosome = {
-    chromaCrosser.getOffspringWithoutSelection(pair.first.chromosomes(chromaNum), pair.second.chromosomes(chromaNum)).get
+    chromaCrosser.getOffspringWithoutSelection(pair.first.chromosomes(chromaNum), pair.second.chromosomes(chromaNum))
   }
 
-  def selectHomozygousOffspring(pair: PlantPair, criteriaList: Set[Criterion]): Option[OffspringPlant] = {
+  def selectHomozygousOffspring(pair: PlantPair, criteriaList: Set[Criterion]): OffspringPlant = {
     checkCanCross(pair)
 
     val resultGenome = new Array[Chromosome](pair.first.spec.chromosomeLengths.size)
@@ -75,9 +73,7 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
       if (resultGenome(chromaNum) != null)
         throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
       val selectedChroma = getHomozygousSelectedChroma(pair, criteria)
-      if (selectedChroma == None)
-        return None
-      resultGenome(chromaNum) = selectedChroma.get
+      resultGenome(chromaNum) = selectedChroma
     })
 
     for (i <- 0 until resultGenome.size) {
@@ -85,10 +81,10 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
         resultGenome(i) = getUnselectedtedChroma(pair, i)
     }
 
-    Some(new OffspringPlant(resultGenome, pair.first.spec, getSelectionProbability(resultGenome)))
+    new OffspringPlant(resultGenome, pair.first.spec, Some(getSelectionProbability(resultGenome)), None, Option(pair))
   }
 
-  private def getHomozygousSelectedChroma(pair: PlantPair, criteria: Criterion): Option[Chromosome] = {
+  private def getHomozygousSelectedChroma(pair: PlantPair, criteria: Criterion): Chromosome = {
     val chromaNum = criteria.chromasomeIndex
     val cMNum = criteria.cMIndex
     val plant = criteria.plant

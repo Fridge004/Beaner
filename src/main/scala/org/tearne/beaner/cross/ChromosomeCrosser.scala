@@ -22,38 +22,38 @@ class ChromosomeCrosser(val gameter: Gameter){
 	
 	def getOffspringWithoutSelection(
 			firstChromasome:Chromosome,
-			secondChromasome:Chromosome):Option[Chromosome] = {
-		Some(new Chromosome(
+			secondChromasome:Chromosome):Chromosome = {
+		new Chromosome(
       gameter.withoutSelection(firstChromasome),
       gameter.withoutSelection(secondChromasome)
-    ))
+    )
 	}
 	
 	def selectHomozygousOffspring(
 			firstChromasome:Chromosome,
 			secondChromasome:Chromosome,
 			plantToSelectFor:Plant,
-			positionForSelection:Int):Option[Chromosome] = {
+			positionForSelection:Int):Chromosome = {
 
 		val selectionProbability = 
 			gameter.probContains(plantToSelectFor, positionForSelection, firstChromasome) *
 			gameter.probContains(plantToSelectFor, positionForSelection, secondChromasome)
 		
 		if(selectionProbability==0.0)
-			None
+			throw new ChromasomeCrosserException("Chromosomes can't both provide allele")
 		else
-			Some(new Chromosome(
+		  new Chromosome(
 				gameter.selectOn(plantToSelectFor, positionForSelection, firstChromasome),
 				gameter.selectOn(plantToSelectFor, positionForSelection, secondChromasome),
 				selectionProbability
-			))
+			)
 	}
 	
 	def selectHeterozygousOffspring(
 			firstChromosome:Chromosome,
 			secondChromosome:Chromosome,
 			plantToSelectFor:Plant, 
-			positionForSelection:Int):Option[Chromosome] = {
+			positionForSelection:Int):Chromosome = {
 
 		if(gameter.probContains(plantToSelectFor, positionForSelection, firstChromosome)>0){
 			if(gameter.probContains(plantToSelectFor, positionForSelection, secondChromosome)>0){
@@ -61,12 +61,12 @@ class ChromosomeCrosser(val gameter: Gameter){
 				throw new ChromasomeCrosserException("Not supported: Heterozygous selection when both chromasome can supply allele")
 			}
 			//Only first chromatid
-			Some(getResultGivenSelectionFromSingleChromasome(firstChromosome, secondChromosome, plantToSelectFor:Plant, positionForSelection:Int))
+			getResultGivenSelectionFromSingleChromasome(firstChromosome, secondChromosome, plantToSelectFor:Plant, positionForSelection:Int)
 		} else if(gameter.probContains(plantToSelectFor, positionForSelection, secondChromosome)>0){
 			//Only second chromatid
-			Some(getResultGivenSelectionFromSingleChromasome(secondChromosome, firstChromosome, plantToSelectFor:Plant, positionForSelection:Int))
+			getResultGivenSelectionFromSingleChromasome(secondChromosome, firstChromosome, plantToSelectFor:Plant, positionForSelection:Int)
 		} else {
-			None
+			throw new ChromasomeCrosserException("Neither chromosome can provide allele")
 		}
 	}
 
