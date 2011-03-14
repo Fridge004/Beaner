@@ -22,24 +22,18 @@ import org.apache.commons.math.distribution.BinomialDistributionImpl
 case class OffspringPlant(
   val chromosomes: Array[Chromosome],
   val spec: PlantSpec,
-	val selectionProbability: Option[Double],
+	val selectionProbability: Option[Double] = None,
   name: Option[String] = None,
   val parents: Option[PlantPair] = None) extends Plant {
 
   type Self = OffspringPlant
 
-  def this(chromasomes: Array[Chromosome], 
-	   spec: PlantSpec) = 
-    this(chromasomes, spec, None)
-  
-  def this(chromasomes: Array[Chromosome], 
-	   spec: PlantSpec, 
-	   selectionProbability: Double) =
-    this(chromasomes, spec, {
-      if (selectionProbability > 1.0 || selectionProbability < 0.0)
+  selectionProbability match {
+    case Some(p) =>
+      if (p > 1.0 || p < 0.0)
         throw new OffspringPlantException("Selection probability out of range: " + selectionProbability)
-      Some(selectionProbability)
-    })
+    case _ =>
+  }
 
   for (i <- 0 until chromosomes.size) {
     val length1 = chromosomes(i).size

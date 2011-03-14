@@ -45,7 +45,7 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 	}
 
   @Test def numRequiredForConfidenceInSelection {
-    val plant = new OffspringPlant(chromas, spec, 0.1)
+    val plant = new OffspringPlant(chromas, spec, Some(0.1), None, None)
     assertEquals(275, plant.numPlantsForConfidence(0.95, 20))
   }
 
@@ -76,7 +76,7 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 	}
 	
 	@Test def nonNoneSelectionProbability {
-		assertEquals(0.3, new OffspringPlant(chromas, spec, 0.3).selectionProbability.get, tolerance)
+		assertEquals(0.3, new OffspringPlant(chromas, spec, Some(0.3)).selectionProbability.get, tolerance)
 	}
 	
 	@Test def exceptionIfChromasDontMatchSpec {
@@ -84,17 +84,17 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 		chromas = Array(chroma1, chroma2, chroma3)
 		
 		intercept[OffspringPlantException]{
-			new OffspringPlant(chromas, spec, 0.0)
+			new OffspringPlant(chromas, spec, Some(0.0))
 		}
 	}
 	
 	@Test def exceptionifSelectionProbOutOfRange {
 		intercept[OffspringPlantException]{
-			new OffspringPlant(chromas, spec, -0.3)
+			new OffspringPlant(chromas, spec, Some(-0.3))
 		}
 		
 		intercept[OffspringPlantException]{
-			new OffspringPlant(chromas, spec, -1.1)
+			new OffspringPlant(chromas, spec, Some(-1.1))
 		}
 	}
 
@@ -108,7 +108,7 @@ class OffspringPlantTest extends JUnitSuite with MockitoSugar{
 	@Test def attributes {		
 		val chromas = Array(chroma1, chroma2, chroma3)
 		
-		val plant = new OffspringPlant(chromas, spec, 0.5)
+		val plant = new OffspringPlant(chromas, spec, Some(0.5))
 		
 		assertTrue(plant.isInstanceOf[Plant])
 		assertEquals(3, plant.chromosomes.size)
