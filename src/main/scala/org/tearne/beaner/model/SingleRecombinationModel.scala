@@ -12,20 +12,14 @@
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see <http://www.gnu.org/licenses/>.
  */
-package org.tearne.beaner.cross
+
+package org.tearne.beaner.model
 
 import scala.math._
 
-class RecombinationModel{
-
+class SingleRecombinationModel extends RecombinationModel{
   def probInAtDistance(distance: Int): Double = {
-    val dist = abs(distance)
-    1.0-0.5*(1.0-exp(-2.0*dist/100.0))
-
-    //if (distance > 1) {
-    //  val probIN = probInAtDist(distance - 1)
-    //  0.99 * probIN + 0.01 * (1 - probIN)
-    //} else
-    //  0.99
+    pow(0.99, distance)
   }
+
 }

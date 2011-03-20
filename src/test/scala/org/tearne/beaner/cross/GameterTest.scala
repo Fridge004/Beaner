@@ -17,6 +17,7 @@ package org.tearne.beaner.cross
 
 import org.tearne.beaner.plant._
 import org.tearne.beaner.chroma._
+import org.tearne.beaner.model._
 import org.scalatest.junit.JUnitSuite
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
@@ -43,7 +44,12 @@ class GameterTest extends JUnitSuite with MockitoSugar{
   val chromosome3 = new Chromosome(tidC, tidC)
   val chromosome4 = new Chromosome(tidB, tidC)
 
-  val recombinationModel = new RecombinationModel()
+  //val recombinationModel = new HaldaneRecombinationModel()
+  val recombinationModel = new RecombinationModel{
+    def probInAtDistance(d: Int) = if(d==0) 1 else 1/d
+  }
+
+
   val gameter = new Gameter(recombinationModel)
 
   @Test
@@ -95,19 +101,24 @@ class GameterTest extends JUnitSuite with MockitoSugar{
     val chromosome = new Chromosome(tidA, tidB)
     val gamete = gameter.selectOn(p1, 50, chromosome)
 
+    //Check position 50
     assertEquals(1.0, gamete.probabilityOf(p1, 50), tolerance)
     var probP1 = 0.0
     for (index <- 51 until 100) {
-      probP1 = recombinationModel.probInAtDistance(index-50)
+      probP1 = 1/(index-50)
+      //Check positions 51 up to 99
       assertEquals("At " + index + ":", probP1, gamete.probabilityOf(p1, index), tolerance)
       assertEquals("At " + index + ":", 1 - probP1, gamete.probabilityOf(p2, index), tolerance)
+      //Check positions 49 down to 1
       assertEquals("At " + index + ":", probP1, gamete.probabilityOf(p1, 100 - index), tolerance)
       assertEquals("At " + index + ":", 1 - probP1, gamete.probabilityOf(p2, 100 - index), tolerance)
     }
 
-    probP1 = 1.0-0.5*(1.0-exp(-2.0*(50.0)/100.0))
+    //Check position 0
+    probP1 = recombinationModel.probInAtDistance(50)
     assertEquals("At " + 0 + ":", probP1, gamete.probabilityOf(p1, 0), tolerance)
     assertEquals("At " + 0 + ":", 1 - probP1, gamete.probabilityOf(p2, 0), tolerance)
+
   }
 
   @Test

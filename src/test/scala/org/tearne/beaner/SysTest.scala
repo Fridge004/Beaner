@@ -22,12 +22,14 @@ import org.scalatest.mock.MockitoSugar
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant._
 import org.tearne.beaner.cross._
+import org.tearne.beaner.model._
+
 import org.junit.{Before, Test}
 
 class SysTest extends JUnitSuite with MockitoSugar {
   val tolerance = 1e-16
   val lowTolerance = 1e-4
-  val plantCrosser = new PlantCrosser(new ChromosomeCrosser(new Gameter(new RecombinationModel)))
+  val plantCrosser = new PlantCrosser(new ChromosomeCrosser(new Gameter(new HaldaneRecombinationModel)))
 
   @Test def megansSecondExcelSheetTest_4Markers {
     object MyPlantSpec extends PlantSpec{

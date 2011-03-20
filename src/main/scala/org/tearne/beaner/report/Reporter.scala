@@ -18,6 +18,7 @@ package org.tearne.beaner.report
 import com.lowagie.text.PageSize
 import org.tearne.beaner.cross.Criterion
 import org.tearne.beaner.plant.Plant
+import org.tearne.beaner.model._
 import processing.core.{PApplet, PFont}
 import processing.pdf.PGraphicsPDF
 
@@ -61,14 +62,24 @@ class Reporter(plants: List[Plant], criteria: Set[Criterion], colour: Colour) ex
   }
 }
 
+object Setup{
+  import org.tearne.beaner.plant._
+  import org.tearne.beaner.cross._
+  import org.tearne.beaner.model._
+
+
+  val plantCrosser1 = new PlantCrosser(new ChromosomeCrosser(new Gameter(new HaldaneRecombinationModel)))
+  val plantCrosser2 = new PlantCrosser(new ChromosomeCrosser(new Gameter(new SingleRecombinationModel)))
+  val plantCrosser3 = new PlantCrosser(new ChromosomeCrosser(new Gameter(new NoDragModel)))
+}
+
 object Reporter {
    //For testing
   def main(args: Array[String]) {
     // --- Preamble ---
     import org.tearne.beaner.plant._
     import org.tearne.beaner.cross._
-
-    val plantCrosser = new PlantCrosser(new ChromosomeCrosser(new Gameter(new RecombinationModel)))
+    import Setup._
 
     // --- Setup ---
     // Starting plants
@@ -102,7 +113,9 @@ object Reporter {
     // Prepare for reporting
     val colours = new Colour(cAll, pV)
     val plantsList = List(
-      fin.evaluateUsing(plantCrosser)
+      fin.evaluateUsing(plantCrosser1),
+      fin.evaluateUsing(plantCrosser2),
+      fin.evaluateUsing(plantCrosser3)
       //pV, p1, p2, p3, p4,
       //f1_p1p2, f1_p3p4, f1_p1p2p3p4,
       //bc1, bc2, bc3, bc4,

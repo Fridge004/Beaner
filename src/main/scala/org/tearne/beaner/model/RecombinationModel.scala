@@ -13,23 +13,8 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.cross
+package org.tearne.beaner.model
 
-import org.scalatest.junit.JUnitSuite
-import org.junit.Test
-import org.junit.Assert._
-import scala.math._
-
-class RecombinationModelTest extends JUnitSuite {
-  val tolerance = 1e-16
-
-  @Test def probInAtDistance {
-    val model = new RecombinationModel()
-
-    var prob = 0.0
-    for (distance <- -100 to 100) {
-      prob = 1.0-0.5*(1.0-exp(-2.0*abs(distance)/100.0))
-      assertEquals("At distance "+distance, prob, model.probInAtDistance(distance), tolerance)
-    }
-  }
+trait RecombinationModel{
+  def probInAtDistance(distance: Int): Double
 }

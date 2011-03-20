@@ -17,6 +17,8 @@ package org.tearne.beaner.cross
 
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.plant._
+import org.tearne.beaner.model._
+import scala.math._
 
 class Gameter(private val model: RecombinationModel){
 
@@ -82,7 +84,7 @@ class Gameter(private val model: RecombinationModel){
           gamete(i) = new Centimorgan(plant)
       else {
         cMa = tid1(i); cMb = tid2(i)
-        gamete(i) = cMa.combinedWith(cMb, model.probInAtDistance(index - i))
+        gamete(i) = cMa.combinedWith(cMb, getProbAtDist(index - i))
       }
     }
     gamete
@@ -99,4 +101,6 @@ class Gameter(private val model: RecombinationModel){
 
     new Chromatid(gameteArray)
   }
+
+  private def getProbAtDist(d: Int) = model.probInAtDistance(abs(d))
 }
