@@ -15,41 +15,28 @@
 
 package org.tearne.beaner.report
 
-import com.lowagie.text.PageSize
 import org.tearne.beaner.cross.Criterion
 import org.tearne.beaner.plant.Plant
 import org.tearne.beaner.model._
-import processing.core.{PApplet, PFont}
-import processing.pdf.PGraphicsPDF
+import com.lowagie.text.{Document, Paragraph}
+import com.lowagie.text.pdf._
+import java.io.FileOutputStream
 
-class Reporter(plants: List[Plant], criteria: Set[Criterion], colour: Colour) extends PApplet {
-
-  private val fontName = PGraphicsPDF.listFonts().toList.find(f=>f.contains("Arial"))
-  println("Auto selected font: "+fontName.getOrElse("[Error, not font found]"))
-  val f:PFont = createFont(fontName.getOrElse("Arial Black"), 10);
-
-  private val pageSplit = 0.3
+class Reporter(filePath: String, plants: List[Plant], criteria: Set[Criterion], colour: Colour){
 
   def makePDF(){
-    this.init
-  }
+    val document:Document = new Document()
+    val writer:PdfWriter = PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
-  override def setup(){
-    textFont(f,12)
-    val page = PageSize.A5
-    size(
-      page.getHeight.asInstanceOf[Int],
-      page.getWidth.asInstanceOf[Int],
-      processing.core.PConstants.PDF,
-      "Output.pdf"
-    )
-    background(255)
+    document.open()
+    document.add(new Paragraph("Hello PDF!"))
 
-    stroke(0)
-    strokeWeight(0.1f)
-    noLoop()
+    val canvas:PdfContentByte =  writer.getDirectContentUnder()
 
-    val pGraphics = g.asInstanceOf[PGraphicsPDF]
+    canvas.rectangle(100,100,100,100)
+    canvas.fill()
+
+    document.close()
 
     val plantIterator = plants.iterator
     while(plantIterator.hasNext){
@@ -62,24 +49,18 @@ class Reporter(plants: List[Plant], criteria: Set[Criterion], colour: Colour) ex
   }
 }
 
-object Setup{
-  import org.tearne.beaner.plant._
-  import org.tearne.beaner.cross._
-  import org.tearne.beaner.model._
-
-
-  val plantCrosser1 = new PlantCrosser(new ChromosomeCrosser(new Gameter(new HaldaneRecombinationModel)))
-  val plantCrosser2 = new PlantCrosser(new ChromosomeCrosser(new Gameter(new SingleRecombinationModel)))
-  val plantCrosser3 = new PlantCrosser(new ChromosomeCrosser(new Gameter(new NoDragModel)))
-}
-
 object Reporter {
-   //For testing
   def main(args: Array[String]) {
     // --- Preamble ---
     import org.tearne.beaner.plant._
     import org.tearne.beaner.cross._
-    import Setup._
+    import org.tearne.beaner.model._
+    import org.tearne.beaner.chroma._
+
+    val plantCrosser1 = new PlantCrosser(new ChromosomeCrosser(new Gameter(new HaldaneRecombinationModel)))
+    val plantCrosser2 = new PlantCrosser(new ChromosomeCrosser(new Gameter(new SingleRecombinationModel)))
+    val plantCrosser3 = new PlantCrosser(new ChromosomeCrosser(new Gameter(new NoDragModel)))
+
 
     // --- Setup ---
     // Starting plants
@@ -122,6 +103,7 @@ object Reporter {
       //fin
     )
     // Produce PDF
-    new Reporter(plantsList, cAll, colours).makePDF()
+    val path = "output.pdf"
+    new Reporter(path, plantsList, cAll, colours).makePDF()
   }
 }
