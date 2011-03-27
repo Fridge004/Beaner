@@ -1,3 +1,5 @@
+package org.tearne.beaner.report
+
 /*
  * Copyright (c) Oliver Tearne (tearne at gmail dot com)
  *
@@ -13,24 +15,36 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.report
-
-import processing.core.{PApplet, PFont}
 import org.tearne.beaner.chroma._
+import com.itextpdf.text._
+import com.itextpdf.text.pdf._
 
-class ChromasomeView(chromasome:Chromosome, colour: Colour, reporter:Reporter) {
-  private val left = new ChromatidView(chromasome.firstChromatid, true, colour, reporter)
-  private val right = new ChromatidView(chromasome.secondChromatid, false, colour, reporter)
-  
-  def display(){
-    reporter.textFont(reporter.f,8)
-    reporter.textAlign(processing.core.PConstants.CENTER)
-    
-    val percent = chromasome.proportionOf(colour.prefVar)*100
-    reporter.fill(0)
-    reporter.text("%.1f".format(percent)+"%",10, -6)
+object ChromosomeView {
 
-    left.display
-    right.display
+  val helvetica: Font = new Font(Font.FontFamily.HELVETICA, 12)
+  val font: BaseFont = helvetica.getCalculatedBaseFont(false)
+
+  def apply(chromosome:Chromosome, colour: Colour, canvas:PdfTemplate):PdfTemplate = {
+    val percent = chromosome.proportionOf(colour.prefVar)*100
+
+    canvas.beginText
+    canvas.setFontAndSize(font, 8)
+    canvas.showTextAligned(
+        Element.ALIGN_LEFT,
+        "%.1f".format(percent)+"%",
+        0,
+        canvas.getHeight-20,
+        0
+    )
+    canvas.endText
+
+    val halfWidth = canvas.getWidth/2
+    var leftTemplate = canvas.createTemplate(halfWidth-5, canvas.getHeight-25)
+    var rightTemplate = canvas.createTemplate(halfWidth-5, canvas.getHeight-25)
+
+    canvas.addTemplate(ChromatidView(chromosome.firstChromatid, colour, leftTemplate), 0, 0)
+    canvas.addTemplate(ChromatidView(chromosome.firstChromatid, colour, rightTemplate), halfWidth-5, 0)
+
+    canvas
   }
 }

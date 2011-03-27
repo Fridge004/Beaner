@@ -18,35 +18,49 @@ package org.tearne.beaner.report
 import org.tearne.beaner.cross.Criterion
 import org.tearne.beaner.plant.Plant
 import org.tearne.beaner.model._
-import com.lowagie.text.{Document, Paragraph}
-import com.lowagie.text.pdf._
+import com.itextpdf.text.{Document, Paragraph, Font, Element, PageSize}
+import com.itextpdf.text.pdf._
 import java.io.FileOutputStream
 
 class Reporter(filePath: String, plants: List[Plant], criteria: Set[Criterion], colour: Colour){
+  val document: Document = new Document()
+  document.setPageSize(PageSize.A5.rotate)
+  document.setMargins(10,10,10,10)
+
+  val writer: PdfWriter = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+  var canvas: PdfContentByte = null
+  val helvetica: Font = new Font(Font.FontFamily.HELVETICA, 12)
+  val font: BaseFont = helvetica.getCalculatedBaseFont(false)
 
   def makePDF(){
-    val document:Document = new Document()
-    val writer:PdfWriter = PdfWriter.getInstance(document, new FileOutputStream(filePath));
-
     document.open()
-    document.add(new Paragraph("Hello PDF!"))
+    canvas = writer.getDirectContentUnder()
 
-    val canvas:PdfContentByte =  writer.getDirectContentUnder()
-
-    canvas.rectangle(100,100,100,100)
-    canvas.fill()
-
-    document.close()
+//    canvas.setFontAndSize(font, 12)
+//    canvas.beginText
+//    canvas.showTextAligned(Element.ALIGN_TOP, "Hello world", 10, document.top, 0)
+//    canvas.endText
 
     val plantIterator = plants.iterator
     while(plantIterator.hasNext){
       val plant = plantIterator.next
-      new PlantPrinter(plant, criteria, colour, (200,10), (400,0), this).display
-      new StatsPrinter((2,50), plant, this).display
+
+      var template = canvas.createTemplate(document.right-200, document.top)
+      template = PlantPrinter(plant, criteria, colour, template)
+      canvas.addTemplate(template, 200, 0)
+
+      //new StatsPrinter((2,50), plant, this).display
       if(plantIterator.hasNext)
-	      pGraphics.nextPage
+	      document.newPage
     }
+
+
+    canvas.fill()
+    document.close()
   }
+
+  def createTemplate(w:Float, h:Float):PdfTemplate = canvas.createTemplate(w,h)
+
 }
 
 object Reporter {

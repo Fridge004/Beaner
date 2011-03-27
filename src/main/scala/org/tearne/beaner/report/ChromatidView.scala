@@ -1,3 +1,5 @@
+package org.tearne.beaner.report
+
 /*
  * Copyright (c) Oliver Tearne (tearne at gmail dot com)
  *
@@ -13,61 +15,67 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.report
-
-import processing.core.PApplet
 import org.tearne.beaner.chroma._
 import collection.mutable.ListBuffer
+import com.itextpdf.text.pdf._
 
-class ChromatidView(chromatid:Chromatid, isLeft:Boolean, colour:Colour, pApplet:PApplet) {
-  private val length = chromatid.size
-  private val cMHeight = 2
+object ChromatidView {
 
-  def display(){
-    pApplet.pushMatrix
-    if(!isLeft){
-      pApplet.translate(10,0)
-    }
+  val cMHeight = 2
+  private class Data(val chromatid:Chromatid, val colour:Colour, val canvas:PdfTemplate)
 
-    drawCMColours()
-    drawOutline()
+  def apply(chromatid:Chromatid, colour:Colour, canvas:PdfTemplate) = {
+    val length = chromatid.size
 
-    pApplet.popMatrix
+    val data = new Data(chromatid, colour, canvas)
+
+    drawCMColours(data)
+    drawOutline(data)
+
+    canvas
   }
-  
-  private def drawCMColours() {
-    val nonTrivial = detectIfNonTrivialChromatid(0)
+
+  private def drawCMColours(data:Data) {
+    import data._
+
+    val nonTrivial = isNonTrivialChromatid(data, 0)
     var highlights = new ListBuffer[Int]()
+    val canvHeight = canvas.getHeight
 
     chromatid.cMArray.zipWithIndex.foreach{
       case (cM,index) => {
         val c = colour(cM)
-	      pApplet.fill(c)
-        pApplet.stroke(c)
+	      canvas.setColorFill(c)
         if(nonTrivial && cM.alleles.size == 1)
           highlights += index
-        pApplet.rect(0, cMHeight*index, 10, cMHeight)
-   }}
+        canvas.rectangle(0, canvHeight-cMHeight*(index+1), canvas.getWidth, cMHeight)
+        canvas.fill
+    }}
 
-    pApplet.strokeWeight(1f)
+    canvas.setLineWidth(1)
     highlights.foreach{index =>
-      pApplet.noFill
-      pApplet.stroke(0)
-      pApplet.rect(0, cMHeight*index, 10, cMHeight)
+      canvas.rectangle(0, canvHeight-cMHeight*(index+1), canvas.getWidth, cMHeight)
+      canvas.stroke
     }
-    pApplet.strokeWeight(0.1f)
-
   }
 
-  private def drawOutline() {
-    pApplet.stroke(0,0,0)
-    pApplet.noFill()
-    pApplet.rect(0, 0, 10, chromatid.size*cMHeight)
+  private def drawOutline(data:Data) {
+    import data._
+
+    val canvHeight = canvas.getHeight
+    val numCentimorgans = chromatid.size
+    val height = numCentimorgans*cMHeight
+
+    canvas.setLineWidth(1)
+    canvas.rectangle(0, canvHeight-height, canvas.getWidth, height)
+    canvas.stroke
   }
 
-  private def detectIfNonTrivialChromatid(startIndex: Int): Boolean = {
+  private def isNonTrivialChromatid(data:Data, startIndex: Int): Boolean = {
+    import data._
+
     if(chromatid.cMArray(startIndex).alleles.size > 1) true
-    else if(startIndex+1==chromatid.cMArray.size ) false
-    else detectIfNonTrivialChromatid(startIndex+1)
+    else if(startIndex+1 == chromatid.cMArray.size ) false
+    else isNonTrivialChromatid(data, startIndex+1)
   }
 }
