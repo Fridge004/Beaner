@@ -1,3 +1,3 @@
 #!/bin/bash
-scala -classpath 'lib/*' script.txt
+scala -classpath "lib/*" script.txt
 
