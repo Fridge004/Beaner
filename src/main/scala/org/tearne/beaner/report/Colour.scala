@@ -33,7 +33,7 @@ class Colour(criteria: Set[Criterion], val prefVar: Plant){
       .+(prefVar -> Colour.prefVar)
    }
 
-  def apply(plant: Plant) = {
+  def apply(plant: Plant):BaseColor = {
     plantsMap(plant)
   }
 

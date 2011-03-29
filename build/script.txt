@@ -4,9 +4,11 @@ import org.tearne.beaner.cross._
 import org.tearne.beaner.model._
 import org.tearne.beaner.chroma._
 import org.tearne.beaner.report._
+
 val plantCrosser1 = new PlantCrosser(new ChromosomeCrosser(new Gameter(new HaldaneRecombinationModel)))
 val plantCrosser2 = new PlantCrosser(new ChromosomeCrosser(new Gameter(new SingleRecombinationModel)))
 val plantCrosser3 = new PlantCrosser(new ChromosomeCrosser(new Gameter(new NoDragModel)))
+
 
 // --- Setup ---
 // Starting plants
@@ -49,6 +51,5 @@ val plantsList = List(
   //fin
 )
 // Produce PDF
-new Reporter(plantsList, cAll, colours).makePDF()
-
-Thread.sleep(5000)
+val path = "output.pdf"
+new Reporter(path, plantsList, cAll, colours).makePDF()

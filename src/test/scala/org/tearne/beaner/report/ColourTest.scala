@@ -6,7 +6,8 @@ import org.junit.Test
 import org.tearne.beaner.plant.Plant
 import org.tearne.beaner.cross.Criterion
 import org.tearne.beaner.chroma.Centimorgan
-import processing.core.PApplet
+
+import com.itextpdf.text.BaseColor
 
 class ColourTest extends JUnitSuite with MockitoSugar{
 
@@ -28,18 +29,18 @@ class ColourTest extends JUnitSuite with MockitoSugar{
     val alleles = Map(prefVar -> 0.2, p0 -> 0.3, p1 -> 0.4)
     val cM = new Centimorgan(alleles)
 
-    def red(c: Int) = c >> 16 & 0xFF
-    def green(c: Int) = c >> 8 & 0xFF
-    def blue(c: Int) = c & 0xFF
+    def red(c: BaseColor) = c.getRed
+    def green(c: BaseColor) = c.getGreen
+    def blue(c: BaseColor) = c.getBlue
 
     val expectedRed   = red(Colour.prefVar)*0.2 + red(Colour.donorColours(0))*0.3 + red(Colour.donorColours(1))*0.4
     val expectedGreen = green(Colour.prefVar)*0.2 + green(Colour.donorColours(0))*0.3 + green(Colour.donorColours(1))*0.4
     val expectedBlue  = blue(Colour.prefVar)*0.2 + blue(Colour.donorColours(0))*0.3 + blue(Colour.donorColours(1))*0.4
 
-    val expectedColour = new PApplet().color(
-      expectedRed.asInstanceOf[Float],
-      expectedGreen.asInstanceOf[Float],
-      expectedBlue.asInstanceOf[Float]
+    val expectedColour = new BaseColor(
+      expectedRed.asInstanceOf[Int],
+      expectedGreen.asInstanceOf[Int],
+      expectedBlue.asInstanceOf[Int]
     )
 
     val criteria: Set[Criterion] = new Criterion(p0, 0, 1) + new Criterion(p1, 2, 3)
@@ -81,7 +82,7 @@ class ColourTest extends JUnitSuite with MockitoSugar{
 
     assert(Colour.prefVar === colour(prefVar))
 
-    var colours = Set[Int]()
+    var colours = Set[BaseColor]()
     for(i <- 0 to 9){
       colours += colour(plants(i))
     }
