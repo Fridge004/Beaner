@@ -45,11 +45,13 @@ class Reporter(filePath: String, plants: List[Plant], criteria: Set[Criterion], 
     while(plantIterator.hasNext){
       val plant = plantIterator.next
 
-      var template = canvas.createTemplate(document.right-200, document.top)
-      template = PlantPrinter(plant, criteria, colour, template)
-      canvas.addTemplate(template, 200, 0)
+      var templateRight = canvas.createTemplate(document.right-200, document.top)
+      templateRight = PlantPrinter(plant, criteria, colour, templateRight)
+      canvas.addTemplate(templateRight, 200, 0)
 
-      //new StatsPrinter((2,50), plant, this).display
+      var templateLeft = canvas.createTemplate(200, document.top)
+      templateLeft = StatePrinter()
+      new StatsPrinter((2,50), plant, this).display
       if(plantIterator.hasNext)
 	      document.newPage
     }
