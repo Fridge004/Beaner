@@ -11,6 +11,11 @@ class MyProject(info: ProjectInfo) extends DefaultProject(info)
 
   lazy val justTest = testTask(testFrameworks, testClasspath, testCompileConditional.analysis, testOptions)
 
+  lazy val justTestOnly = testQuickMethod(testCompileConditional.analysis, testOptions)(
+    o => testTask(testFrameworks, testClasspath, testCompileConditional.analysis, o)
+  )
+
+
   lazy val junit = "junit" % "junit" % "4.5" % "test->default"
   lazy val scalatest = "org.scalatest" % "scalatest" % "1.2" % "test"
   lazy val mockito = "org.mockito" % "mockito-all" % "1.8.5" %"test"
