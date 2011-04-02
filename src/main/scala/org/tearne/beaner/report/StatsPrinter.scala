@@ -15,26 +15,40 @@
 
 package org.tearne.beaner.report
 
-import processing.core.PConstants._
+import com.itextpdf.text._
+import com.itextpdf.text.pdf._
 import org.tearne.beaner.plant.{OffspringPlant, Plant}
 
-class StatsPrinter(position: (Int, Int), plant: Plant, parent: Reporter){
+object StatsPrinter{
 
-  def display(){
-    parent.textFont(parent.f,9)
-    parent.fill(0)
+  val helvetica: Font = new Font(Font.FontFamily.HELVETICA, 12)
+  val font: BaseFont = helvetica.getCalculatedBaseFont(false)
 
+  def apply(plant: Plant, canvas: PdfTemplate): PdfTemplate = {
+    //TODO do this with patten matching
     if(plant.isInstanceOf[OffspringPlant]){
-
-      parent.pushMatrix()
-      parent.translate(position._1, position._2)
-      plotStats(plant.asInstanceOf[OffspringPlant])
-      parent.popMatrix()
+      plotStats(plant.asInstanceOf[OffspringPlant], canvas)
     }
+
+    canvas
   }
 
-  private def plotStats(p: OffspringPlant){
-    parent.textAlign(LEFT)
-    parent.text("Test "+p.numPlantsForConfidence(0.95, 5)+" for a 95% chance\nof selecting 5")
+  private def plotStats(p: OffspringPlant, canvas: PdfTemplate){
+    val str = "Test "+p.numPlantsForConfidence(0.95, 5)+" for a 95% chance\nof selecting 5"
+
+    val doc = canvas.getPdfDocument
+
+    doc.add(new Paragraph(str))
+
+//    canvas.beginText
+//    canvas.setFontAndSize(font, 8)
+//    canvas.showTextAligned(
+//        Element.ALIGN_LEFT,
+//        str,
+//        0,
+//        canvas.getHeight-20,
+//        0
+//    )
+//    canvas.endText
   }
 }

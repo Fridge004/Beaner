@@ -50,8 +50,9 @@ class Reporter(filePath: String, plants: List[Plant], criteria: Set[Criterion], 
       canvas.addTemplate(templateRight, 200, 0)
 
       var templateLeft = canvas.createTemplate(200, document.top)
-      templateLeft = StatePrinter()
-      new StatsPrinter((2,50), plant, this).display
+      templateLeft = StatsPrinter(plant, templateLeft)
+      canvas.addTemplate(templateLeft, 0, 0)
+
       if(plantIterator.hasNext)
 	      document.newPage
     }
