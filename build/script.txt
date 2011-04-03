@@ -45,10 +45,6 @@ val plantsList = List(
   fin.evaluateUsing(plantCrosser1),
   fin.evaluateUsing(plantCrosser2),
   fin.evaluateUsing(plantCrosser3)
-  //pV, p1, p2, p3, p4,
-  //f1_p1p2, f1_p3p4, f1_p1p2p3p4,
-  //bc1, bc2, bc3, bc4,
-  //fin
 )
 // Produce PDF
 val path = "output.pdf"
