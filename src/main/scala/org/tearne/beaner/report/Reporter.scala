@@ -45,11 +45,14 @@ class Reporter(filePath: String, plants: List[Plant], criteria: Set[Criterion], 
     while(plantIterator.hasNext){
       val plant = plantIterator.next
 
-      var template = canvas.createTemplate(document.right-200, document.top)
-      template = PlantPrinter(plant, criteria, colour, template)
-      canvas.addTemplate(template, 200, 0)
+      var templateRight = canvas.createTemplate(document.right-200, document.top)
+      templateRight = PlantPrinter(plant, criteria, colour, templateRight)
+      canvas.addTemplate(templateRight, 200, 0)
 
-      //new StatsPrinter((2,50), plant, this).display
+      var templateLeft = canvas.createTemplate(200, document.top)
+      templateLeft = StatsPrinter(plant, templateLeft)
+      canvas.addTemplate(templateLeft, 0, 0)
+
       if(plantIterator.hasNext)
 	      document.newPage
     }
@@ -111,10 +114,6 @@ object Reporter {
       fin.evaluateUsing(plantCrosser1),
       fin.evaluateUsing(plantCrosser2),
       fin.evaluateUsing(plantCrosser3)
-      //pV, p1, p2, p3, p4,
-      //f1_p1p2, f1_p3p4, f1_p1p2p3p4,
-      //bc1, bc2, bc3, bc4,
-      //fin
     )
     // Produce PDF
     val path = "output.pdf"
