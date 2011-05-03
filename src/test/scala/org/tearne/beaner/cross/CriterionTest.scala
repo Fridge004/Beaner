@@ -40,17 +40,17 @@ class CriterionTest extends JUnitSuite with MockitoSugar {
   }
 
   //TODO Why necessary?  Helpful for testing?
-  @Test def orderPreserved {
-    val c1 = new Criterion(mock[Plant], 1, 2)
-    val c2 = new Criterion(mock[Plant], 2, 2)
-    val c3 = new Criterion(mock[Plant], 1, 4)
-    val c4 = new Criterion(mock[Plant], 5, 6)
-
-    val criteria = c1 + c2 + c3 + c4
-    val expectedOrder = List(c1,c2,c3,c4)
-
-    expectedOrder.zip(criteria).foreach{
-      case(expected, actual) => assert(expected === actual)
-    }
-  }
+//  @Test def orderPreserved {
+//    val c1 = new Criterion(mock[Plant], 1, 2)
+//    val c2 = new Criterion(mock[Plant], 2, 2)
+//    val c3 = new Criterion(mock[Plant], 1, 4)
+//    val c4 = new Criterion(mock[Plant], 5, 6)
+//
+//    val criteria = c1 + c2 + c3 + c4
+//    val expectedOrder = List(c1,c2,c3,c4)
+//
+//    expectedOrder.zip(criteria).foreach{
+//      case(expected, actual) => assert(expected === actual)
+//    }
+//  }
 }

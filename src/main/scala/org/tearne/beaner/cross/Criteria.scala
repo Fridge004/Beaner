@@ -26,9 +26,9 @@ class Criteria(elems: Criterion*) extends Set[Criterion] with SetLike[Criterion,
 
   //override def companion: GenericCompanion[Bucket] = Bucket
 
-  override def size = size0
+  override def size = elems.size
   override def empty: Criteria = new Criteria()
-  override def stringPrefix = "Bucket"
+  override def stringPrefix = "Criteria"
 
   def contains(key: Criterion) = elems.contains(key)
   def iterator = elems.iterator

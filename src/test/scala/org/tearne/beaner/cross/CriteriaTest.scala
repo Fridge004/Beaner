@@ -21,7 +21,32 @@ import org.junit.Test
 import org.junit.Assert.fail
 
 class CriteriaTest extends JUnitSuite with MockitoSugar {
-  @Test def plus {
-    fail("not written yet")
+  @Test def checkSetLikeBahaviour {
+    val c1 = mock[Criterion]
+    val c2 = mock[Criterion]
+    val c3 = mock[Criterion]
+
+
+    var criteria = new Criteria()
+    assert(criteria.size === 0)
+
+    criteria = criteria + c1
+    assert(criteria.size === 1)
+    assert(criteria.contains(c1))
+
+    criteria = criteria + c1
+    assert(criteria.size === 1)
+    assert(criteria.contains(c1))
+
+    criteria = criteria + c2
+    assert(criteria.size === 2)
+    assert(criteria.contains(c1))
+    assert(criteria.contains(c2))
+
+    criteria = criteria + c3
+    criteria = criteria - c1
+    assert(criteria.size === 2)
+    assert(criteria.contains(c2))
+    assert(criteria.contains(c3))
   }
 }

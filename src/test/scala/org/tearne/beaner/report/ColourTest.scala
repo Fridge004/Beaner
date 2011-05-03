@@ -23,6 +23,9 @@ class ColourTest extends JUnitSuite with MockitoSugar{
 
 
   @Test def blendedCentiMorganColour {
+    //
+    // TODO: Success of this test is dependent on the order of the plants stored in the criteria
+    //
     val prefVar = mock[Plant]
     val p0 = mock[Plant]
     val p1 = mock[Plant]
@@ -30,13 +33,16 @@ class ColourTest extends JUnitSuite with MockitoSugar{
     val alleles = Map(prefVar -> 0.2, p0 -> 0.3, p1 -> 0.4)
     val cM = new Centimorgan(alleles)
 
-    def red(c: BaseColor) = c.getRed
-    def green(c: BaseColor) = c.getGreen
-    def blue(c: BaseColor) = c.getBlue
+    val criteria = new Criterion(p0, 0, 1) + new Criterion(p1, 2, 3)
+    val colour = new Colour(criteria,prefVar)
 
-    val expectedRed   = red(Colour.prefVar)*0.2 + red(Colour.donorColours(0))*0.3 + red(Colour.donorColours(1))*0.4
-    val expectedGreen = green(Colour.prefVar)*0.2 + green(Colour.donorColours(0))*0.3 + green(Colour.donorColours(1))*0.4
-    val expectedBlue  = blue(Colour.prefVar)*0.2 + blue(Colour.donorColours(0))*0.3 + blue(Colour.donorColours(1))*0.4
+    val colour1 = colour(prefVar)
+    val colour2 = colour(p0)
+    val colour3 = colour(p1)
+
+    val expectedRed   = red(colour1)*0.2 + red(colour2)*0.3 + red(colour3)*0.4
+    val expectedGreen = green(colour1)*0.2 + green(colour2)*0.3 + green(colour3)*0.4
+    val expectedBlue  = blue(colour1)*0.2 + blue(colour2)*0.3 + blue(colour3)*0.4
 
     val expectedColour = new BaseColor(
       expectedRed.asInstanceOf[Int],
@@ -44,10 +50,7 @@ class ColourTest extends JUnitSuite with MockitoSugar{
       expectedBlue.asInstanceOf[Int]
     )
 
-    val criteria = new Criterion(p0, 0, 1) + new Criterion(p1, 2, 3)
-    val colour = new Colour(criteria,prefVar)
-
-    assert(expectedColour === colour(cM))
+    assert( expectedColour === colour(cM) )
   }
 
   @Test def gettingPlantColours {
@@ -93,4 +96,8 @@ class ColourTest extends JUnitSuite with MockitoSugar{
       i => assert(colours.contains(Colour.donorColours(i)), "Result doesn't contain "+i+"th colour: "+Colour.donorColours(i)+colours)
     }
   }
+
+  def red(c: BaseColor) = c.getRed
+  def green(c: BaseColor) = c.getGreen
+  def blue(c: BaseColor) = c.getBlue
 }

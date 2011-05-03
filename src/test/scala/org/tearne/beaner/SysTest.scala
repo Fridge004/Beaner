@@ -102,7 +102,7 @@ class SysTest extends JUnitSuite with MockitoSugar {
     val crit2 = new Criterion(p2, 1, 39)
 
     //Heterozygous selection
-    val f1 = p1 x p2 selectHet crit1 + crit1 named "f1"
+    val f1 = p1 x p2 selectHet crit1 + crit2 named "f1"
     val bc1 = f1 x pV selectHet crit1 + crit2 named "bc1"
     val bc2 = bc1 x pV selectHet crit1 + crit2  named "bc2"
 
