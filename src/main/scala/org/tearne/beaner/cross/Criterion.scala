@@ -18,13 +18,9 @@ package org.tearne.beaner.cross
 import org.tearne.beaner.plant._
 
 class Criterion(val plant:Plant, val chromasomeIndex:Int, val cMIndex:Int){
-  def +(that:Criterion):Set[Criterion] = {
-    val set = Set(this, that)
-
-    //val result1:Set[Criterion] = new LinkedHashSet[Criterion]()+this
-    //val result2:Set[Criterion] = result1 + that
-    //result2
-
-    set
-  }
+  def +(that:Criterion):Criteria = new Criteria(this, that)
+  //{
+   //Set(this, that)
+  //  List(this, that)
+  //}
 }

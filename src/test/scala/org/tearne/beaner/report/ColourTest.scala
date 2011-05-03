@@ -4,7 +4,7 @@ import org.scalatest.junit.JUnitSuite
 import org.scalatest.mock.MockitoSugar
 import org.junit.Test
 import org.tearne.beaner.plant.Plant
-import org.tearne.beaner.cross.Criterion
+import org.tearne.beaner.cross.{Criterion,Criteria}
 import org.tearne.beaner.chroma.Centimorgan
 
 import com.itextpdf.text.BaseColor
@@ -13,7 +13,8 @@ class ColourTest extends JUnitSuite with MockitoSugar{
 
   @Test def exceptionIfMorePlantsThanAvailableColours {
     val elevenPlants = 1.to(11).map(i => mock[Plant])
-    val criteria = elevenPlants.map(p => new Criterion(p,0,0)).toSet
+    val temp = elevenPlants.map(p => new Criterion(p,0,0))
+    val criteria = new Criteria() ++ temp
 
     intercept[ColourException]{
       new Colour(criteria, mock[Plant])
@@ -43,7 +44,7 @@ class ColourTest extends JUnitSuite with MockitoSugar{
       expectedBlue.asInstanceOf[Int]
     )
 
-    val criteria: Set[Criterion] = new Criterion(p0, 0, 1) + new Criterion(p1, 2, 3)
+    val criteria = new Criterion(p0, 0, 1) + new Criterion(p1, 2, 3)
     val colour = new Colour(criteria,prefVar)
 
     assert(expectedColour === colour(cM))

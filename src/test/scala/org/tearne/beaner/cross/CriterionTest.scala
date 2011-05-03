@@ -33,11 +33,13 @@ class CriterionTest extends JUnitSuite with MockitoSugar {
     val c2 = new Criterion(mock[Plant], 1, 2)
     
     val criteria = c1 + c2
+
     assertTrue(criteria.contains(c1))
     assertTrue(criteria.contains(c2))
     assert(criteria.size == 2)
   }
 
+  //TODO Why necessary?  Helpful for testing?
   @Test def orderPreserved {
     val c1 = new Criterion(mock[Plant], 1, 2)
     val c2 = new Criterion(mock[Plant], 2, 2)

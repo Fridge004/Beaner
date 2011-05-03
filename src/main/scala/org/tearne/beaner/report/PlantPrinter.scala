@@ -16,7 +16,7 @@
 package org.tearne.beaner.report
 
 import org.tearne.beaner.plant._
-import org.tearne.beaner.cross.Criterion
+import org.tearne.beaner.cross.{Criterion, Criteria}
 
 import com.itextpdf.text._
 import com.itextpdf.text.pdf._
@@ -26,7 +26,7 @@ object PlantPrinter{
   val helvetica: Font = new Font(Font.FontFamily.HELVETICA, 12)
   val font: BaseFont = helvetica.getCalculatedBaseFont(false)
 
-  def apply(plant:Plant, criteria:Set[Criterion], colour:Colour, canvas:PdfTemplate):PdfTemplate = {
+  def apply(plant:Plant, criteria:Criteria, colour:Colour, canvas:PdfTemplate):PdfTemplate = {
     val numChromasomes = plant.chromosomes.size
 
     var title = plant.name.getOrElse("")

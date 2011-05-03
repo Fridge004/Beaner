@@ -18,15 +18,13 @@ package org.tearne.beaner.cross
 import org.tearne.beaner.plant._
 
 sealed trait ParentPair{
-  def selectHet(criteria: Set[Criterion]): Cross = new Cross(this, criteria, Option(SelectionType.Heterozygous))
-  def selectHom(criteria: Set[Criterion]): Cross = new Cross(this, criteria, Option(SelectionType.Homozygous))
+  def selectHet(criteria: Criteria): Cross = new Cross(this, criteria, Option(SelectionType.Heterozygous))
+  def selectHom(criteria: Criteria): Cross = new Cross(this, criteria, Option(SelectionType.Homozygous))
 
 }
 
 case class CrossPair(val first: Cross, val second: Cross) extends ParentPair
-
 case class MixedPair(val first: Cross, val second: Plant) extends ParentPair
-
 case class PlantPair(val first:Plant, val second:Plant) extends ParentPair{
   def bothNamed() = first.name != None && second.name != None
 }

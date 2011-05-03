@@ -19,7 +19,7 @@ import org.tearne.beaner.chroma._
 
 case class Cross(
     val pair:ParentPair,
-    val criteria: Set[Criterion],
+    val criteria: Criteria,
     val selectionType: Option[SelectionType.Value] = None,
     name: Option[String] = None) {
 

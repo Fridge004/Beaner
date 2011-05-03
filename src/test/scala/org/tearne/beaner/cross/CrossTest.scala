@@ -26,14 +26,14 @@ import org.tearne.beaner.chroma._
 
 class CrossTest extends JUnitSuite with MockitoSugar{
   var plantPair: PlantPair = null
-  var criteria: Set[Criterion] = null
+  var criteria: Criteria = null
   val name = "named"
   var plantCrosser: PlantCrosser = null
   var cross: Cross = null
 
   @Before def setup {
     plantPair = mock[PlantPair]
-    criteria = Set(mock[Criterion])
+    criteria = mock[Criteria]
     plantCrosser = mock[PlantCrosser]
 
     cross = new Cross(plantPair, criteria, null)

@@ -20,7 +20,7 @@ import org.tearne.beaner.plant._
 import org.tearne.beaner.cross._
 import org.tearne.beaner.chroma.Centimorgan
 
-class Colour(criteria: Set[Criterion], val prefVar: Plant){
+class Colour(criteria: Criteria, val prefVar: Plant){
   val plantsMap: Map[Plant, BaseColor] = {
     val donorsExcludingPrefVar = criteria.toList.map(_.plant).filter(_!=prefVar).distinct
 

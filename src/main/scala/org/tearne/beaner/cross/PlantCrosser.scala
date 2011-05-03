@@ -27,7 +27,7 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
       throw new UnnamedPlantException()
   }
 
-  def selectHeterozygousOffspring(pair: PlantPair, criteria: Set[Criterion]): OffspringPlant = {
+  def selectHeterozygousOffspring(pair: PlantPair, criteria: Criteria): OffspringPlant = {
     checkCanCross(pair)
 
     val resultGenome = new Array[Chromosome](pair.first.spec.chromosomeLengths.size)
@@ -61,14 +61,14 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
     chromaCrosser.getOffspringWithoutSelection(pair.first.chromosomes(chromaNum), pair.second.chromosomes(chromaNum))
   }
 
-  def selectHomozygousOffspring(pair: PlantPair, criteriaList: Set[Criterion]): OffspringPlant = {
+  def selectHomozygousOffspring(pair: PlantPair, criteria: Criteria): OffspringPlant = {
     checkCanCross(pair)
 
     val resultGenome = new Array[Chromosome](pair.first.spec.chromosomeLengths.size)
     var selectionProbability = 0.0
     var chromasomeSize = 0
 
-    criteriaList.foreach(criteria => {
+    criteria.foreach(criteria => {
       val chromaNum = criteria.chromasomeIndex
       if (resultGenome(chromaNum) != null)
         throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
