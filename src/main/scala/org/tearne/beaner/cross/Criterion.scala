@@ -17,10 +17,6 @@ package org.tearne.beaner.cross
 
 import org.tearne.beaner.plant._
 
-class Criterion(val plant:Plant, val chromasomeIndex:Int, val cMIndex:Int){
+class Criterion(val plant:Plant, val chromosomeIndex:Int, val cMIndex:Int){
   def +(that:Criterion):Criteria = new Criteria(that, this)
-  //{
-   //Set(this, that)
-  //  List(this, that)
-  //}
 }

@@ -25,8 +25,7 @@ import org.junit.Assert._
 import org.junit.Test
 import org.junit.Before
 
-class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
-
+class ChromosomeCrosserTest extends JUnitSuite with MockitoSugar{
 	val tolerance = 1e-16
 	var chromosome1, chromosome2: Chromosome = null
 	var p1,p2:Plant = null
@@ -65,7 +64,7 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
     when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0)
     when(gameter.probContains(p1, 50, chromosome2)).thenReturn(0)
 
-    intercept[ChromasomeCrosserException]{
+    intercept[ChromosomeCrosserException]{
       chromosomeCrosser.selectHomozygousOffspring(chromosome1, chromosome2, p1, 50)
     }
 
@@ -90,7 +89,7 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
     when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0)
     when(gameter.probContains(p1, 50, chromosome2)).thenReturn(0)
 
-	  intercept[ChromasomeCrosserException]{
+	  intercept[ChromosomeCrosserException]{
       chromosomeCrosser.selectHeterozygousOffspring(chromosome1, chromosome2, p1, 50)
     }
 
@@ -117,7 +116,7 @@ class ChromasomeCrosserTest extends JUnitSuite with MockitoSugar{
 		when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0.5)
     when(gameter.probContains(p1, 50, chromosome2)).thenReturn(0.5)
 
-		intercept[ChromasomeCrosserException]{
+		intercept[ChromosomeCrosserException]{
 			chromosomeCrosser.selectHeterozygousOffspring(chromosome1, chromosome2, p1, 50)
 		}
 	}

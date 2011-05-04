@@ -17,14 +17,12 @@ package org.tearne.beaner.cross
 
 import scala.collection.Iterator
 import scala.collection.generic.{ CanBuildFrom, GenericCompanion, MutableSetFactory }
-import scala.collection.{ SetLike , Set }
+import scala.collection.SetLike
 import scala.collection.mutable.{ Builder, SetBuilder }
 
 class Criteria(elems: Criterion*) extends Set[Criterion] with SetLike[Criterion, Criteria] {
   private val rep = Set[Criterion]()
   private var size0 = 0
-
-  //override def companion: GenericCompanion[Bucket] = Bucket
 
   override def size = elems.size
   override def empty: Criteria = new Criteria()
@@ -34,6 +32,9 @@ class Criteria(elems: Criterion*) extends Set[Criterion] with SetLike[Criterion,
   def iterator = elems.iterator
   override def +(elem: Criterion) = if(elems contains elem) this else new Criteria( elem +: elems: _*)
   override def -(elem: Criterion) = if(!(elems contains elem)) this else new Criteria( elems filterNot(elem == _): _* )
+
+  // Non-collection functionality below
+  def getChromosomeCriteria() = Set[ChromosomeCriteria]()
 }
 
 object Criteria { //Was mutable set factory

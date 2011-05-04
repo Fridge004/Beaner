@@ -34,7 +34,7 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
     var selectionProbability = 0.0;
 
     criteria.foreach(criteria => {
-      val chromaNum = criteria.chromasomeIndex
+      val chromaNum = criteria.chromosomeIndex
       if (resultGenome(chromaNum) != null)
         throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
 
@@ -51,7 +51,7 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
   }
 
   private def getHeterozygousSelectedChroma(pair: PlantPair, criterion: Criterion): Chromosome = {
-    val chromaNum = criterion.chromasomeIndex
+    val chromaNum = criterion.chromosomeIndex
     val cMNum = criterion.cMIndex
     val plant = criterion.plant
     chromaCrosser.selectHeterozygousOffspring(pair.first.chromosomes(chromaNum), pair.second.chromosomes(chromaNum), plant, cMNum)
@@ -69,7 +69,7 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
     var chromasomeSize = 0
 
     criteria.foreach(criteria => {
-      val chromaNum = criteria.chromasomeIndex
+      val chromaNum = criteria.chromosomeIndex
       if (resultGenome(chromaNum) != null)
         throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
       val selectedChroma = getHomozygousSelectedChroma(pair, criteria)
@@ -85,7 +85,7 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
   }
 
   private def getHomozygousSelectedChroma(pair: PlantPair, criteria: Criterion): Chromosome = {
-    val chromaNum = criteria.chromasomeIndex
+    val chromaNum = criteria.chromosomeIndex
     val cMNum = criteria.cMIndex
     val plant = criteria.plant
     chromaCrosser.selectHomozygousOffspring(pair.first.chromosomes(chromaNum), pair.second.chromosomes(chromaNum), plant, cMNum)

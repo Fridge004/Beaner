@@ -40,7 +40,7 @@ class ChromosomeCrosser(val gameter: Gameter){
 			gameter.probContains(plantToSelectFor, positionForSelection, secondChromasome)
 		
 		if(selectionProbability==0.0)
-			throw new ChromasomeCrosserException("Chromosomes can't both provide allele")
+			throw new ChromosomeCrosserException("Chromosomes can't both provide allele")
 		else
 		  new Chromosome(
 				gameter.selectOn(plantToSelectFor, positionForSelection, firstChromasome),
@@ -58,7 +58,7 @@ class ChromosomeCrosser(val gameter: Gameter){
 		if(gameter.probContains(plantToSelectFor, positionForSelection, firstChromosome)>0){
 			if(gameter.probContains(plantToSelectFor, positionForSelection, secondChromosome)>0){
 				//Both chromatids
-				throw new ChromasomeCrosserException("Not supported: Heterozygous selection when both chromasome can supply allele")
+				throw new ChromosomeCrosserException("Not supported: Heterozygous selection when both chromasome can supply allele")
 			}
 			//Only first chromatid
 			getResultGivenSelectionFromSingleChromasome(firstChromosome, secondChromosome, plantToSelectFor:Plant, positionForSelection:Int)
@@ -66,7 +66,7 @@ class ChromosomeCrosser(val gameter: Gameter){
 			//Only second chromatid
 			getResultGivenSelectionFromSingleChromasome(secondChromosome, firstChromosome, plantToSelectFor:Plant, positionForSelection:Int)
 		} else {
-			throw new ChromasomeCrosserException("Neither chromosome can provide allele")
+			throw new ChromosomeCrosserException("Neither chromosome can provide allele")
 		}
 	}
 
