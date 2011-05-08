@@ -18,7 +18,7 @@ package org.tearne.beaner.cross
 import org.tearne.beaner.plant._
 
 import org.scalatest.junit.AssertionsForJUnit
-import org.junit.{ Test, Ignore }
+import org.junit.{ Test, Before }
 import org.junit.Assert._
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.Assertions._
@@ -26,11 +26,18 @@ import org.scalatest.junit.JUnitSuite
 import collection._
 import org.mockito.Matchers._
 
-class CriterionTest extends JUnitSuite with MockitoSugar {
+class SelectionCriterionTest extends JUnitSuite with MockitoSugar {
+
+  var p1, p2: Plant = _
+
+  @Before def setup {
+    p1 = mock[Plant]
+    p2 = mock[Plant]
+  }
 
   @Test def andIngCriterion {
-    val c1 = new Criterion(mock[Plant], 1, 2)
-    val c2 = new Criterion(mock[Plant], 1, 2)
+    val c1 = new Criterion(p1, 1, 2)
+    val c2 = new Criterion(p2, 1, 2)
     
     val criteria = c1 + c2
 
@@ -41,10 +48,10 @@ class CriterionTest extends JUnitSuite with MockitoSugar {
 
   //TODO Why necessary?  Helpful for testing?
 //  @Test def orderPreserved {
-//    val c1 = new Criterion(mock[Plant], 1, 2)
-//    val c2 = new Criterion(mock[Plant], 2, 2)
-//    val c3 = new Criterion(mock[Plant], 1, 4)
-//    val c4 = new Criterion(mock[Plant], 5, 6)
+//    val c1 = new Criterion(p1, 1, 2)
+//    val c2 = new Criterion(p1, 2, 2)
+//    val c3 = new Criterion(p1, 1, 4)
+//    val c4 = new Criterion(p1, 5, 6)
 //
 //    val criteria = c1 + c2 + c3 + c4
 //    val expectedOrder = List(c1,c2,c3,c4)
@@ -53,4 +60,44 @@ class CriterionTest extends JUnitSuite with MockitoSugar {
 //      case(expected, actual) => assert(expected === actual)
 //    }
 //  }
+
+
+  @Test def failIfDifferentPlants {
+    //TODO May remove this restriction in future, to allow different
+    // donors to provide the required alleles
+
+    val c1 = new Criterion(p1, 0, 1)
+    val c2 = new Criterion(p2, 0, 10)
+
+    intercept[CriterionException]{
+      new DoubleCriterion(c1, c2)
+    }
+  }
+
+  @Test def failIfSameCentimorgan {
+    val c1 = new Criterion(p1, 0, 1)
+    val c2 = new Criterion(p1, 0, 1)
+
+    intercept[CriterionException]{
+      new DoubleCriterion(c1, c2)
+    }
+  }
+
+  @Test def failIfDifferentChromasome {
+    val c1 = new Criterion(p1, 0, 1)
+    val c2 = new Criterion(p1, 1, 1)
+
+    intercept[CriterionException]{
+      new DoubleCriterion(c1, c2)
+    }
+  }
+
+  @Test def containsDoubleSelection {
+    val c1 = new Criterion(p1, 0, 1)
+    val c2 = new Criterion(p1, 0, 10)
+
+    val dc = new DoubleCriterion(c1, c2)
+    assert( dc.criterion1 === c1 )
+    assert( dc.criterion2 === c2 )
+  }
 }

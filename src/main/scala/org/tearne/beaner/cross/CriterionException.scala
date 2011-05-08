@@ -15,7 +15,7 @@
 
 package org.tearne.beaner.cross
 
-class ChromosomeCriteriaException(message: String, cause: Throwable) extends RuntimeException(message, cause) {
+class CriterionException(message: String, cause: Throwable) extends RuntimeException(message, cause) {
 
   def this(message: String) { this(message, null) }
 

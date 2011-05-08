@@ -15,34 +15,63 @@ package org.tearne.beaner.cross
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-import scala.collection.Iterator
-import scala.collection.generic.{ CanBuildFrom, GenericCompanion, MutableSetFactory }
-import scala.collection.SetLike
-import scala.collection.mutable.{ Builder, SetBuilder }
+import collection._
+//import Iterator
+import generic.{CanBuildFrom, GenericTraversableTemplate, GenericCompanion, SeqFactory}
+import generic.CanBuildFrom
+//import SetLike
+import mutable.{ Builder, ArrayBuffer }
 
-class Criteria(elems: Criterion*) extends Set[Criterion] with SetLike[Criterion, Criteria] {
-  private val rep = Set[Criterion]()
+class Criteria(buf: ArrayBuffer[Criterion])
+  extends IndexedSeq[Criterion]
+  with IndexedSeqLike[Criterion, Criteria]{
+
+  def this(criterion: Criterion*) = this(new ArrayBuffer[Criterion]() ++= criterion)
+
+  override def newBuilder = Criteria.newBuilder
   private var size0 = 0
 
-  override def size = elems.size
-  override def empty: Criteria = new Criteria()
+  override def size = buf.size
   override def stringPrefix = "Criteria"
 
-  def contains(key: Criterion) = elems.contains(key)
-  def iterator = elems.iterator
-  override def +(elem: Criterion) = if(elems contains elem) this else new Criteria( elem +: elems: _*)
-  override def -(elem: Criterion) = if(!(elems contains elem)) this else new Criteria( elems filterNot(elem == _): _* )
+  def contains(key: Criterion) = buf.contains(key)
+  def apply(idx: Int) = buf.apply(idx)
+  def length = buf.length
+  override def iterator = buf.iterator
+  def +(elem: Criterion) = if(buf contains elem) this else new Criteria(buf += elem)
 
+  //
   // Non-collection functionality below
-  def getChromosomeCriteria() = Set[ChromosomeCriteria]()
+  //
+
+  def getGatheredSelectionCriterion() = {
+    val gatherByChromosomeIndex = mutable.Map[Int, Set[SelectionCriterion]]()
+    foreach{c => {
+      val index = c.chromosomeIndex
+      if(!gatherByChromosomeIndex.contains(index))
+        gatherByChromosomeIndex.update(index, Set[SelectionCriterion]())
+      gatherByChromosomeIndex.update(index, gatherByChromosomeIndex(index)+c)
+    }}
+
+    gatherByChromosomeIndex.values.map{set => {
+      if(set.size == 1) set.iterator.next
+      else if(set.size == 2) {
+        val it = set.iterator
+        new DoubleCriterion(it.next.asInstanceOf[Criterion], it.next.asInstanceOf[Criterion])
+      }
+      else throw new RuntimeException("TODO - fix me")
+    }}.toSet
+  }
 }
 
-object Criteria { //Was mutable set factory
+object Criteria{
   implicit def criteriaCanBuildFrom = new CanBuildFrom[Criteria, Criterion, Criteria](){
     def apply(from: Criteria) = newBuilder
     def apply() = newBuilder
   }
-  def newBuilder: Builder[Criterion, Criteria] = new SetBuilder[Criterion, Criteria](empty)
 
-  def empty: Criteria = new Criteria()
+  def newBuilder: Builder[Criterion, Criteria] =
+    new ArrayBuffer[Criterion] mapResult (buf => new Criteria(buf))
+
+  def empty: Criteria = new Criteria(new ArrayBuffer[Criterion])
 }

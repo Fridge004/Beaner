@@ -20,6 +20,7 @@ import org.scalatest.junit.JUnitSuite
 import org.scalatest.mock.MockitoSugar
 import org.junit.Test
 import org.junit.Assert.fail
+import collection.immutable.Set
 
 class CriteriaTest extends JUnitSuite with MockitoSugar {
 
@@ -34,18 +35,16 @@ class CriteriaTest extends JUnitSuite with MockitoSugar {
 
     val criteria: Criteria = c1 + c2 + c3 + c4
 
-    val chromoCriteria: Set[ChromosomeCriteria] = criteria.getChromosomeCriteria
+    val gatheredCriterion: Set[SelectionCriterion] = criteria.getGatheredSelectionCriterion
 
-    assert( chromoCriteria.size === 3 )
+    assert( gatheredCriterion.size === 3 )
 
-    val expected1 = new SingleChromosomeCriteria(c1)
-    assert( chromoCriteria contains expected1 )
+    assert( gatheredCriterion contains c1 )
 
-    val expected2 = new DoubleChromosomeCriteria(c2, c3)
-    assert( chromoCriteria contains expected1 )
+    val expectedDouble = new DoubleCriterion(c2, c3)
+    assert( gatheredCriterion contains expectedDouble )
 
-    val expected3 = new SingleChromosomeCriteria(c4)
-    assert( chromoCriteria contains expected1 )
+    assert( gatheredCriterion contains c4 )
   }
 
   @Test def checkSetLikeBahaviour {
@@ -70,9 +69,22 @@ class CriteriaTest extends JUnitSuite with MockitoSugar {
     assert(criteria.contains(c2))
 
     criteria = criteria + c3
-    criteria = criteria - c1
-    assert(criteria.size === 2)
+    criteria = criteria + c1
+    assert(criteria.size === 3)
+    assert(criteria.contains(c1))
     assert(criteria.contains(c2))
     assert(criteria.contains(c3))
+  }
+
+  def checkOrderingMaintained() {
+    val c1 = mock[Criterion]
+    val c2 = mock[Criterion]
+    val c3 = mock[Criterion]
+
+    var criteria = new Criteria() + c1 + c1 + c2 + c3
+
+    assert(criteria(0)===c3)
+    assert(criteria(1)===c2)
+    assert(criteria(2)===c3)
   }
 }
