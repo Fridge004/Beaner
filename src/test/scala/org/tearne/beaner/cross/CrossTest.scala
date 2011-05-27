@@ -33,7 +33,7 @@ class CrossTest extends JUnitSuite with MockitoSugar{
 
   @Before def setup {
     plantPair = mock[PlantPair]
-    criteria = mock[Criteria]
+    criteria = new Criteria(mock[Criterion])
     plantCrosser = mock[PlantCrosser]
 
     cross = new Cross(plantPair, criteria, null)

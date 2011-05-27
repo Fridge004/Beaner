@@ -22,7 +22,7 @@ import org.apache.commons.math.distribution.BinomialDistributionImpl
 case class OffspringPlant(
   val chromosomes: Array[Chromosome],
   val spec: PlantSpec,
-	val selectionProbability: Option[Double] = None,
+  val selectionProbability: Option[Double] = None,
   name: Option[String] = None,
   val parents: Option[PlantPair] = None) extends Plant {
 

@@ -23,7 +23,7 @@ import org.junit.Assert.fail
 import collection.immutable.Set
 
 class CriteriaTest extends JUnitSuite with MockitoSugar {
-
+  
   @Test def separatingSingleAndDoubleSelections {
     val p1 = mock[Plant]
     val p2 = mock[Plant]
