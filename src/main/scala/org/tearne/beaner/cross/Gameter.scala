@@ -79,7 +79,7 @@ class Gameter(private val model: RecombinationModel){
     for (i <- 0 until gamete.size) {
       if (i == index)
         if (tid1(i).alleles(plant) != 1.0)
-          throw new ChromasomeException("Can only select when allele is present with probability on one of the chromatids")
+          throw new ChromasomeException("Can only select when allele is present with probability one on one of the chromatids")
         else
           gamete(i) = new Centimorgan(plant)
       else {

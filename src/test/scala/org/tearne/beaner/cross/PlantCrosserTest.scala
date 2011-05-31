@@ -57,7 +57,7 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar {
   when(chromasome2.size).thenReturn(1)
   when(chromasome2.selectionProbability).thenReturn(None)
 
-  @Test def parentsSetOnOffspringPlant {
+  @Test def parentsAreSetOnOffspringPlant {
 	val chromasomeCrosser = mock[ChromosomeCrosser]
     when(chromasomeCrosser.selectHeterozygousOffspring(p1.chromosomes(0), p2.chromosomes(0), p1, 2)).thenReturn(chromasome0)
     when(chromasomeCrosser.selectHeterozygousOffspring(p1.chromosomes(1), p2.chromosomes(1), p2, 1)).thenReturn(chromasome1)

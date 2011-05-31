@@ -26,12 +26,12 @@ import org.junit.Test
 import org.junit.Before
 
 class ChromosomeCrosserTest extends JUnitSuite with MockitoSugar{
-	val tolerance = 1e-16
-	var chromosome1, chromosome2: Chromosome = null
-	var p1,p2:Plant = null
+  val tolerance = 1e-16
+  var chromosome1, chromosome2: Chromosome = null
+  var p1,p2:Plant = null
   var gamete1, gamete2: Chromatid = null
 	
-	var chromosomeCrosser:ChromosomeCrosser = null
+  var chromosomeCrosser:ChromosomeCrosser = null
   var gameter:Gameter = null;
 	
 	@Before def setup{

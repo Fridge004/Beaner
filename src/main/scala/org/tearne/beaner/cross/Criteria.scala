@@ -16,10 +16,8 @@ package org.tearne.beaner.cross
  */
 
 import collection._
-//import Iterator
 import generic.{CanBuildFrom, GenericTraversableTemplate, GenericCompanion, SeqFactory}
 import generic.CanBuildFrom
-//import SetLike
 import mutable.{ Builder, ArrayBuffer }
 
 class Criteria(buf: ArrayBuffer[Criterion])
@@ -29,15 +27,13 @@ class Criteria(buf: ArrayBuffer[Criterion])
   def this(criterion: Criterion*) = this(new ArrayBuffer[Criterion]() ++= criterion)
 
   override def newBuilder = Criteria.newBuilder
-  private var size0 = 0
-
   override def size = buf.size
   override def stringPrefix = "Criteria"
+  override def iterator = buf.iterator
 
   def contains(key: Criterion) = buf.contains(key)
   def apply(idx: Int) = buf.apply(idx)
   def length = buf.length
-  override def iterator = buf.iterator
   def +(elem: Criterion) = if(buf contains elem) this else new Criteria(buf += elem)
 
   //
