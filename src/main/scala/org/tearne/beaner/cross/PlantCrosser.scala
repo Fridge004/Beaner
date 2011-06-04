@@ -15,8 +15,10 @@
 
 package org.tearne.beaner.cross
 
-import org.tearne.beaner.chroma._
-import org.tearne.beaner.plant._
+import org.tearne.beaner._
+import criteria._
+import chroma._
+import plant._
 
 class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
 
@@ -27,19 +29,21 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
       throw new UnnamedPlantException()
   }
 
-  def selectHeterozygousOffspring(pair: PlantPair, criteria: Criteria): OffspringPlant = {
+  def selectHeterozygousOffspring(pair: PlantPair, criteria: CriteriaProvider): OffspringPlant = {
     checkCanCross(pair)
 
     val resultGenome = new Array[Chromosome](pair.first.spec.chromosomeLengths.size)
     var selectionProbability = 0.0;
 
-    criteria.foreach(criteria => {
-      val chromaNum = criteria.chromosomeIndex
-      if (resultGenome(chromaNum) != null)
-        throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
-
-      val selectedChroma = getHeterozygousSelectedChroma(pair, criteria)
-      resultGenome(chromaNum) = selectedChroma
+    criteria.getGatheredSelectionCriterion.foreach(_ match{
+      case criterion: Criterion => 
+	      val chromaNum = criterion.chromosomeIndex
+	      if (resultGenome(chromaNum) != null)
+	        throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
+	
+	      val selectedChroma = getHeterozygousSelectedChroma(pair, criterion)
+	      resultGenome(chromaNum) = selectedChroma
+      case criterion: DoubleCriterion => throw new RuntimeException("NWY")
     })
 
     for (i <- 0 until resultGenome.size) {
@@ -61,19 +65,21 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
     chromaCrosser.getOffspringWithoutSelection(pair.first.chromosomes(chromaNum), pair.second.chromosomes(chromaNum))
   }
 
-  def selectHomozygousOffspring(pair: PlantPair, criteria: Criteria): OffspringPlant = {
+  def selectHomozygousOffspring(pair: PlantPair, criteria: CriteriaProvider): OffspringPlant = {
     checkCanCross(pair)
 
     val resultGenome = new Array[Chromosome](pair.first.spec.chromosomeLengths.size)
     var selectionProbability = 0.0
     var chromasomeSize = 0
 
-    criteria.foreach(criteria => {
-      val chromaNum = criteria.chromosomeIndex
-      if (resultGenome(chromaNum) != null)
-        throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
-      val selectedChroma = getHomozygousSelectedChroma(pair, criteria)
-      resultGenome(chromaNum) = selectedChroma
+    criteria.getGatheredSelectionCriterion.foreach(_ match {
+      case criterion: Criterion =>
+	      val chromaNum = criterion.chromosomeIndex
+	      if (resultGenome(chromaNum) != null)
+	        throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
+	      val selectedChroma = getHomozygousSelectedChroma(pair, criterion)
+	      resultGenome(chromaNum) = selectedChroma
+      case criterion: DoubleCriterion => throw new RuntimeException("NRY")
     })
 
     for (i <- 0 until resultGenome.size) {

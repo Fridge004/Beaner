@@ -19,10 +19,12 @@ import org.mockito.Mockito._
 import org.scalatest.junit.JUnitSuite
 import org.scalatest.mock.MockitoSugar
 
-import org.tearne.beaner.chroma._
-import org.tearne.beaner.plant._
-import org.tearne.beaner.cross._
-import org.tearne.beaner.model._
+import org.tearne.beaner._
+import plant._
+import chroma._
+import criteria._
+import cross._
+import model._
 
 import org.junit.{Before, Test}
 

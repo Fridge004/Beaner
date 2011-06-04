@@ -15,7 +15,10 @@
 
 package org.tearne.beaner.cross
 
-import org.tearne.beaner.plant._
+import org.tearne.beaner._
+import plant._
+import criteria._
+import cross._
 
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.{ Test, Before }

@@ -16,9 +16,11 @@
 package org.tearne.beaner.report
 
 import com.itextpdf.text.BaseColor
-import org.tearne.beaner.plant._
-import org.tearne.beaner.cross._
-import org.tearne.beaner.chroma.Centimorgan
+import org.tearne.beaner._
+import plant._
+import chroma._
+import criteria._
+import cross._
 
 class Colour(criteria: Criteria, val prefVar: Plant){
   val plantsMap: Map[Plant, BaseColor] = {

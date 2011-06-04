@@ -15,9 +15,12 @@
 
 package org.tearne.beaner.report
 
-import org.tearne.beaner.cross.{Criterion, Criteria}
-import org.tearne.beaner.plant.Plant
-import org.tearne.beaner.model._
+import org.tearne.beaner._
+import plant._
+import criteria._
+import cross._
+import model._
+
 import com.itextpdf.text.{Document, Paragraph, Font, Element, PageSize}
 import com.itextpdf.text.pdf._
 import java.io.FileOutputStream

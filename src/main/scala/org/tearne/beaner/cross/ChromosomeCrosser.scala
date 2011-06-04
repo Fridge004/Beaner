@@ -23,37 +23,37 @@ class ChromosomeCrosser(val gameter: Gameter){
 	def getOffspringWithoutSelection(
 			firstChromasome:Chromosome,
 			secondChromasome:Chromosome):Chromosome = {
-		new Chromosome(
-      gameter.withoutSelection(firstChromasome),
-      gameter.withoutSelection(secondChromasome)
-    )
+	  new Chromosome(
+        gameter.withoutSelection(firstChromasome),
+        gameter.withoutSelection(secondChromasome)
+      )
 	}
 	
 	def selectHomozygousOffspring(
-			firstChromasome:Chromosome,
-			secondChromasome:Chromosome,
-			plantToSelectFor:Plant,
-			positionForSelection:Int):Chromosome = {
+	    firstChromasome:Chromosome,
+	    secondChromasome:Chromosome,
+	    plantToSelectFor:Plant,
+	    positionForSelection:Int):Chromosome = {
 
-		val selectionProbability = 
-			gameter.probContains(plantToSelectFor, positionForSelection, firstChromasome) *
-			gameter.probContains(plantToSelectFor, positionForSelection, secondChromasome)
+	  val selectionProbability = 
+	    gameter.probContains(plantToSelectFor, positionForSelection, firstChromasome) *
+		gameter.probContains(plantToSelectFor, positionForSelection, secondChromasome)
 		
-		if(selectionProbability==0.0)
-			throw new ChromosomeCrosserException("Chromosomes can't both provide allele")
-		else
-		  new Chromosome(
-				gameter.selectOn(plantToSelectFor, positionForSelection, firstChromasome),
-				gameter.selectOn(plantToSelectFor, positionForSelection, secondChromasome),
-				selectionProbability
-			)
+	  if(selectionProbability==0.0)
+		throw new ChromosomeCrosserException("Chromosomes can't both provide allele")
+	  else
+		new Chromosome(
+		  gameter.selectOn(plantToSelectFor, positionForSelection, firstChromasome),
+		  gameter.selectOn(plantToSelectFor, positionForSelection, secondChromasome),
+		  selectionProbability
+		)
 	}
 	
 	def selectHeterozygousOffspring(
-			firstChromosome:Chromosome,
-			secondChromosome:Chromosome,
-			plantToSelectFor:Plant, 
-			positionForSelection:Int):Chromosome = {
+		firstChromosome:Chromosome,
+		secondChromosome:Chromosome,
+		plantToSelectFor:Plant, 
+		positionForSelection:Int):Chromosome = {
 
 		if(gameter.probContains(plantToSelectFor, positionForSelection, firstChromosome)>0){
 			if(gameter.probContains(plantToSelectFor, positionForSelection, secondChromosome)>0){
@@ -71,15 +71,15 @@ class ChromosomeCrosser(val gameter: Gameter){
 	}
 
 	private def getResultGivenSelectionFromSingleChromasome(
-      firstChromosome:Chromosome,
-      secondChromosome:Chromosome,
-      plantToSelectFor:Plant,
-      positionForSelection:Int) = {
+        firstChromosome:Chromosome,
+        secondChromosome:Chromosome,
+        plantToSelectFor:Plant,
+        positionForSelection:Int) = {
 
-		val resultChromatidA = gameter.selectOn(plantToSelectFor, positionForSelection, firstChromosome)
-		val resultChromatidB = gameter.withoutSelection(secondChromosome);
-    val selectionProb = gameter.probContains(plantToSelectFor, positionForSelection, firstChromosome)
+	  val resultChromatidA = gameter.selectOn(plantToSelectFor, positionForSelection, firstChromosome)
+	  val resultChromatidB = gameter.withoutSelection(secondChromosome);
+      val selectionProb = gameter.probContains(plantToSelectFor, positionForSelection, firstChromosome)
 
-		new Chromosome(resultChromatidA, resultChromatidB, selectionProb)
+	  new Chromosome(resultChromatidA, resultChromatidB, selectionProb)
 	}
 }

@@ -1,4 +1,4 @@
-package org.tearne.beaner.cross
+package org.tearne.beaner.criteria
 
 /*
  * Copyright (c) Oliver Tearne (tearne at gmail dot com)
@@ -22,7 +22,8 @@ import mutable.{ Builder, ArrayBuffer }
 
 class Criteria(buf: ArrayBuffer[Criterion])
   extends IndexedSeq[Criterion]
-  with IndexedSeqLike[Criterion, Criteria]{
+  with IndexedSeqLike[Criterion, Criteria]
+  with CriteriaProvider{
 
   def this(criterion: Criterion*) = this(new ArrayBuffer[Criterion]() ++= criterion)
 
@@ -40,7 +41,7 @@ class Criteria(buf: ArrayBuffer[Criterion])
   // Non-collection functionality below
   //
 
-  def getGatheredSelectionCriterion() = {
+  override def getGatheredSelectionCriterion() = {
     val gatherByChromosomeIndex = mutable.Map[Int, Set[SelectionCriterion]]()
     foreach{c => {
       val index = c.chromosomeIndex

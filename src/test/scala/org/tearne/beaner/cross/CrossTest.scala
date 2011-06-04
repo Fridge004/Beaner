@@ -20,9 +20,11 @@ import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import org.junit.{Test, Before}
 import org.junit.Assert._
-import org.tearne.beaner.plant._
-import org.tearne.beaner.cross._
-import org.tearne.beaner.chroma._
+
+import org.tearne.beaner._
+import plant._
+import criteria._
+import cross._
 
 class CrossTest extends JUnitSuite with MockitoSugar{
   var plantPair: PlantPair = null

@@ -14,8 +14,10 @@
  */
 package org.tearne.beaner.cross
 
-import org.tearne.beaner.plant._
-import org.tearne.beaner.chroma._
+import org.tearne.beaner._
+import plant._
+import chroma._
+import criteria._
 
 case class Cross(
     val pair:ParentPair,

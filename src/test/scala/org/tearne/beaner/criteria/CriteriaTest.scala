@@ -13,14 +13,14 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.cross
+package org.tearne.beaner.criteria
 
 import org.tearne.beaner.plant.Plant
 import org.scalatest.junit.JUnitSuite
 import org.scalatest.mock.MockitoSugar
 import org.junit.Test
 import org.junit.Assert.fail
-import collection.immutable.Set
+//import collection.immutable.Set
 
 class CriteriaTest extends JUnitSuite with MockitoSugar {
   
@@ -35,7 +35,7 @@ class CriteriaTest extends JUnitSuite with MockitoSugar {
 
     val criteria: Criteria = c1 + c2 + c3 + c4
 
-    val gatheredCriterion: Set[SelectionCriterion] = criteria.getGatheredSelectionCriterion
+    val gatheredCriterion = criteria.getGatheredSelectionCriterion
 
     assert( gatheredCriterion.size === 3 )
 

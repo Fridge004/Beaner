@@ -15,9 +15,12 @@
 
 package org.tearne.beaner.cross
 
-import org.tearne.beaner.chroma._
-import org.tearne.beaner.plant._
-import org.tearne.beaner.cross._
+import org.tearne.beaner._
+import plant._
+import chroma._
+import criteria._
+import cross._
+
 import org.scalatest.junit.AssertionsForJUnit
 import org.junit.Test
 import org.junit.Assert.{ assertEquals, assertTrue }
@@ -26,6 +29,8 @@ import org.scalatest.mock.MockitoSugar
 import org.scalatest.Assertions._
 import org.mockito.Mockito._
 import org.mockito.Matchers._
+import org.mockito.stubbing.Answer
+import org.mockito.invocation.InvocationOnMock
 
 class PlantCrosserTest extends JUnitSuite with MockitoSugar {
   val tolerance = 1e-16
@@ -42,8 +47,12 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar {
   // p1 on the first chromasome, third cM
   // p2 on the second chromasome, second cM
   //No selection on the third chromasome
-  val criteria = new Criterion(p1, 0, 2) + new Criterion(p2, 1, 1)
-
+  //val criteria = new Criterion(p1, 0, 2) + new Criterion(p2, 1, 1)
+  val criteria = mock[CriteriaProvider]
+  when(criteria.getGatheredSelectionCriterion).thenReturn(
+    Set[SelectionCriterion](new Criterion(p1, 0, 2),new Criterion(p2, 1, 1))
+  )
+  
   //Result Chromosomes
   val chromasome0 = mock[Chromosome];
   when(chromasome0.size).thenReturn(3)
@@ -143,4 +152,6 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar {
     //No selection probability on third chromasome since pretending there is no selection on it
     assertEquals(expectedSelectionProb, offspring.selectionProbability.get, tolerance)
   }
+  
+//  @Test def exceptionIf
 }

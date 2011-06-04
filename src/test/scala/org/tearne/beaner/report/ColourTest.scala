@@ -4,8 +4,11 @@ import org.scalatest.junit.JUnitSuite
 import org.scalatest.mock.MockitoSugar
 import org.junit.Test
 import org.tearne.beaner.plant.Plant
-import org.tearne.beaner.cross.{Criterion,Criteria}
-import org.tearne.beaner.chroma.Centimorgan
+
+import org.tearne.beaner._
+import chroma._
+import criteria._
+import cross._
 
 import com.itextpdf.text.BaseColor
 

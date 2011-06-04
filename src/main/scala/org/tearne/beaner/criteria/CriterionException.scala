@@ -13,7 +13,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.cross
+package org.tearne.beaner.criteria
 
 class CriterionException(message: String, cause: Throwable) extends RuntimeException(message, cause) {
 

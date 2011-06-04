@@ -15,7 +15,9 @@
 
 package org.tearne.beaner.cross
 
-import org.tearne.beaner.plant._
+import org.tearne.beaner._
+import plant._
+import criteria._
 
 sealed trait ParentPair{
   def selectHet(criteria: Criteria): Cross = new Cross(this, criteria, Option(SelectionType.Heterozygous))
