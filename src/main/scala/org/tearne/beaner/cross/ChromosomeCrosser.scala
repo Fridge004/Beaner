@@ -49,6 +49,15 @@ class ChromosomeCrosser(val gameter: Gameter){
 		)
 	}
 	
+	def selectHomozygousOffspring(
+	    firstChromasome:Chromosome,
+	    secondChromasome:Chromosome,
+	    plantToSelectFor:Plant,
+	    positionForFirstSelection:Int,
+	    positionForSecondSelection:Int):Chromosome = {
+	  throw new UnsupportedOperationException("not written yet")
+	}
+	
 	def selectHeterozygousOffspring(
 		firstChromosome:Chromosome,
 		secondChromosome:Chromosome,
@@ -68,6 +77,15 @@ class ChromosomeCrosser(val gameter: Gameter){
 		} else {
 			throw new ChromosomeCrosserException("Neither chromosome can provide allele")
 		}
+	}
+	
+	def selectHeterozygousOffspring(
+		firstChromosome:Chromosome,
+		secondChromosome:Chromosome,
+		plantToSelectFor:Plant, 
+		positionForFirstSelection:Int,
+		positionForSecondSelection:Int):Chromosome = {
+	  throw new UnsupportedOperationException("not written yet")
 	}
 
 	private def getResultGivenSelectionFromSingleChromasome(

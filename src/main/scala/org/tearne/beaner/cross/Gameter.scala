@@ -22,13 +22,25 @@ import scala.math._
 
 class Gameter(private val model: RecombinationModel){
 
-  def probContains(plant: Plant, index: Int, chromosome: Chromosome) = {
+  /** Returns the probability that a gamete produced by the chromosome
+   *  would contain the plant gene at specified index
+   */
+  def probContains(plant: Plant, index: Int, chromosome: Chromosome):Double = {
     val firstChromatid = chromosome.firstChromatid
     val secondChromatid = chromosome.secondChromatid
 
     0.5 * (firstChromatid.probabilityOf(plant, index) + secondChromatid.probabilityOf(plant, index))
   }
+  
+   /** Returns the probability that a gamete produced by the chromosome
+   *  would contain the plant gene at two specified indexes
+   */
+  def probContains(plant: Plant, firstIndex: Int, secondIndex: Int, chromosome: Chromosome):Double = {
+	throw new UnsupportedOperationException("Not written yet")
+  }
 
+  /** Make gamete by selection at single centiMorgan
+   */
   def selectOn(plant: Plant, index: Int, chromosome: Chromosome): Chromatid = {
     val firstChromatid = chromosome.firstChromatid
     val secondChromatid = chromosome.secondChromatid
@@ -44,6 +56,12 @@ class Gameter(private val model: RecombinationModel){
       //Not possible to select
       null
     }
+  }
+  
+  /** Make gamete by selection at two centiMorgans
+   */
+  def selectOn(plant: Plant, firstIndex: Int, secondIndex: Int, chromosome: Chromosome): Chromatid = {
+    throw new UnsupportedOperationException("Not written yet")
   }
 
   private def selectOnBothTids(index: Int, plant: Plant, chromosome: Chromosome) = {

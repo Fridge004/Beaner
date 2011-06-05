@@ -48,8 +48,7 @@ class GameterTest extends JUnitSuite with MockitoSugar{
   val recombinationModel = new RecombinationModel{
     def probInAtDistance(d: Int) = if(d==0) 1 else 1/d
   }
-
-
+  
   val gameter = new Gameter(recombinationModel)
 
   @Test

@@ -62,14 +62,20 @@ class ChromosomeCrosserTest extends JUnitSuite with MockitoSugar{
 	
   @Test def failedHomozygousSelection {
 	when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0)
-	when(gameter.probContains(p1, 50, chromosome2)).thenReturn(0)
+	when(gameter.probContains(p1, 50, chromosome2)).thenReturn(0.5)
 	
 	intercept[ChromosomeCrosserException]{
 	  chromosomeCrosser.selectHomozygousOffspring(chromosome1, chromosome2, p1, 50)
 	}
+  }
+  
+  @Test def failedHomozygousDoubleSelection {
+	when(gameter.probContains(p1, 1, 10, chromosome1)).thenReturn(0)
+	when(gameter.probContains(p1, 1, 10, chromosome2)).thenReturn(0.5)
 	
-	verify(gameter).probContains(p1, 50, chromosome1)
-	verify(gameter).probContains(p1, 50, chromosome2)
+	intercept[ChromosomeCrosserException]{
+	  chromosomeCrosser.selectHomozygousOffspring(chromosome1, chromosome2, p1, 1, 10)
+	}
   }
 	
   @Test def homozygousSelection {
@@ -84,7 +90,20 @@ class ChromosomeCrosserTest extends JUnitSuite with MockitoSugar{
 	assertEquals(gamete2, result.secondChromatid)
 	assertEquals(0.5*0.4, result.selectionProbability.get, tolerance)
   }
+  
+  @Test def homozygousDoubleSelection {
+    when(gameter.probContains(p1, 5, 50, chromosome1)).thenReturn(0.7)
+	when(gameter.probContains(p1, 5, 50, chromosome2)).thenReturn(0.2)
+	when(gameter.selectOn(p1, 5, 50, chromosome1)).thenReturn(gamete1)
+	when(gameter.selectOn(p1, 5, 50, chromosome2)).thenReturn(gamete2)
 	
+	val result = chromosomeCrosser.selectHomozygousOffspring(chromosome1, chromosome2, p1, 5, 50)
+
+	assertEquals(gamete1, result.firstChromatid)
+	assertEquals(gamete2, result.secondChromatid)
+	assertEquals(0.7*0.2, result.selectionProbability.get, tolerance)
+  }
+  
   @Test def failedHeterozygousSelection {
 	when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0)
 	when(gameter.probContains(p1, 50, chromosome2)).thenReturn(0)
@@ -92,12 +111,9 @@ class ChromosomeCrosserTest extends JUnitSuite with MockitoSugar{
 	intercept[ChromosomeCrosserException]{
 	  chromosomeCrosser.selectHeterozygousOffspring(chromosome1, chromosome2, p1, 50)
 	}
-	
-	verify(gameter).probContains(p1, 50, chromosome1)
-	verify(gameter).probContains(p1, 50, chromosome2)
   }
 	
-  @Test def simpleHeterozygousSelection {
+  @Test def heterozygousSelection {
 	when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0.4)
 	when(gameter.probContains(p1, 50, chromosome2)).thenReturn(0)
 	when(gameter.selectOn(p1, 50, chromosome1)).thenReturn(gamete1)
@@ -111,6 +127,21 @@ class ChromosomeCrosserTest extends JUnitSuite with MockitoSugar{
 	
 	verify(gameter, never()).withoutSelection(chromosome1)
   }
+  
+  @Test def heterozygousDoubleSelection {
+	when(gameter.probContains(p1, 2, 20, chromosome1)).thenReturn(0.7)
+	when(gameter.probContains(p1, 2, 20, chromosome2)).thenReturn(0)
+	when(gameter.selectOn(p1, 2, 20, chromosome1)).thenReturn(gamete1)
+	when(gameter.withoutSelection(chromosome2)).thenReturn(gamete2)
+	
+	val result = chromosomeCrosser.selectHeterozygousOffspring(chromosome1, chromosome2, p1, 2, 20)
+	
+	assertEquals(gamete1, result.firstChromatid)
+	assertEquals(gamete2, result.secondChromatid)
+	assertEquals(0.7, result.selectionProbability.get, tolerance)
+	
+	verify(gameter, never()).withoutSelection(chromosome1)
+  }
 	
   @Test def exceptionIfTryHeterozygousSelectionAndBothChromosomesCanSupplyAllele {
 	when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0.5)
@@ -118,6 +149,15 @@ class ChromosomeCrosserTest extends JUnitSuite with MockitoSugar{
 	
 	intercept[ChromosomeCrosserException]{
 		chromosomeCrosser.selectHeterozygousOffspring(chromosome1, chromosome2, p1, 50)
+	}
+  }
+  
+  @Test def exceptionIfTryHeterozygousDoubleSelectionAndBothChromosomesCanSupplyAlleles {
+	when(gameter.probContains(p1, 1, 10, chromosome1)).thenReturn(0.5)
+	when(gameter.probContains(p1, 1, 10, chromosome2)).thenReturn(0.5)
+	
+	intercept[ChromosomeCrosserException]{
+		chromosomeCrosser.selectHeterozygousOffspring(chromosome1, chromosome2, p1, 1, 10)
 	}
   }
 }
