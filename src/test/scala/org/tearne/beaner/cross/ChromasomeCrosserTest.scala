@@ -15,8 +15,9 @@
 
 package org.tearne.beaner.cross
 
-import org.tearne.beaner.plant._
-import org.tearne.beaner.chroma._
+import org.tearne.beaner._
+import plant._
+import chroma._
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.junit.JUnitSuite
 import org.mockito.Mockito._
@@ -43,8 +44,9 @@ class ChromosomeCrosserTest extends JUnitSuite with MockitoSugar{
 	p1 = mock[Plant]
 	p2 = mock[Plant]
 	
-	chromosome1 = mock[Chromosome]
-	chromosome2 = mock[Chromosome]
+	chromosome1 = new Chromosome(mock[Chromatid], mock[Chromatid], None)
+	chromosome2 = new Chromosome(mock[Chromatid], mock[Chromatid], None)
+	
 	gamete1 = mock[Chromatid]
 	gamete2 = mock[Chromatid]
   }
@@ -61,7 +63,7 @@ class ChromosomeCrosserTest extends JUnitSuite with MockitoSugar{
   }
 	
   @Test def failedHomozygousSelection {
-	when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0)
+    when(gameter.probContains(p1, 50, chromosome1)).thenReturn(0)
 	when(gameter.probContains(p1, 50, chromosome2)).thenReturn(0.5)
 	
 	intercept[ChromosomeCrosserException]{

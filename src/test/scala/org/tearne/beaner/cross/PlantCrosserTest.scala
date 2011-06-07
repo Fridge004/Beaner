@@ -59,7 +59,7 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar {
     Set[SelectionCriterion](
         new Criterion(p1, 0, 2),
         new Criterion(p2, 1, 1),
-        new DoubleCriterion(new Criterion(p1,2,0),new Criterion(p1,2,0)) )
+        new DoubleCriterion(new Criterion(p2,2,1),new Criterion(p2,2,10)) )
   )
   
   //Result Chromosomes
@@ -79,23 +79,25 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar {
   when(chromosome3.size).thenReturn(1)
   when(chromosome3.selectionProbability).thenReturn(None)
 
-  @Test def parentsAreSetOnOffspringPlant {
-	var chromosomeCrosser = mock[ChromosomeCrosser]
+  @Test def parentsAreSetOnOffspringPlant_Heterozygous {
+	val chromosomeCrosser = mock[ChromosomeCrosser]
     when(chromosomeCrosser.selectHeterozygousOffspring(p1.chromosomes(0), p2.chromosomes(0), p1, 2)).thenReturn(chromosome0)
     when(chromosomeCrosser.selectHeterozygousOffspring(p1.chromosomes(1), p2.chromosomes(1), p2, 1)).thenReturn(chromosome1)
     when(chromosomeCrosser.selectHeterozygousOffspring(p1.chromosomes(2), p2.chromosomes(2), p1, 1, 10)).thenReturn(chromosome2)
     when(chromosomeCrosser.getOffspringWithoutSelection(p1.chromosomes(2), p2.chromosomes(2))).thenReturn(chromosome3)
     
-    var offspring = new PlantCrosser(chromosomeCrosser).selectHeterozygousOffspring(PlantPair(p1, p2), criteria)
+    val offspring = new PlantCrosser(chromosomeCrosser).selectHeterozygousOffspring(PlantPair(p1, p2), criteria)
     assertEquals(PlantPair(p1, p2), offspring.parents.get)
-    
-    chromosomeCrosser = mock[ChromosomeCrosser]
+  }
+  
+  @Test def parentsAreSetOnOffspringPlant_Homozygous {
+    val chromosomeCrosser = mock[ChromosomeCrosser]
     when(chromosomeCrosser.selectHomozygousOffspring(p1.chromosomes(0), p2.chromosomes(0), p1, 2)).thenReturn(chromosome0)
     when(chromosomeCrosser.selectHomozygousOffspring(p1.chromosomes(1), p2.chromosomes(1), p2, 1)).thenReturn(chromosome1)
     when(chromosomeCrosser.selectHomozygousOffspring(p1.chromosomes(1), p2.chromosomes(1), p2, 1, 10)).thenReturn(chromosome2)
     when(chromosomeCrosser.getOffspringWithoutSelection(p1.chromosomes(2), p2.chromosomes(2))).thenReturn(chromosome3)
      
-    offspring = new PlantCrosser(chromosomeCrosser).selectHomozygousOffspring(PlantPair(p1, p2), criteria)
+    val offspring = new PlantCrosser(chromosomeCrosser).selectHomozygousOffspring(PlantPair(p1, p2), criteria)
     assertEquals(PlantPair(p1, p2), offspring.parents.get)
   }
 
@@ -171,6 +173,4 @@ class PlantCrosserTest extends JUnitSuite with MockitoSugar {
     //No selection probability on third chromasome since pretending there is no selection on it
     assertEquals( expectedSelectionProb, offspring.selectionProbability.get, tolerance )
   }
-  
-//  @Test def exceptionIf
 }

@@ -1,0 +1,52 @@
+package org.tearne.beaner.problems
+
+import org.scalatest.junit.JUnitSuite
+import org.scalatest.mock.MockitoSugar
+import org.mockito.Mockito.when
+import org.junit.Test
+import org.junit.Before
+
+class A(val b:B)
+class B(val c:Int)
+
+class First(){
+  def getSomething(a:A) = a.b.c
+}
+
+class Second_A extends Second_B
+class Second_B{
+  def getSomething(a:A) = a.b.c
+}
+
+class Third_A extends Third_B
+trait Third_B{
+  def getSomething(a:A) = a.b.c
+}
+
+class Mocking extends JUnitSuite with MockitoSugar{
+	var mockA:A = _
+	@Before def setup { mockA = mock[A] }
+  
+	@Test def first_PASSES {
+	  val mockFirst = mock[First]
+	  when(mockFirst.getSomething(mockA)).thenReturn(3)
+	  
+	  assert(3 === mockFirst.getSomething(mockA))
+	}
+	
+	@Test def second_PASSES {
+	  val mockSecond = mock[Second_A]
+	  when(mockSecond.getSomething(mockA)).thenReturn(3)
+	  
+	  assert(3 === mockSecond.getSomething(mockA))
+	}
+	
+	@Test def third_FAILS {
+	  val mockThird = mock[Third_A]
+	  
+	  //NullPointerException here
+	  when(mockThird.getSomething(mockA)).thenReturn(3) 
+	  
+	  assert(3 === mockThird.getSomething(mockA))
+	}
+}

@@ -25,19 +25,21 @@ import org.junit.Test
 import org.junit.Assert._
 import scala.math._
 
-class GameterTest extends JUnitSuite with MockitoSugar{
+class GameterSingleSelectionTest extends JUnitSuite with MockitoSugar{
   val tolerance = 1e-16
   val p1 = mock[Plant]
   val p2 = mock[Plant]
   val p3 = mock[Plant]
   val p4 = mock[Plant]
 
-  var tidA, tidB, tidC, tidD: Chromatid = null
+  var tidA, tidB, tidC, tidD, tidE: Chromatid = null
   tidA = new Chromatid(p1, 100)
   tidB = new Chromatid(p2, 100)
   tidC = new Chromatid(p1, 100)
   tidC(50) = new Centimorgan(Map(p1->0.5,p2->0.5))
   tidD = new Chromatid(p1, 99)
+  tidE = new Chromatid(p2, 100)
+  tidE(50) = new Centimorgan(Map(p1->0.5,p2->0.5))
 
   val chromosome1 = new Chromosome(tidA, tidB)
   val chromosome2 = new Chromosome(tidA, tidC)
@@ -61,22 +63,27 @@ class GameterTest extends JUnitSuite with MockitoSugar{
 
   @Test
   def exceptionIfTryToSelectWhenAlleleNotPresentWithProbOne {
-    tidA(50) = new Centimorgan(Map(p1->0.5, p2->0.5))
+    //tidA(50) = new Centimorgan(Map(p1->0.5, p2->0.5))
 
-    val chromosome = new Chromosome(tidA, tidB)
+    val chromosome = new Chromosome(tidA, tidE)
 
-    intercept[ChromasomeException] {
-      gameter.selectOn(p1, 50, chromosome)
-    }
-
-    intercept[ChromasomeException] {
+    intercept[GameterException] {
       gameter.selectOn(p2, 50, chromosome)
     }
+  }
+  
+  @Test def noExceptionIfHalfPresentOnOneTidAndFullyOnTheOther{
+    val chromosome = new Chromosome(tidA, tidE)
+    
+    val gamete = gameter.selectOn(p1, 50, chromosome)
+    assert(gamete.probabilityOf(p1, 50) === 1)
+    assert(gamete.probabilityOf(p1, 60) === recombinationModel.probInAtDistance(10))
+    assert(gamete.probabilityOf(p1, 45) === recombinationModel.probInAtDistance(5))
   }
 
 
   @Test
-  def gameteSelectingFor_doubleChromatid {
+  def gameteSelectingOnBothChromatids {
     tidB(50) = new Centimorgan(p1)
     val chromosome = new Chromosome(tidA, tidB)
 
@@ -96,7 +103,7 @@ class GameterTest extends JUnitSuite with MockitoSugar{
   }
 
   @Test
-  def gameteSelectingFor_singleChromatid {
+  def gameteSelectingOnSingleChromatid {
     val chromosome = new Chromosome(tidA, tidB)
     val gamete = gameter.selectOn(p1, 50, chromosome)
 
@@ -120,8 +127,7 @@ class GameterTest extends JUnitSuite with MockitoSugar{
 
   }
 
-  @Test
-  def makingWithoutSelection_subcalling {
+  @Test def makingWithoutSelection_subcalling {
     val cM1a = mock[Centimorgan]
     val cM1b = mock[Centimorgan]
     val cTidArray1 = new Array[Centimorgan](2)

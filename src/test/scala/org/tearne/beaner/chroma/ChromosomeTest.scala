@@ -50,7 +50,7 @@ class ChromosomeTest extends JUnitSuite with MockitoSugar {
 
   @Test
   def exceptionIfChromatidsDiffLengths {
-    intercept[ChromasomeException] { new Chromosome(tidA, tidD) }
+    intercept[ChromosomeException] { new Chromosome(tidA, tidD) }
   }
 
   @Test

@@ -25,7 +25,7 @@ class Chromosome(val firstChromatid: Chromatid, val secondChromatid: Chromatid, 
   def this(plant: Plant, size: Int) = this(new Chromatid(plant, size), new Chromatid(plant, size))
 
   if (firstChromatid.size != secondChromatid.size)
-    throw new ChromasomeException("Chromatids are not of the same size")
+    throw new ChromosomeException("Chromatids are not of the same size")
 
   val size = firstChromatid.size
 

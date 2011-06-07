@@ -1,29 +1,32 @@
-/*
- * Copyright (c) Oliver Tearne (tearne at gmail dot com)
- *
- * This program is free software: you can redistribute it and/or modify it under the terms of
- * the GNU General Public License as published by the Free Software Foundation, either version
- * 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with this program.
- * If not, see <http://www.gnu.org/licenses/>.
- */
-
 package org.tearne.beaner.cross
 
-import org.tearne.beaner.chroma._
-import org.tearne.beaner.plant._
-import org.tearne.beaner.model._
-import scala.math._
+import math.abs
+import org.tearne.beaner._
+import plant._
+import cross._
+import chroma._
+import model._
 
-class Gameter(private val model: RecombinationModel){
+class Gameter(val recombinationModel:RecombinationModel) 
+    extends GameterSingleSelection
+	with GameterDoubleSelection{
+	
+  /** Do a cross without any selection  
+   */
+  def withoutSelection(chromosome: Chromosome): Chromatid = {
+    val firstChromatid = chromosome.firstChromatid
+    val secondChromatid = chromosome.secondChromatid
 
-  /** Returns the probability that a gamete produced by the chromosome
-   *  would contain the plant gene at specified index
+    val gameteArray = new Array[Centimorgan](firstChromatid.size)
+    for (i <- 0 until firstChromatid.size) {
+      gameteArray(i) = firstChromatid(i).gameteify(secondChromatid(i), 0.5)
+    }
+
+    new Chromatid(gameteArray)
+  }
+  
+  /** Probability that a gamete of the chromosome
+   * contains the plant gene at the index
    */
   def probContains(plant: Plant, index: Int, chromosome: Chromosome):Double = {
     val firstChromatid = chromosome.firstChromatid
@@ -31,31 +34,30 @@ class Gameter(private val model: RecombinationModel){
 
     0.5 * (firstChromatid.probabilityOf(plant, index) + secondChromatid.probabilityOf(plant, index))
   }
-  
-   /** Returns the probability that a gamete produced by the chromosome
-   *  would contain the plant gene at two specified indexes
-   */
-  def probContains(plant: Plant, firstIndex: Int, secondIndex: Int, chromosome: Chromosome):Double = {
-	throw new UnsupportedOperationException("Not written yet")
-  }
 
-  /** Make gamete by selection at single centiMorgan
+  /** Make a gamete selecting for the given plant at the index 
    */
   def selectOn(plant: Plant, index: Int, chromosome: Chromosome): Chromatid = {
     val firstChromatid = chromosome.firstChromatid
     val secondChromatid = chromosome.secondChromatid
 
-    if (firstChromatid(index).probabilityOf(plant) > 0) {
-      if (secondChromatid(index).probabilityOf(plant) > 0) {
+    if (firstChromatid(index).probabilityOf(plant) == 1) {
+      if (secondChromatid(index).probabilityOf(plant) == 1) {
         selectOnBothTids(index, plant, chromosome)
       } else
         selectOnSingleTid(true, index, plant, chromosome)
-    } else if (secondChromatid(index).probabilityOf(plant) > 0) {
+    } else if (secondChromatid(index).probabilityOf(plant) == 1) {
       selectOnSingleTid(false, index, plant, chromosome)
     } else {
-      //Not possible to select
-      null
+      throw new GameterException("Allele not present with probability one on either chromatid")
     }
+  }
+  
+   /** Probability that a gamete produced by the chromosome
+   *  would contain the plant gene at two specified indexes
+   */
+  def probContains(plant: Plant, firstIndex: Int, secondIndex: Int, chromosome: Chromosome):Double = {
+	throw new UnsupportedOperationException("Not written yet")
   }
   
   /** Make gamete by selection at two centiMorgans
@@ -71,10 +73,11 @@ class Gameter(private val model: RecombinationModel){
     val gamete = new Chromatid(firstChromatid)
     for (i <- 0 until gamete.size) {
       if (i == index && (firstChromatid(i).alleles(plant) != 1.0 || secondChromatid(i).alleles(plant) != 1.0))
-        throw new ChromasomeException("Can only select when allele is present with probability one")
-      else
-        gamete(i) = new Centimorgan(plant)
-      gamete(i) = firstChromatid(i).combinedWith(secondChromatid(i), 0.5)
+        throw new GameterException("Allele unexpectidly not present with probability one on both chromatids")
+      else{
+        //gamete(i) = new Centimorgan(plant)
+    	  gamete(i) = firstChromatid(i).combinedWith(secondChromatid(i), 0.5)
+      }
     }
     gamete
   }
@@ -97,7 +100,7 @@ class Gameter(private val model: RecombinationModel){
     for (i <- 0 until gamete.size) {
       if (i == index)
         if (tid1(i).alleles(plant) != 1.0)
-          throw new ChromasomeException("Can only select when allele is present with probability one on one of the chromatids")
+          throw new GameterException("Allele unexpectidly not present with probability one on chromatid")
         else
           gamete(i) = new Centimorgan(plant)
       else {
@@ -108,17 +111,6 @@ class Gameter(private val model: RecombinationModel){
     gamete
   }
 
-  def withoutSelection(chromosome: Chromosome): Chromatid = {
-    val firstChromatid = chromosome.firstChromatid
-    val secondChromatid = chromosome.secondChromatid
-
-    val gameteArray = new Array[Centimorgan](firstChromatid.size)
-    for (i <- 0 until firstChromatid.size) {
-      gameteArray(i) = firstChromatid(i).gameteify(secondChromatid(i), 0.5)
-    }
-
-    new Chromatid(gameteArray)
-  }
-
-  private def getProbAtDist(d: Int) = model.probInAtDistance(abs(d))
+  private def getProbAtDist(d: Int) = recombinationModel.probInAtDistance(abs(d))
+  
 }

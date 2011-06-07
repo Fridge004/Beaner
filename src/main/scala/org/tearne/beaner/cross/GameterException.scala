@@ -13,9 +13,9 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.tearne.beaner.chroma
+package org.tearne.beaner.cross
 
-class ChromosomeException(message: String, cause: Throwable) extends RuntimeException(message, cause) {
+class GameterException(message: String, cause: Throwable) extends RuntimeException(message, cause) {
 
   def this(message: String) { this(message, null) }
 
