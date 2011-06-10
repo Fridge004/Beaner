@@ -35,15 +35,29 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
     val resultGenome = new Array[Chromosome](pair.first.spec.chromosomeLengths.size)
     var selectionProbability = 0.0;
 
-    criteria.getGatheredSelectionCriterion.foreach(_ match{
-      case criterion: Criterion => 
-	      val chromaNum = criterion.chromosomeIndex
-	      if (resultGenome(chromaNum) != null)
-	        throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
-	
-	      val selectedChroma = getHeterozygousSelectedChroma(pair, criterion)
-	      resultGenome(chromaNum) = selectedChroma
-      case criterion: DoubleCriterion => throw new RuntimeException("NWY")
+    //TODO fix duplication
+    criteria.getGatheredSelectionCriterion.foreach(criterion => {
+      val chromaNum = criterion.chromosomeIndex
+      if (resultGenome(chromaNum) != null)
+		 throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
+		
+      resultGenome(chromaNum) = criterion match {
+	      case criterion: Criterion => 
+		    chromaCrosser.selectHeterozygousOffspring(
+		      pair.first.chromosomes(chromaNum), 
+		      pair.second.chromosomes(chromaNum), 
+		      criterion.plant, 
+		      criterion.cMIndex  
+		    ) 
+	      case criterion: DoubleCriterion => 
+	        chromaCrosser.selectHeterozygousOffspring(
+	          pair.first.chromosomes(chromaNum),
+	          pair.second.chromosomes(chromaNum),
+	          criterion.plant,
+	          criterion.criterion1.cMIndex,
+	          criterion.criterion2.cMIndex
+	        )
+      }
     })
 
     for (i <- 0 until resultGenome.size) {
@@ -52,13 +66,6 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
     }
 
     new OffspringPlant(resultGenome, pair.first.spec, Some(getSelectionProbability(resultGenome)), None, Some(pair))
-  }
-
-  private def getHeterozygousSelectedChroma(pair: PlantPair, criterion: Criterion): Chromosome = {
-    val chromaNum = criterion.chromosomeIndex
-    val cMNum = criterion.cMIndex
-    val plant = criterion.plant
-    chromaCrosser.selectHeterozygousOffspring(pair.first.chromosomes(chromaNum), pair.second.chromosomes(chromaNum), plant, cMNum)
   }
 
   private def getUnselectedtedChroma(pair: PlantPair, chromaNum: Int): Chromosome = {
@@ -72,15 +79,31 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
     var selectionProbability = 0.0
     var chromasomeSize = 0
 
-    criteria.getGatheredSelectionCriterion.foreach(_ match {
-      case criterion: Criterion =>
-	      val chromaNum = criterion.chromosomeIndex
-	      if (resultGenome(chromaNum) != null)
-	        throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
-	      val selectedChroma = getHomozygousSelectedChroma(pair, criterion)
-	      resultGenome(chromaNum) = selectedChroma
-      case criterion: DoubleCriterion => throw new RuntimeException("NRY")
-    })
+    //TODO fix duplication
+    criteria.getGatheredSelectionCriterion.foreach(criterion => {
+      val chromaNum = criterion.chromosomeIndex
+      if (resultGenome(chromaNum) != null)
+		 throw new UnsupportedOperationException("Not supported yet: multiple criteria on single chromasome")
+      
+      resultGenome(chromaNum) = criterion match {
+	      case criterion: Criterion =>
+		    chromaCrosser.selectHomozygousOffspring(
+		        pair.first.chromosomes(chromaNum), 
+		        pair.second.chromosomes(chromaNum), 
+		        criterion.plant, 
+		        criterion.cMIndex
+		    )
+	      case criterion: DoubleCriterion => 
+	        chromaCrosser.selectHomozygousOffspring(
+	          pair.first.chromosomes(chromaNum),
+	          pair.second.chromosomes(chromaNum),
+	          criterion.plant,
+	          criterion.criterion1.cMIndex,
+	          criterion.criterion2.cMIndex
+	        )
+      	}
+      }
+    )
 
     for (i <- 0 until resultGenome.size) {
       if (resultGenome(i) == null)
@@ -88,13 +111,6 @@ class PlantCrosser(chromaCrosser: ChromosomeCrosser) {
     }
 
     new OffspringPlant(resultGenome, pair.first.spec, Some(getSelectionProbability(resultGenome)), None, Option(pair))
-  }
-
-  private def getHomozygousSelectedChroma(pair: PlantPair, criteria: Criterion): Chromosome = {
-    val chromaNum = criteria.chromosomeIndex
-    val cMNum = criteria.cMIndex
-    val plant = criteria.plant
-    chromaCrosser.selectHomozygousOffspring(pair.first.chromosomes(chromaNum), pair.second.chromosomes(chromaNum), plant, cMNum)
   }
 
   private def getSelectionProbability(chromasomes: Array[Chromosome]): Double = {

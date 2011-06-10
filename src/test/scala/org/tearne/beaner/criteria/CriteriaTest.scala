@@ -20,7 +20,6 @@ import org.scalatest.junit.JUnitSuite
 import org.scalatest.mock.MockitoSugar
 import org.junit.Test
 import org.junit.Assert.fail
-//import collection.immutable.Set
 
 class CriteriaTest extends JUnitSuite with MockitoSugar {
   

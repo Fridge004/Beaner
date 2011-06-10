@@ -17,7 +17,10 @@ package org.tearne.beaner.criteria
 
 import org.tearne.beaner.plant._
 
-sealed abstract class SelectionCriterion
+sealed abstract class SelectionCriterion{
+  val plant: Plant
+  val chromosomeIndex: Int
+}
 
 case class Criterion(val plant:Plant, val chromosomeIndex:Int, val cMIndex:Int) extends SelectionCriterion {
   def +(that:Criterion):Criteria = new Criteria(that, this)
@@ -29,4 +32,7 @@ case class DoubleCriterion(val criterion1: Criterion, val criterion2: Criterion)
     throw new CriterionException("Chromasome index must be consistent for double selection")
   else if(criterion1.cMIndex == criterion2.cMIndex)
     throw new CriterionException("Centimorgans cannot be equal for double selection")
+  
+  val chromosomeIndex = criterion1.chromosomeIndex
+  val plant = criterion1.plant
 }
