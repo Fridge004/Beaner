@@ -5,6 +5,12 @@ import org.scalatest.junit.JUnitSuite
 class CombinationGeneratorTest extends JUnitSuite{
   import org.tearne.beaner.math.State.{IN, OUT}
   
+  @Test def longLengthMemoryTest {
+    val length = 20
+    val gen: Set[Combination] = CombinationGenerator(length)
+    assert(gen.size === math.pow(2,length))
+  }
+  
   @Test def lengthTwo { 
     val gen: Set[Combination] = CombinationGenerator(2)
     

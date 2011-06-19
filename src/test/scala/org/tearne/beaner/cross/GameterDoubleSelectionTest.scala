@@ -56,10 +56,8 @@ class GameterDoubleSelectionTest extends JUnitSuite with MockitoSugar{
     assert( gameter.probContains(A, 0, 2, chromosome1) === 0 )
     assert( gameter.probContains(A, 0, 3, chromosome1) === 0.5*recombinationModel.probInAtDistance(3) )
     assert( gameter.probContains(A, 0, 5, chromosome1) === 0.5*(1-recombinationModel.probInAtDistance(2)) )
+    assert( gameter.probContains(A, 1, 4, chromosome1) === 1  )
     
-    intercept[UnsupportedOperationException]{
-              gameter.probContains(A, 1, 4, chromosome1)
-    }
     intercept[UnsupportedOperationException]{
               gameter.probContains(A, 1, 3, chromosome1)
     }
@@ -69,26 +67,26 @@ class GameterDoubleSelectionTest extends JUnitSuite with MockitoSugar{
     intercept[GameterException]{
       gameter.selectOn(A, 0, 2, chromosome1)
     }
+    
     intercept[GameterException]{
       gameter.selectOn(A, 2, 6, chromosome1)
     }
     
     intercept[UnsupportedOperationException]{
-              gameter.probContains(A, 1, 4, chromosome1)
-    }
-    intercept[UnsupportedOperationException]{
               gameter.probContains(A, 1, 3, chromosome1)
     }
   }
   
-  @Test def exceptionIfSecondIndexBeforeFirst(){
-    intercept[UnsupportedOperationException]{
-    	gameter.probContains(A, 2, 0, chromosome1)
-    }
-    
-    intercept[UnsupportedOperationException]{
-      gameter.selectOn(A, 2, 0, chromosome1)
-    }
+  @Test def selectionIndexesInDifferentOrders {
+    assert(
+        gameter.probContains(A, 3, 0, chromosome1) === 
+        gameter.probContains(A, 0, 3, chromosome1)
+    )
+    val g1 = gameter.selectOn(A, 3, 0, chromosome1)
+    val g11 = gameter.selectOn(A, 3, 0, chromosome1)
+    val g2 = gameter.selectOn(A, 0, 3, chromosome1)
+    assert(g1 === g11)
+    assert(g1 === g2)
   }
   
   @Test def selectionWhenBothOnSingleTid{
@@ -103,6 +101,23 @@ class GameterDoubleSelectionTest extends JUnitSuite with MockitoSugar{
     assertEquals( probs(0), gamete.probabilityOf(A,1), tolerance )
     assertEquals( probs(1), gamete.probabilityOf(A,2), tolerance )
     assertEquals( probs(2), gamete.probabilityOf(A,3), tolerance )
+    assertEquals( 1, gamete.probabilityOf(A,4), tolerance )
+  }
+  
+  @Test def selectionWhenBothOnBothTids{
+    val chromo = new Chromosome(
+			    	 	makeChromatid(A,A,A,A,A),
+			    	 	makeChromatid(a,A,A,a,A)
+			       	 )
+    val gamete = gameter.selectOn(A, 1, 4, chromo)
+    val model = new HaldaneRecombinationModel()
+    val probs = new DoubleSelectionProb(model).probabilityArray(2, IN, IN)
+    //Expect prob = 0.5
+    assertEquals( 0.5*model.probInAtDistance(1)+0.5*(1-model.probInAtDistance(1)), gamete.probabilityOf(a,0), tolerance )
+    assertEquals( 1, gamete.probabilityOf(A,1), tolerance )
+    assertEquals( 1, gamete.probabilityOf(A,2), tolerance )
+    //Expected prob = 0.5
+    assertEquals( 0.5*probs(1)+0.5*(1-probs(1)), gamete.probabilityOf(a,3), tolerance )
     assertEquals( 1, gamete.probabilityOf(A,4), tolerance )
   }
 }

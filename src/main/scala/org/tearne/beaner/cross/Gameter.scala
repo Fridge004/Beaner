@@ -58,7 +58,7 @@ class Gameter(val recombinationModel:RecombinationModel) {
    */
   def probContains(plant: Plant, firstIndex: Int, secondIndex: Int, chromosome: Chromosome):Double = {
     if(secondIndex <= firstIndex)
-      throw new UnsupportedOperationException("First index must be strictly less than second index")
+    	return probContains(plant, secondIndex, firstIndex, chromosome)
     
     val firstChromatid = chromosome.firstChromatid
     val secondChromatid = chromosome.secondChromatid
@@ -78,12 +78,13 @@ class Gameter(val recombinationModel:RecombinationModel) {
     if(probChro1Pos2 != 1 && probChro2Pos2 != 1)
       throw new UnsupportedOperationException("Not supported yet: Prob gamete contains double alleles when neither chromotids contains gene with certainty at position 2")
     
+    if(probChro1Pos1 == 1 && probChro2Pos1 == 1 && probChro1Pos2 == 1 && probChro2Pos2 == 1)
+      return 1
+    
 	if(probChro1Pos1 == 1 && probChro2Pos1 == 1)
 	  throw new UnsupportedOperationException("Not supported yet: Prob gamete contains double alleles when both chromatids contain gene with certainty at position 1")
-	if(probChro1Pos2 == 1 && probChro2Pos1 == 2)
+	if(probChro1Pos2 == 1 && probChro2Pos2 == 1)
 	  throw new UnsupportedOperationException("Not supported yet: Prob gamete contains double alleles when both chromatids contain gene with certainty at position 2")
-	
-	//We now know that both alleles can be provided, but are they on the same chromatid? 
 	
     if(probChro1Pos1*probChro1Pos2 == 1){
       //On same tid
@@ -99,7 +100,7 @@ class Gameter(val recombinationModel:RecombinationModel) {
    */
   def selectOn(plant: Plant, firstIndex: Int, secondIndex: Int, chromosome: Chromosome): Chromatid = {
 	if(secondIndex <= firstIndex)
-	  throw new UnsupportedOperationException("First index must be strictly less than second index")
+	  return selectOn(plant, secondIndex, firstIndex, chromosome)
 
     val firstChromatid = chromosome.firstChromatid
     val secondChromatid = chromosome.secondChromatid
@@ -119,6 +120,9 @@ class Gameter(val recombinationModel:RecombinationModel) {
     if(probChro1Pos2 != 1 && probChro2Pos2 != 1)
       throw new UnsupportedOperationException("Not supported yet: Selection for double alleles when neither chromotids contains gene with certainty at position 2")
     
+	if(probChro1Pos1 == 1 && probChro2Pos1 == 1 && probChro1Pos2 == 1 && probChro2Pos2 == 1)
+	  return withoutSelection(chromosome)
+	  
 	if(probChro1Pos1 == 1 && probChro2Pos1 == 1)
 	  throw new UnsupportedOperationException("Not supported yet: Selection for double alleles when both chromatids contain gene with certainty at position 1")
 	if(probChro1Pos2 == 1 && probChro2Pos2 == 1)

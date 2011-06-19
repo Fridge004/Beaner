@@ -9,7 +9,6 @@ object CombinationGenerator{
     	builder: Combination = Combination.empty, 
     	acc: Set[Combination] = Set[Combination]()
     ): Set[Combination] = {
-	  
 	  if(currentDepth == length)
 	    acc + builder
 	  else{

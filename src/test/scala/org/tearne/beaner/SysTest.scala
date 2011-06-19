@@ -33,15 +33,56 @@ class SysTest extends JUnitSuite with MockitoSugar {
   val lowTolerance = 1e-4
   val plantCrosser = new PlantCrosser(new ChromosomeCrosser(new Gameter(new HaldaneRecombinationModel)))
 
+  /**
+   * verifying against previous figures (not analytically verified)
+   */
+  @Test def doubleSelectionTest{
+    object ThreeChromoPlant extends PlantSpec{
+      val chromosomeLengths = Array(100,100,100)
+    }
+    //Todo takes v long time to work out combinations
+    val p1 = ThreeChromoPlant("donor1")
+    val p2 = ThreeChromoPlant("donor2")
+    val pV = ThreeChromoPlant("prefVar")
+    
+    val c1_1 = new Criterion(p1, 0, 10)	//Gene1
+    val c1_2 = new Criterion(p1, 0, 15) //Marker for Gene1
+    val c2_1 = new Criterion(p2, 1, 30)	//Gene2
+    val c2_2 = new Criterion(p2, 1, 40)	//Marker for Gene2
+    
+    val cAll = c1_1 + c1_2 + c2_1 + c2_2
+    
+    val f1_p1p2 = p1 x p2 selectHet cAll named "f1_p1p2"
+    val complex = f1_p1p2 x pV selectHet cAll named "complex"
+
+    val bc1 = complex x pV selectHet cAll named "bc1"
+    val bc2 = bc1 x pV selectHet cAll named "bc2"
+    val bc3 = bc2 x pV selectHet cAll named "bc3"
+    val bc4 = bc3 x pV selectHet cAll named "bc4"
+
+    val fin = bc4 x bc4 selectHom cAll named "fin"
+
+    fail("Forcing test to fail since too slow at present")
+    
+    assertEquals( 0.62147, bc1.evaluateUsing(plantCrosser).chromosomes(0).proportionOf(pV), lowTolerance )
+    assertEquals( 0.59658,  bc1.evaluateUsing(plantCrosser).chromosomes(1).proportionOf(pV), lowTolerance )
+    assert( 0.75 === bc1.evaluateUsing(plantCrosser).chromosomes(2).proportionOf(pV) )
+    
+    assertEquals( 0.66748, fin.evaluateUsing(plantCrosser).chromosomes(0).proportionOf(pV), lowTolerance)
+    assertEquals( 0.58603, fin.evaluateUsing(plantCrosser).chromosomes(1).proportionOf(pV), lowTolerance)
+    assertEquals( 0.96875, fin.evaluateUsing(plantCrosser).chromosomes(2).proportionOf(pV), lowTolerance)
+    
+  }
+  
   @Test def megansSecondExcelSheetTest_4Markers {
-    object MyPlantSpec extends PlantSpec{
+    object FiveChromoPlant extends PlantSpec{
       val chromosomeLengths = Array(5, 6, 3, 7, 5)
     }
-    val p1 = MyPlantSpec("donor1")
-    val p2 = MyPlantSpec("donor2")
-    val p3 = MyPlantSpec("donor3")
-    val p4 = MyPlantSpec("donor4")
-    val pV = MyPlantSpec("donor5")
+    val p1 = FiveChromoPlant("donor1")
+    val p2 = FiveChromoPlant("donor2")
+    val p3 = FiveChromoPlant("donor3")
+    val p4 = FiveChromoPlant("donor4")
+    val pV = FiveChromoPlant("donor5")
 
     val c1 = new Criterion(p1, 0, 1)
     val c2 = new Criterion(p2, 1, 5)
@@ -66,28 +107,28 @@ class SysTest extends JUnitSuite with MockitoSugar {
 
     assert(1.0 === f1_p1p2p3p4.evaluateUsing(plantCrosser).chromosomes(0).firstChromatid(1).probabilityOf(p1))
 
-    assertEquals(0.5, bc1.evaluateUsing(plantCrosser).chromosomes(0)proportionOf(pV), lowTolerance)
+    assertEquals(0.5, bc1.evaluateUsing(plantCrosser).chromosomes(0).proportionOf(pV), lowTolerance)
     assertEquals(0.5, bc1.evaluateUsing(plantCrosser).proportionOf(pV), lowTolerance)
 
-    assertEquals(0.506852, bc2.evaluateUsing(plantCrosser).chromosomes(0)proportionOf(pV), lowTolerance)
-    assertEquals(0.508375, bc2.evaluateUsing(plantCrosser).chromosomes(3)proportionOf(pV), lowTolerance)
+    assertEquals(0.506852, bc2.evaluateUsing(plantCrosser).chromosomes(0).proportionOf(pV), lowTolerance)
+    assertEquals(0.508375, bc2.evaluateUsing(plantCrosser).chromosomes(3).proportionOf(pV), lowTolerance)
     assertEquals(0.554999, bc2.evaluateUsing(plantCrosser).proportionOf(pV), lowTolerance)
 
-    assertEquals(0.516560, bc3.evaluateUsing(plantCrosser).chromosomes(3)proportionOf(pV), lowTolerance)
+    assertEquals(0.516560, bc3.evaluateUsing(plantCrosser).chromosomes(3).proportionOf(pV), lowTolerance)
     assertEquals(0.585773, bc3.evaluateUsing(plantCrosser).proportionOf(pV), lowTolerance)
 
-    assertEquals(0.520132, bc4.evaluateUsing(plantCrosser).chromosomes(0)proportionOf(pV), lowTolerance)
-    assertEquals(0.534910, bc4.evaluateUsing(plantCrosser).chromosomes(1)proportionOf(pV), lowTolerance)
-    assertEquals(0.514513, bc4.evaluateUsing(plantCrosser).chromosomes(2)proportionOf(pV), lowTolerance)
-    assertEquals(0.524559, bc4.evaluateUsing(plantCrosser).chromosomes(3)proportionOf(pV), lowTolerance)
-    assertEquals(0.937500, bc4.evaluateUsing(plantCrosser).chromosomes(4)proportionOf(pV), lowTolerance)
+    assertEquals(0.520132, bc4.evaluateUsing(plantCrosser).chromosomes(0).proportionOf(pV), lowTolerance)
+    assertEquals(0.534910, bc4.evaluateUsing(plantCrosser).chromosomes(1).proportionOf(pV), lowTolerance)
+    assertEquals(0.514513, bc4.evaluateUsing(plantCrosser).chromosomes(2).proportionOf(pV), lowTolerance)
+    assertEquals(0.524559, bc4.evaluateUsing(plantCrosser).chromosomes(3).proportionOf(pV), lowTolerance)
+    assertEquals(0.937500, bc4.evaluateUsing(plantCrosser).chromosomes(4).proportionOf(pV), lowTolerance)
     assertEquals(0.604349, bc4.evaluateUsing(plantCrosser).proportionOf(pV), lowTolerance)
 
-    assertEquals(0.053133, fin.evaluateUsing(plantCrosser).chromosomes(0)proportionOf(pV), lowTolerance)
-    assertEquals(0.091490, fin.evaluateUsing(plantCrosser).chromosomes(1)proportionOf(pV), lowTolerance)
-    assertEquals(0.038388, fin.evaluateUsing(plantCrosser).chromosomes(2)proportionOf(pV), lowTolerance)
-    assertEquals(0.064756, fin.evaluateUsing(plantCrosser).chromosomes(3)proportionOf(pV), lowTolerance)
-    assertEquals(0.937500, fin.evaluateUsing(plantCrosser).chromosomes(4)proportionOf(pV), lowTolerance)
+    assertEquals(0.053133, fin.evaluateUsing(plantCrosser).chromosomes(0).proportionOf(pV), lowTolerance)
+    assertEquals(0.091490, fin.evaluateUsing(plantCrosser).chromosomes(1).proportionOf(pV), lowTolerance)
+    assertEquals(0.038388, fin.evaluateUsing(plantCrosser).chromosomes(2).proportionOf(pV), lowTolerance)
+    assertEquals(0.064756, fin.evaluateUsing(plantCrosser).chromosomes(3).proportionOf(pV), lowTolerance)
+    assertEquals(0.937500, fin.evaluateUsing(plantCrosser).chromosomes(4).proportionOf(pV), lowTolerance)
     assertEquals(0.233483, fin.evaluateUsing(plantCrosser).proportionOf(pV), lowTolerance)
   }
 
